@@ -50,6 +50,15 @@ body {
   margin-top: 10px;
 }
 
+#content {
+    width: 960px;
+    border-left: 1px solid #999;
+    border-right: 1px solid #999;
+}
+
+.container {
+    width: 960px;
+}
 
 .mainContent {
   margin-top: 10px;
