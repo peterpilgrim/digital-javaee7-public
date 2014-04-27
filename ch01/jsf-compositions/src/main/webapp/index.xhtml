@@ -8,17 +8,41 @@
 
     <h:head>
         <title>Digital Java EE 7 - Sample JSF</title>
+        <style type="text/css">
+            body {
+                font-size: 16pt;
+                margin: 25px;
+            }
+
+            button, input, textarea {
+                font-size: 24pt;
+            }
+        </style>
     </h:head>
     <h:body>
+
+        <h1> Digital Java EE 7 - JSF Compositions</h1>
+
+        <p>
         This is the simplest JSF example possible.
+        </p>
 
         <h:form>
             <h:commandButton action="#{basicFlow.serveResponse}"
                              value="Invoke Action" />
         </h:form>
 
-        <h:link outcome="composition1.xhtml">
-            Composition 1
-        </h:link>
+        <p>
+            Here follows the composition layout examples:
+        </p>
+
+        <ul>
+            <li>
+                <h:link outcome="composition1.xhtml">
+                    Composition 1
+                </h:link>
+            </li>
+        </ul>
+
     </h:body>
 </html>

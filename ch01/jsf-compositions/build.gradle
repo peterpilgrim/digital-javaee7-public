@@ -24,14 +24,14 @@ repositories {
 }
 
 dependencies {
-    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+//    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
     providedCompile 'javax:javaee-api:7.0'
 
     compile     'joda-time:joda-time:2.2'
     compile     'org.slf4j:slf4j-simple:1.6.4'
-    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+//    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+//    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+//    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
 
     testCompile 'junit:junit:4.11'
 }
@@ -66,6 +66,10 @@ war {
     // classpath  configurations.extralibs
     // webXml = file("src/main/webapp/WEB-INF/web.xml")
     // baseXml = "servlet-webapp"
+
+    // Exclude GlassFish embedded libraries and avoid java.io.IOException: com.sun.enterprise.admin.remote.RemoteFailureException: Error occurred during deployment: Exception while deploying the app [jsf-compositions-1.0-SNAPSHOT] : Servlet [ParticipantPortImpl] and Servlet [CoordinatorPortImpl] have the same url pattern: [/WSAT11Service].
+    rootSpec.exclude("**/glassfish-embedded-all-*.jar")
+    rootSpec.exclude("**/glassfish-embedded-runner-*.jar")
 }
 
 task(run, dependsOn: 'classes', type: JavaExec) {

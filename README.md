@@ -1,4 +1,4 @@
-javaee7-developer-handbook
+Digital Java EE 7 Book
 ==========================
 
-This is the official repository for my book, Java EE 7 Developer Handbook published by Packt Publishing (1st Published on Friday 20 September 2013 ;-) 
+This is the official repository for my book, Digital Java EE 7 to published before JavaOne 2014!!!!!

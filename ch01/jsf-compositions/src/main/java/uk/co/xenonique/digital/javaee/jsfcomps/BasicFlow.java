@@ -1,17 +1,17 @@
 package uk.co.xenonique.digital.javaee.jsfcomps;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+//@javax.enteprise.context.RequestScoped
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 /**
  * The type BasicFlow
  *
  * @author Peter Pilgrim
  */
-@ManagedBean(name = "basicFlow")
+@Named
 @RequestScoped
 public class BasicFlow {
-
     public String serveResponse() {
         return "endState.xhtml";
     }
