@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+
+        <title>Demonstration Application :: jsf-crud-1.0-SNAPSHOT</title>
+        <meta name="description" content="Demonstration of a Java EE HTML5 application for the digital web" />
+        <meta name="author" content="Author is Simon Templaton by Peter Pilgrim"/>
+
+        <link href="#{request.contextPath}/resources/styles/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="styles/bootstrap-responsive.css" rel="stylesheet"> -->
+        <link href="#{request.contextPath}/resources/styles/main.css" rel="stylesheet"/>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+
+    <h:body>
+        <div class="main-container">
+            <div class="header-content">
+
+                <div class="navbar navbar-inverse" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Demo App</a>
+                        </div>
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#">Home</a></li>
+                                <li><a href="#about">About</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demo Application <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="https://github.com/peterpilgrim">Github</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="http://www.packtpub.com/java-ee-7-developer-handbook/book">Book</a></li>
+                                        <li><a href="http://www.amazon.com/Java-EE-7-Developer-Handbook/dp/1849687943/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1380468215&amp;sr=1-1&amp;keywords=java+ee+7+developer+handbook">Amazon USA</a></li>
+                                        <li><a href="http://www.amazon.co.uk/Java-EE-Developer-Handbook-ebook/dp/B00FDLOF66/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1380468106&amp;sr=1-1-catcorr&amp;keywords=java+ee+7+developer+handbook">Amazon UK</a></li>
+                                        <li class="nav-header">Friends</li>
+                                        <li><a href="http://tlcpowertalk.com/">TLC Powertalk</a></li>
+                                        <li><a href="https://java-champions.java.net/">Java Champions</a></li>
+                                        <li><a href="http://www.jfrog.com/home/v_artifactory_opensource_overview">Artifactory</a></li>
+                                        <li><a href="http://jenkins-ci.org//">Jenkins</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /.collapse /.nav-collapse -->
+                    </div><!-- /.container -->
+                </div><!-- /.navbar navbar-inverse navbar-fixed-top -->
+
+
+            </div><!-- headerContent -->
+
+            <div class="main-content">
+
+                <h1> Delete Contact Details </h1>
+
+
+                <h:form id="editContactDetail"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                    <div class="form-group">
+                        <h:outputLabel for="title" class="col-sm-3 control-label">
+                            Title</h:outputLabel>
+                        <div class="col-sm-9">
+                            <h:selectOneMenu class="form-control"
+                                 id="title" value="#{contactDetailController.contactDetail.title}">
+                                <f:selectItem itemLabel="--" itemValue="" />
+                                <f:selectItem itemValue="Mr" />
+                                <f:selectItem itemValue="Mrs" />
+                                <f:selectItem itemValue="Miss" />
+                                <f:selectItem itemValue="Ms" />
+                                <f:selectItem itemValue="Dr" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="firstName" class="col-sm-3 control-label">
+                            First name</h:outputLabel>
+                        <div class="col-sm-9">
+                            <h:inputText class="form-control"
+                             value="#{contactDetailController.contactDetail.firstName}"
+                             id="firstName" placeholder="First name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="middleName" class="col-sm-3 control-label">
+                            Middle name</h:outputLabel>
+                        <div class="col-sm-9">
+                            <h:inputText class="form-control"
+                             value="#{contactDetailController.contactDetail.middleName}"
+                            id="middleName" placeholder="Middle name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="lastName" class="col-sm-3 control-label">
+                            Last name</h:outputLabel>
+                        <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                         value="#{contactDetailController.contactDetail.lastName}"
+                             id="lastName" placeholder="Last name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="email" class="col-sm-3 control-label">Email address
+                        </h:outputLabel>
+                        <div class="col-sm-9">
+                            <h:inputText type="email"
+                             class="form-control" id="email"
+                             value="#{contactDetailController.contactDetail.email}"
+                             placeholder="Enter email"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel class="col-sm-3 control-label" for="allowEmails">
+                           Newsletter
+                        </h:outputLabel>
+                        <div class="col-sm-9 checkbox">
+                            <h:selectBooleanCheckbox id="allowEmails"
+                            value="#{contactDetailController.contactDetail.allowEmails}">
+                                Send me email promotions
+                            </h:selectBooleanCheckbox>
+                        </div>
+                    </div>
+
+                    <label class="control-label"> Your Date of Birth</label>
+
+                    <div class="row  my-group-border">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobDay">Day</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobDay" value="#{contactDetailController.dobDay}"
+                                                 label="Registration Day">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{contactDetailController.daysOfTheMonth}" var="day"
+                                                   itemLabel="#{day}" itemValue="#{day}" />
+                                    <f:validateRequired/>
+                                </h:selectOneMenu>
+                                <h:message for="dobDay" styleClass="form-error"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobMonth">Month</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobMonth" value="#{contactDetailController.dobMonth}"
+                                                 label="Registration Month">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{contactDetailController.monthsOfTheYear}" />
+                                    <f:validateRequired/>
+                                </h:selectOneMenu>
+                                <h:message for="dobMonth" styleClass="form-error"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobYear">Year</label>
+                            <div class="controls">
+                                <h:inputText id="dobYear" value="#{contactDetailController.dobYear}"
+                                             label="Registration Year">
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="dobYear" styleClass="form-error"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h:commandButton styleClass="btn btn-primary"
+                        action="#{contactDetailController.createContact()}"
+                        value="Submit" />
+                </h:form>
+
+                <hr class="subfeaturette-divider" />
+
+            </div><!-- main-content -->
+
+            <div class="footer-content">
+
+            </div> <!-- footer-content -->
+        </div> <!-- main-container -->
+    </h:body>
+    <script src="resources/javascripts/jquery-1.11.0.js"></script>
+    <script src="resources/javascripts/bootstrap.js"></script>
+    <script src="resources/app/main.js"></script>
+</html>
