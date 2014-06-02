@@ -87,11 +87,20 @@ public class ContactDetailController {
         int year = Integer.parseInt(dobYear);
         cal.set(Calendar.YEAR, year);
         contactDetail.setDob(cal.getTime());
+        contactDetail.setId(id);
         contactDetailService.update(contactDetail);
         System.out.println(contactDetail);
 
         contactDetail = new ContactDetail();
 
+        return "index.xhtml";
+    }
+
+    public String removeContact() {
+        contactDetail = contactDetailService.findById(id).get(0);
+        contactDetailService.delete(contactDetail);
+        System.out.println(contactDetail);
+        contactDetail = new ContactDetail();
         return "index.xhtml";
     }
 

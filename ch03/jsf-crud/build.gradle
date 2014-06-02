@@ -1,0 +1,103 @@
+// Template based on Java EE 7 Developer Handbook by Peter A. Pilgrim
+// http://www.xenonique.co.uk/blog/ (CC) 2013
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+// Define equivalent Maven GAV coordinates.
+group = 'uk.co.xenonique.digital.javaee'
+archivesBaseName = 'jsf-crud'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://maven.java.net/content/groups/promoted'
+    }
+    maven {
+        url 'http://repository.jboss.org/nexus/content/groups/public'
+    }
+}
+
+dependencies {
+    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    providedCompile 'javax:javaee-api:7.0'
+
+    // WARNING: Joda time is broken with Glassfish 4
+    compile     'joda-time:joda-time:2.2'
+    compile     'org.slf4j:slf4j-simple:1.6.4'
+    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+
+    testCompile 'junit:junit:4.11'
+}
+
+
+war {
+    // classpath  configurations.extralibs
+    // webXml = file("src/main/webapp/WEB-INF/web.xml")
+    // baseXml = "servlet-webapp"
+
+    // Exclude GlassFish embedded libraries and avoid java.io.IOException: com.sun.enterprise.admin.remote.RemoteFailureException: Error occurred during deployment: Exception while deploying the app [jsf-compositions-1.0-SNAPSHOT] : Servlet [ParticipantPortImpl] and Servlet [CoordinatorPortImpl] have the same url pattern: [/WSAT11Service].
+    rootSpec.exclude("**/glassfish-embedded-all-*.jar")
+    rootSpec.exclude("**/glassfish-embedded-runner-*.jar")
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}
+
+// Override Gradle defaults - a force an exploded JAR view
+sourceSets {
+    main {
+        output.resourcesDir = 'build/classes/main'
+        output.classesDir   = 'build/classes/main'
+    }
+    test {
+        resources {
+            srcDir 'src/test/resources'
+        }
+        resources {
+            srcDir 'src/test/resources-glassfish-embedded'
+        }
+//        resources {
+//            srcDir 'src/test/resources-jbossas-embedded'
+//        }
+
+        output.resourcesDir = 'build/classes/test'
+        output.classesDir   = 'build/classes/test'
+    }
+}
+
+war {
+    // classpath  configurations.extralibs
+    // webXml = file("src/main/webapp/WEB-INF/web.xml")
+    // baseXml = "servlet-webapp"
+}
+
+task(run, dependsOn: 'classes', type: JavaExec) {
+    description = 'Runs the main application'
+    main = 'uk.co.xenonique.digital.AppMain'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'Mary', 'Peter', 'Jane'
+    standardInput = System.in
+}
+
+task(generateScript, dependsOn: 'classes') {
+    description = 'Generates UNIX bash script that launches the program.'
+    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
+        // Not Microsoft Windows
+        new File("SampleRunner").withWriter { out ->
+            out.println("#!/bin/bash")
+            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  uk.co.xenonique.digital.AppMain")
+        }
+        "chmod 755 SampleRunner".execute()
+    }
+}
+

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+
+        <title>Demonstration Application :: jsf-crud-1.0-SNAPSHOT</title>
+        <meta name="description" content="Demonstration of a Java EE HTML5 application for the digital web" />
+        <meta name="author" content="Author is Simon Templaton by Peter Pilgrim"/>
+
+        <link href="#{request.contextPath}/resources/styles/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="styles/bootstrap-responsive.css" rel="stylesheet"> -->
+        <link href="#{request.contextPath}/resources/styles/main.css" rel="stylesheet"/>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+
+    <h:body>
+        <f:metadata>
+            <f:viewParam name="id" value="#{contactDetailController.id}" />
+            <f:event type="preRenderView" listener="#{contactDetailController.findContactById()}"/>
+        </f:metadata>
+        <div class="main-container">
+            <div class="header-content">
+
+                <div class="navbar navbar-inverse" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Demo App</a>
+                        </div>
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#">Home</a></li>
+                                <li><a href="#about">About</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demo Application <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="https://github.com/peterpilgrim">Github</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="http://www.packtpub.com/java-ee-7-developer-handbook/book">Book</a></li>
+                                        <li><a href="http://www.amazon.com/Java-EE-7-Developer-Handbook/dp/1849687943/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1380468215&amp;sr=1-1&amp;keywords=java+ee+7+developer+handbook">Amazon USA</a></li>
+                                        <li><a href="http://www.amazon.co.uk/Java-EE-Developer-Handbook-ebook/dp/B00FDLOF66/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1380468106&amp;sr=1-1-catcorr&amp;keywords=java+ee+7+developer+handbook">Amazon UK</a></li>
+                                        <li class="nav-header">Friends</li>
+                                        <li><a href="http://tlcpowertalk.com/">TLC Powertalk</a></li>
+                                        <li><a href="https://java-champions.java.net/">Java Champions</a></li>
+                                        <li><a href="http://www.jfrog.com/home/v_artifactory_opensource_overview">Artifactory</a></li>
+                                        <li><a href="http://jenkins-ci.org//">Jenkins</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /.collapse /.nav-collapse -->
+                    </div><!-- /.container -->
+                </div><!-- /.navbar navbar-inverse navbar-fixed-top -->
+
+
+            </div><!-- headerContent -->
+
+            <div class="main-content">
+
+                <h1> Delete Contact Details </h1>
+
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th> Item</th>
+                        <th> Value</th>
+                    </tr>
+                    <tr>
+                        <td> Title </td>
+                        <td> #{contactDetailController.contactDetail.title} </td>
+                    </tr>
+                    <tr>
+                        <td> First Name </td>
+                         <td> #{contactDetailController.contactDetail.firstName} </td>
+                    </tr>
+                    <tr>
+                        <td> Middle Name </td>
+                        <td> #{contactDetailController.contactDetail.middleName} </td>
+                    </tr>
+                    <tr>
+                        <td> Last Name </td>
+                        <td> #{contactDetailController.contactDetail.lastName} </td>
+                    </tr>
+                    <tr>
+                        <td> Allows Email? </td>
+                        <td> #{contactDetailController.contactDetail.allowEmails} </td>
+                    </tr>
+                    <tr>
+                        <td> Email </td>
+                        <td> #{contactDetailController.contactDetail.email} </td>
+                    </tr>
+                    <tr>
+                        <td> Date of Birth </td>
+                        <td>
+                            <h:outputText value="#{contactDetailController.contactDetail.dob}" >
+                                <f:convertDateTime type="date" pattern="dd-MMM-yyyy"/>
+                            </h:outputText>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <h:form id="editContactDetail"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                    <h:inputHidden value="${contactDetailController.id}" />
+
+                    <h:commandButton styleClass="btn btn-primary"
+                                     action="#{contactDetailController.removeContact()}"
+                                     value="Submit" />
+                    &#160;
+                    &#160;
+                    <h:commandButton styleClass="btn btn-default"
+                                     action="#{contactDetailController.cancel()}"
+                                     immediate="true" value="Cancel"/>
+                </h:form>
+
+                <hr class="subfeaturette-divider" />
+
+            </div><!-- main-content -->
+
+            <div class="footer-content">
+
+            </div> <!-- footer-content -->
+        </div> <!-- main-container -->
+    </h:body>
+    <script src="resources/javascripts/jquery-1.11.0.js"></script>
+    <script src="resources/javascripts/bootstrap.js"></script>
+    <script src="resources/app/main.js"></script>
+</html>
