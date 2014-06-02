@@ -19,7 +19,7 @@
 
 // Packt Publishing and Peter A. Pilgrim present the
 // ================================================================================
-    //    D I G I T A L      J A V A    E E   7    D E V E L O P M E N T
+//    D I G I T A L      J A V A    E E   7    W E B     D E V E L O P M E N T
 // ================================================================================
 //
 // This Gradle build is the root and does compile any software explicitly
@@ -30,8 +30,8 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 // Define equivalent Maven GAV coordinates.
-group = 'digital.javaee7.root'
-archivesBaseName = 'digital-javaee-root'
+group = 'uk.co.xenonique.digital'
+archivesBaseName = 'digital-javaee7-web-root'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -46,7 +46,7 @@ repositories {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+    gradleVersion = '1.12'
 }
 
 task myZip(type: Zip) {
@@ -153,7 +153,7 @@ new File(".").eachFileRecurse{ file ->
 
 task build {
     description = "Builds and installs only the initial project (*Embedded GlassFish utility)"
-    dependsOn 'install_glassfish-embedded'
+    // dependsOn 'install_glassfish-embedded'
 }
 
 task build_everything {
