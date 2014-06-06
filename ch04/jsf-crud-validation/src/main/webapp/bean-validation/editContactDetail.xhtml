@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF CRUD Validation Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent" >
+            <f:metadata>
+                <f:viewParam name="id" value="#{contactDetailControllerBV.id}" />
+                <f:event type="preRenderView" listener="#{contactDetailControllerBV.findContactById()}"/>
+            </f:metadata>
+
+            <h1> Edit Contact Details </h1>
+
+            <div class="alert alert-info">
+                <p> This page uses Bean Validation on the back end.</p>
+            </div>
+
+            <h:messages styleClass="alert alert-danger" />
+
+            <h:form id="editContactDetail"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                <h:inputHidden value="${contactDetailControllerBV.id}" />
+
+                <div class="form-group">
+                    <h:outputLabel for="title" class="col-sm-3 control-label">
+                        Title</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu class="form-control"
+                                         id="title" value="#{contactDetailControllerBV.contactDetail.title}">
+                            <f:selectItem itemLabel="--" itemValue="" />
+                            <f:selectItem itemValue="Mr" />
+                            <f:selectItem itemValue="Mrs" />
+                            <f:selectItem itemValue="Miss" />
+                            <f:selectItem itemValue="Ms" />
+                            <f:selectItem itemValue="Dr" />
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="firstName" class="col-sm-3 control-label">
+                        First name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{contactDetailControllerBV.contactDetail.firstName}"
+                                     id="firstName" placeholder="First name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="middleName" class="col-sm-3 control-label">
+                        Middle name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{contactDetailControllerBV.contactDetail.middleName}"
+                                     id="middleName" placeholder="Middle name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="lastName" class="col-sm-3 control-label">
+                        Last name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{contactDetailControllerBV.contactDetail.lastName}"
+                                     id="lastName" placeholder="Last name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="email" class="col-sm-3 control-label">Email address
+                    </h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText type="email"
+                                     class="form-control" id="email"
+                                     value="#{contactDetailControllerBV.contactDetail.email}"
+                                     placeholder="Enter email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel class="col-sm-3 control-label" for="allowEmails">
+                        Newsletter
+                    </h:outputLabel>
+                    <div class="col-sm-9 checkbox">
+                        <h:selectBooleanCheckbox id="allowEmails"
+                                                 value="#{contactDetailControllerBV.contactDetail.allowEmails}">
+                            Send me email promotions
+                        </h:selectBooleanCheckbox>
+                    </div>
+                </div>
+
+                <label class="control-label"> Your Date of Birth</label>
+
+                <div class="row  my-group-border">
+                    <div class="col-sm-3">
+                        <label class="control-label" for="dobDay">Day</label>
+                        <div class="controls">
+                            <h:selectOneMenu id="dobDay" value="#{contactDetailControllerBV.dobDay}"
+                                             label="Registration Day">
+                                <f:selectItem itemLabel="----"  itemValue=""/>
+                                <f:selectItems value="#{contactDetailControllerBV.daysOfTheMonth}" var="day"
+                                               itemLabel="#{day}" itemValue="#{day}" />
+                                <f:validateRequired/>
+                            </h:selectOneMenu>
+                            <h:message for="dobDay" styleClass="form-error"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="control-label" for="dobMonth">Month</label>
+                        <div class="controls">
+                            <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerBV.dobMonth}"
+                                             label="Registration Month">
+                                <f:selectItem itemLabel="----"  itemValue=""/>
+                                <f:selectItems value="#{contactDetailControllerBV.monthsOfTheYear}" />
+                                <f:validateRequired/>
+                            </h:selectOneMenu>
+                            <h:message for="dobMonth" styleClass="form-error"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="control-label" for="dobYear">Year</label>
+                        <div class="controls">
+                            <h:inputText id="dobYear" value="#{contactDetailControllerBV.dobYear}"
+                                         label="Registration Year">
+                                <f:validateRequired/>
+                            </h:inputText>
+                            <h:message for="dobYear" styleClass="form-error"/>
+                        </div>
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{contactDetailControllerBV.editContact()}"
+                                 value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{contactDetailControllerBV.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+        </ui:define>
+
+    </ui:composition>
+
+</html>
