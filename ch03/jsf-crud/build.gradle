@@ -28,11 +28,11 @@ dependencies {
     providedCompile 'javax:javaee-api:7.0'
 
     // WARNING: Joda time is broken with Glassfish 4
-    compile     'joda-time:joda-time:2.2'
-    compile     'org.slf4j:slf4j-simple:1.6.4'
-    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+//    compile     'joda-time:joda-time:2.2'
+//    compile     'org.slf4j:slf4j-simple:1.6.4'
+//    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+//    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+//    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
 
     testCompile 'junit:junit:4.11'
 }

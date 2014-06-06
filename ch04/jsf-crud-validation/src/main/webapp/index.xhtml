@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF CRUD Validation Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent">
+
+            <h1> CRUD Example with Validation</h1>
+
+            <p>
+                This is your web page for a demo application, which allows the user to enter
+                Contact Details with server side validation.
+            </p>
+
+            <p>
+                Group = <span class="blau">uk.co.xenonique.digital.javaee</span> <br/>
+                ArtifactId = <span class="blau" >jsf-crud-validation</span> <br/>
+                Version = <span class="blau">1.0-SNAPSHOT</span> <br/>
+            </p>
+
+
+            <h2> List of Contact Details </h2>
+
+
+            <ul>
+                <li>
+                    <a class="btn btn-primary btn-lg" href="bean-validation/index.xhtml"> Bean Validation</a>
+                    <p>
+                        Contact Details form with Bean Validation
+                    </p>
+                </li>
+                <li>
+                    <a class="btn btn-primary btn-lg" href="bean-validation/index.xhtml"> JSF Validation</a>
+                    <p>
+                        Contact Details form with JSF Validation
+                    </p>
+                </li>
+            </ul>
+
+
+                <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>
