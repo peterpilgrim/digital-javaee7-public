@@ -107,7 +107,16 @@ body {
 }
 
 .form-error {
-    color: #ff0000;
-    margin: 5px 15px 5px 15px;
+    color: #ca4e34;
+    padding: 8px 0px 12px 0px;
+    margin: 8px;
+}
 
+.validation-error {
+    display: block;
+    margin: 5px 15px 5px 15px;
+    padding: 8px 15px 8px 15px;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }
