@@ -3,10 +3,14 @@ package uk.co.xenonique.digital;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import java.text.DateFormatSymbols;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The type ContactDetailContractor
@@ -107,6 +111,30 @@ public class ContactDetailControllerJV {
         System.out.println(contactDetail);
         contactDetail = new ContactDetail();
         return "/jsf-validation/index.xhtml?redirect=true";
+    }
+
+    public void validateEmailAddress(
+        FacesContext context, UIComponent component, Object value) {
+        String text = value.toString();
+        if ( text.length() > 64 ) {
+            throw new ValidatorException(
+                new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "{contactDetails.emailAddress.length}",
+                    "The value must be less than 64 characters long."));
+        }
+        final String REGEX =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(text);
+        if ( !matcher.matches() ) {
+            throw new ValidatorException(
+                new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "{contactDetails.emailAddress.pattern}",
+                    "The value must be a valid email address."));
+        }
     }
 
     private int dobDay;

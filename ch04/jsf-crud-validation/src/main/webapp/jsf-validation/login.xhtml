@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF CRUD Validation Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent">
+
+
+            <h1> Enter New Contact Details </h1>
+
+            <div class="alert alert-info">
+                <p> This page uses JSF Validation on the back end.</p>
+            </div>
+
+            <h:messages globalOnly="true"  styleClass="alert alert-danger" />
+
+            <h:form id="loginForm"
+                styleClass="form-horizontal"
+                p:role="form">
+                <div class="form-group">
+                    <h:outputLabel for="username" class="col-sm-3 control-label">
+                        First name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="First name"
+                         value="#{loginControllerJV.username}"
+                         id="username" placeholder="Username">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                        </h:inputText>
+                        <h:message for="username" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="username" class="col-sm-3 control-label">
+                        First name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputSecret class="form-control" label="First name"
+                                     value="#{loginControllerJV.password}"
+                                     id="password" placeholder="Password">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                        </h:inputSecret>
+                        <h:message for="password" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                    action="#{contactDetailControllerBV.createContact()}"
+                    value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{contactDetailControllerBV.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

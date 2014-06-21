@@ -84,12 +84,10 @@
                         <h:inputText type="email"
                          label="Email" class="form-control" id="email"
                          value="#{contactDetailControllerBV.contactDetail.email}"
-                         validatorMessage="Value must be in the format of an email address"
-                         converterMessage=""
+                         validator="#{contactDetailControllerJV.validateEmailAddress}"
                          placeholder="Enter email">
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
-                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                         </h:inputText>
                         <h:message for="email" styleClass="alert validation-error"/>
                     </div>
