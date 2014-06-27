@@ -9,6 +9,8 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +27,6 @@ public class FacesDateOfBirthValidator implements Validator {
         UIInput yearComp  = (UIInput)component.getAttributes().get("dob_year");
 
         List<FacesMessage> errors = new ArrayList<>();
-
         int day = parsePositiveInteger(dayComp.getSubmittedValue());
         if ( day < 1 || day > 31 ) {
             errors.add(new FacesMessage(
@@ -40,8 +41,23 @@ public class FacesDateOfBirthValidator implements Validator {
                 "{application.dobMonth.outOfBounds}",
                 "DOB month must be in the range of 1 to 12 "));
         }
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(new Date());
+        cal.add(Calendar.YEAR, -18);
+        Date eighteenBirthday = cal.getTime();
+
+        cal.setTime(new Date());
+        cal.add(Calendar.YEAR, -100);
+        Date hundredthBirthday = cal.getTime();
+
         int year = parsePositiveInteger(yearComp.getSubmittedValue());
-        if ( year < 1900 || year > 1996 ) {
+        cal.set(year,month,day);
+        Date targetDate = cal.getTime();
+
+        if ( targetDate.before(hundredthBirthday) ||
+                targetDate.after(eighteenBirthday) ) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,
                 "{application.dobYear.outOfBounds}",
