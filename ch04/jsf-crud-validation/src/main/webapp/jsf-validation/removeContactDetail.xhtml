@@ -12,8 +12,8 @@
 
         <ui:define name="mainContent">
             <f:metadata>
-                <f:viewParam name="id" value="#{contactDetailControllerBV.id}" />
-                <f:event type="preRenderView" listener="#{contactDetailControllerBV.findContactById()}"/>
+                <f:viewParam name="id" value="#{contactDetailControllerJV.id}" />
+                <f:event type="preRenderView" listener="#{contactDetailControllerJV.findContactById()}"/>
             </f:metadata>
 
             <h1> Delete Contact Details </h1>
@@ -29,32 +29,32 @@
                 </tr>
                 <tr>
                     <td> Title </td>
-                    <td> #{contactDetailControllerBV.contactDetail.title} </td>
+                    <td> #{contactDetailControllerJV.contactDetail.title} </td>
                 </tr>
                 <tr>
                     <td> First Name </td>
-                    <td> #{contactDetailControllerBV.contactDetail.firstName} </td>
+                    <td> #{contactDetailControllerJV.contactDetail.firstName} </td>
                 </tr>
                 <tr>
                     <td> Middle Name </td>
-                    <td> #{contactDetailControllerBV.contactDetail.middleName} </td>
+                    <td> #{contactDetailControllerJV.contactDetail.middleName} </td>
                 </tr>
                 <tr>
                     <td> Last Name </td>
-                    <td> #{contactDetailControllerBV.contactDetail.lastName} </td>
+                    <td> #{contactDetailControllerJV.contactDetail.lastName} </td>
                 </tr>
                 <tr>
                     <td> Allows Email? </td>
-                    <td> #{contactDetailControllerBV.contactDetail.allowEmails} </td>
+                    <td> #{contactDetailControllerJV.contactDetail.allowEmails} </td>
                 </tr>
                 <tr>
                     <td> Email </td>
-                    <td> #{contactDetailControllerBV.contactDetail.email} </td>
+                    <td> #{contactDetailControllerJV.contactDetail.email} </td>
                 </tr>
                 <tr>
                     <td> Date of Birth </td>
                     <td>
-                        <h:outputText value="#{contactDetailControllerBV.contactDetail.dob}" >
+                        <h:outputText value="#{contactDetailControllerJV.contactDetail.dob}" >
                             <f:convertDateTime type="date" pattern="dd-MMM-yyyy"/>
                         </h:outputText>
                     </td>
@@ -65,15 +65,15 @@
             <h:form id="editContactDetail"
                     styleClass="form-horizontal"
                     p:role="form">
-                <h:inputHidden value="${contactDetailControllerBV.id}" />
+                <h:inputHidden value="${contactDetailControllerJV.id}" />
 
                 <h:commandButton styleClass="btn btn-primary"
-                                 action="#{contactDetailControllerBV.removeContact()}"
+                                 action="#{contactDetailControllerJV.removeContact()}"
                                  value="Submit" />
                 &#160;
                 &#160;
                 <h:commandButton styleClass="btn btn-default"
-                                 action="#{contactDetailControllerBV.cancel()}"
+                                 action="#{contactDetailControllerJV.cancel()}"
                                  immediate="true" value="Cancel"/>
             </h:form>
 

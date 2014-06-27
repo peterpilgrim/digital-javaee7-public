@@ -29,7 +29,7 @@
                     <div class="col-sm-9">
                         <h:selectOneMenu class="form-control"
                              label="Title" id="title"
-                             value="#{contactDetailControllerBV.contactDetail.title}">
+                             value="#{contactDetailControllerJV.contactDetail.title}">
                             <f:selectItem itemLabel="-" itemValue="" />
                             <f:selectItem itemValue="Mr" />
                             <f:selectItem itemValue="Mrs" />
@@ -46,7 +46,7 @@
                         First name</h:outputLabel>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" label="First name"
-                         value="#{contactDetailControllerBV.contactDetail.firstName}"
+                         value="#{contactDetailControllerJV.contactDetail.firstName}"
                          id="firstName" placeholder="First name">
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
@@ -59,7 +59,7 @@
                         Middle name</h:outputLabel>
                     <div class="col-sm-9">
                         <h:inputText class="form-control"
-                         value="#{contactDetailControllerBV.contactDetail.middleName}"
+                         value="#{contactDetailControllerJV.contactDetail.middleName}"
                         id="middleName" placeholder="Middle name"/>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         Last name</h:outputLabel>
                     <div class="col-sm-9">
                         <h:inputText class="form-control"
-                         value="#{contactDetailControllerBV.contactDetail.lastName}"
+                         value="#{contactDetailControllerJV.contactDetail.lastName}"
                          label="Last name"
                          id="lastName" placeholder="Last name">
                             <f:validateRequired/>
@@ -83,7 +83,7 @@
                     <div class="col-sm-9">
                         <h:inputText type="email"
                          label="Email" class="form-control" id="email"
-                         value="#{contactDetailControllerBV.contactDetail.email}"
+                         value="#{contactDetailControllerJV.contactDetail.email}"
                          validator="#{contactDetailControllerJV.validateEmailAddress}"
                          placeholder="Enter email">
                             <f:validateRequired/>
@@ -98,22 +98,31 @@
                     </h:outputLabel>
                     <div class="col-sm-9 checkbox">
                         <h:selectBooleanCheckbox id="allowEmails"
-                        value="#{contactDetailControllerBV.contactDetail.allowEmails}">
+                        value="#{contactDetailControllerJV.contactDetail.allowEmails}">
                             Send me email promotions
                         </h:selectBooleanCheckbox>
                     </div>
                 </div>
 
                 <label class="control-label"> Your Date of Birth</label>
+                <h:inputHidden id="aggregateDobHidden"
+                               label="hiddenField1" value="true">
+                    <f:validator validatorId="dateOfBirthValidator" />
+                    <f:attribute name="dob_dotm" value="#{dob_dotm}" />
+                    <f:attribute name="dob_moty" value="#{dob_moty}" />
+                    <f:attribute name="dob_year" value="#{dob_year}" />
+                </h:inputHidden>
+
 
                 <div class="row  my-group-border">
                     <div class="col-sm-3">
                         <label class="control-label" for="dobDay">Day</label>
                         <div class="controls">
-                            <h:selectOneMenu id="dobDay" value="#{contactDetailControllerBV.dobDay}"
+                            <h:selectOneMenu id="dobDay" value="#{contactDetailControllerJV.dobDay}"
+                                             binding="#{dob_dotm}"
                                              label="Registration Day">
                                 <f:selectItem itemLabel="----"  itemValue=""/>
-                                <f:selectItems value="#{contactDetailControllerBV.daysOfTheMonth}" var="day"
+                                <f:selectItems value="#{contactDetailControllerJV.daysOfTheMonth}" var="day"
                                                itemLabel="#{day}" itemValue="#{day}" />
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1" maximum="31" />
@@ -123,10 +132,11 @@
                     <div class="col-sm-3">
                         <label class="control-label" for="dobMonth">Month</label>
                         <div class="controls">
-                            <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerBV.dobMonth}"
+                            <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerJV.dobMonth}"
+                                             binding="#{dob_moty}"
                                              label="Registration Month">
                                 <f:selectItem itemLabel="----"  itemValue=""/>
-                                <f:selectItems value="#{contactDetailControllerBV.monthsOfTheYear}" />
+                                <f:selectItems value="#{contactDetailControllerJV.monthsOfTheYear}" />
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1" maximum="12" />
                             </h:selectOneMenu>
@@ -135,7 +145,8 @@
                     <div class="col-sm-3">
                         <label class="control-label" for="dobYear">Year</label>
                         <div class="controls">
-                            <h:inputText id="dobYear" value="#{contactDetailControllerBV.dobYear}"
+                            <h:inputText id="dobYear" value="#{contactDetailControllerJV.dobYear}"
+                                         binding="#{dob_year}"
                                          label="Registration Year">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1900" />
@@ -151,15 +162,18 @@
                     <div class="col-sm-12">
                         <h:message for="dobYear" styleClass="alert validation-error"/>
                     </div>
+                    <div class="col-sm-12">
+                        <h:message for="aggregateDobHidden" styleClass="alert validation-error"/>
+                    </div>
                 </div>
 
                 <h:commandButton styleClass="btn btn-primary"
-                    action="#{contactDetailControllerBV.createContact()}"
+                    action="#{contactDetailControllerJV.createContact()}"
                     value="Submit" />
                 &#160;
                 &#160;
                 <h:commandButton styleClass="btn btn-default"
-                                 action="#{contactDetailControllerBV.cancel()}"
+                                 action="#{contactDetailControllerJV.cancel()}"
                                  immediate="true" value="Cancel"/>
             </h:form>
 

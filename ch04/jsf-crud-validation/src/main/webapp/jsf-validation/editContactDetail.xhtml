@@ -12,8 +12,8 @@
 
         <ui:define name="mainContent" >
             <f:metadata>
-                <f:viewParam name="id" value="#{contactDetailControllerBV.id}" />
-                <f:event type="preRenderView" listener="#{contactDetailControllerBV.findContactById()}"/>
+                <f:viewParam name="id" value="#{contactDetailControllerJV.id}" />
+                <f:event type="preRenderView" listener="#{contactDetailControllerJV.findContactById()}"/>
             </f:metadata>
 
             <h1> Edit Contact Details </h1>
@@ -27,7 +27,7 @@
             <h:form id="editContactDetail"
                     styleClass="form-horizontal"
                     p:role="form">
-                <h:inputHidden value="${contactDetailControllerBV.id}" />
+                <h:inputHidden value="${contactDetailControllerJV.id}" />
 
                 <div class="form-group">
                     <h:outputLabel for="title" class="col-sm-3 control-label">
@@ -35,7 +35,7 @@
                     <div class="col-sm-9">
                         <h:selectOneMenu class="form-control"
                                          label="Title" id="title"
-                                         value="#{contactDetailControllerBV.contactDetail.title}">
+                                         value="#{contactDetailControllerJV.contactDetail.title}">
                             <f:selectItem itemLabel="-" itemValue="" />
                             <f:selectItem itemValue="Mr" />
                             <f:selectItem itemValue="Mrs" />
@@ -52,7 +52,7 @@
                         First name</h:outputLabel>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" label="First name"
-                                     value="#{contactDetailControllerBV.contactDetail.firstName}"
+                                     value="#{contactDetailControllerJV.contactDetail.firstName}"
                                      id="firstName" placeholder="First name">
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
@@ -65,7 +65,7 @@
                         Middle name</h:outputLabel>
                     <div class="col-sm-9">
                         <h:inputText class="form-control"
-                                     value="#{contactDetailControllerBV.contactDetail.middleName}"
+                                     value="#{contactDetailControllerJV.contactDetail.middleName}"
                                      id="middleName" placeholder="Middle name"/>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         Last name</h:outputLabel>
                     <div class="col-sm-9">
                         <h:inputText class="form-control"
-                                     value="#{contactDetailControllerBV.contactDetail.lastName}"
+                                     value="#{contactDetailControllerJV.contactDetail.lastName}"
                                      label="Last name"
                                      id="lastName" placeholder="Last name">
                             <f:validateRequired/>
@@ -89,7 +89,7 @@
                     <div class="col-sm-9">
                         <h:inputText type="email"
                                      label="Email" class="form-control" id="email"
-                                     value="#{contactDetailControllerBV.contactDetail.email}"
+                                     value="#{contactDetailControllerJV.contactDetail.email}"
                                      validatorMessage="Value must be in the format of an email address"
                                      converterMessage=""
                                      placeholder="Enter email">
@@ -106,7 +106,7 @@
                     </h:outputLabel>
                     <div class="col-sm-9 checkbox">
                         <h:selectBooleanCheckbox id="allowEmails"
-                                                 value="#{contactDetailControllerBV.contactDetail.allowEmails}">
+                                                 value="#{contactDetailControllerJV.contactDetail.allowEmails}">
                             Send me email promotions
                         </h:selectBooleanCheckbox>
                     </div>
@@ -118,10 +118,10 @@
                     <div class="col-sm-3">
                         <label class="control-label" for="dobDay">Day</label>
                         <div class="controls">
-                            <h:selectOneMenu id="dobDay" value="#{contactDetailControllerBV.dobDay}"
+                            <h:selectOneMenu id="dobDay" value="#{contactDetailControllerJV.dobDay}"
                                              label="Registration Day">
                                 <f:selectItem itemLabel="----"  itemValue=""/>
-                                <f:selectItems value="#{contactDetailControllerBV.daysOfTheMonth}" var="day"
+                                <f:selectItems value="#{contactDetailControllerJV.daysOfTheMonth}" var="day"
                                                itemLabel="#{day}" itemValue="#{day}" />
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1" maximum="31" />
@@ -131,10 +131,10 @@
                     <div class="col-sm-3">
                         <label class="control-label" for="dobMonth">Month</label>
                         <div class="controls">
-                            <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerBV.dobMonth}"
+                            <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerJV.dobMonth}"
                                              label="Registration Month">
                                 <f:selectItem itemLabel="----"  itemValue=""/>
-                                <f:selectItems value="#{contactDetailControllerBV.monthsOfTheYear}" />
+                                <f:selectItems value="#{contactDetailControllerJV.monthsOfTheYear}" />
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1" maximum="12" />
                             </h:selectOneMenu>
@@ -143,7 +143,7 @@
                     <div class="col-sm-3">
                         <label class="control-label" for="dobYear">Year</label>
                         <div class="controls">
-                            <h:inputText id="dobYear" value="#{contactDetailControllerBV.dobYear}"
+                            <h:inputText id="dobYear" value="#{contactDetailControllerJV.dobYear}"
                                          label="Registration Year">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1900" />
@@ -162,12 +162,12 @@
                 </div>
 
                 <h:commandButton styleClass="btn btn-primary"
-                                 action="#{contactDetailControllerBV.editContact()}"
+                                 action="#{contactDetailControllerJV.editContact()}"
                                  value="Submit" />
                 &#160;
                 &#160;
                 <h:commandButton styleClass="btn btn-default"
-                                 action="#{contactDetailControllerBV.cancel()}"
+                                 action="#{contactDetailControllerJV.cancel()}"
                                  immediate="true" value="Cancel"/>
             </h:form>
 

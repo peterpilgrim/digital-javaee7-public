@@ -11,8 +11,7 @@
 
         <ui:define name="mainContent">
 
-
-            <h1> Enter New Contact Details </h1>
+            <h1> Login Form  </h1>
 
             <div class="alert alert-info">
                 <p> This page uses JSF Validation on the back end.</p>
@@ -25,9 +24,9 @@
                 p:role="form">
                 <div class="form-group">
                     <h:outputLabel for="username" class="col-sm-3 control-label">
-                        First name</h:outputLabel>
-                    <div class="col-sm-9">
-                        <h:inputText class="form-control" label="First name"
+                        Username</h:outputLabel>
+                    <div class="col-sm-6">
+                        <h:inputText class="form-control" label="Login username"
                          value="#{loginControllerJV.username}"
                          id="username" placeholder="Username">
                             <f:validateRequired/>
@@ -38,12 +37,12 @@
                 </div>
 
                 <div class="form-group">
-                    <h:outputLabel for="username" class="col-sm-3 control-label">
-                        First name</h:outputLabel>
-                    <div class="col-sm-9">
-                        <h:inputSecret class="form-control" label="First name"
-                                     value="#{loginControllerJV.password}"
-                                     id="password" placeholder="Password">
+                    <h:outputLabel for="password" class="col-sm-3 control-label">
+                        Password</h:outputLabel>
+                    <div class="col-sm-6">
+                        <h:inputSecret class="form-control" label="Login password"
+                             value="#{loginControllerJV.password}"
+                             id="password" placeholder="Password">
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
                         </h:inputSecret>
@@ -51,14 +50,55 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <h:outputLabel for="email" class="col-sm-3 control-label">
+                        Email</h:outputLabel>
+                    <div class="col-sm-6">
+                        <h:inputText class="form-control" label="Email"
+                           value="#{loginControllerJV.email}"
+                           id="email" placeholder="Password"
+                           validator="emailValidator">
+                            <f:validateRequired/>
+                        </h:inputText>
+                        <h:message for="email" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3>Security Device Number</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Please enter your six digit device number from security dongle device.
+                            This would be a number of the form <code>123456</code> that you see on the device's
+                            display.
+                        </p>
+                        <div class="form-group">
+                            <h:outputLabel for="verificationId" class="col-sm-3 control-label">
+                                Verification ID</h:outputLabel>
+                            <div class="col-sm-3">
+                                <h:inputText class="form-control" label="Verification Id"
+                                             value="#{loginControllerJV.verificationId}"
+                                             id="verificationId" p:pattern="\d*" >
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="100000" maximum="999999" />
+                                    <f:validateLength maximum="6" />
+                                </h:inputText>
+                                <h:message for="verificationId" styleClass="alert validation-error"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h:commandButton styleClass="btn btn-primary"
-                    action="#{contactDetailControllerBV.createContact()}"
+                    action="#{loginControllerJV.login()}"
                     value="Submit" />
                 &#160;
                 &#160;
                 <h:commandButton styleClass="btn btn-default"
-                                 action="#{contactDetailControllerBV.cancel()}"
-                                 immediate="true" value="Cancel"/>
+                     action="#{loginControllerJV.cancel()}"
+                     immediate="true" value="Cancel"/>
             </h:form>
 
             <hr class="subfeaturette-divider" />

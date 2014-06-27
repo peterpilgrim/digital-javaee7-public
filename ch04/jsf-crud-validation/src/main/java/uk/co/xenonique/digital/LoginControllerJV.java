@@ -19,7 +19,7 @@ public class LoginControllerJV {
     private String verificationId;
 
     public String login() {
-        return "/jsf-validation/loginComplete?redirect=true";
+        return "/jsf-validation/complete?redirect=true";
     }
 
     public String cancel() {

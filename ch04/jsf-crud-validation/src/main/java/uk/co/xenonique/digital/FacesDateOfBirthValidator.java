@@ -1,0 +1,65 @@
+package uk.co.xenonique.digital;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.FacesValidator;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The type FacesDateOfBirthValidator
+ *
+ * @author Peter Pilgrim
+ */
+@FacesValidator("dateOfBirthValidator")
+public class FacesDateOfBirthValidator implements Validator {
+    @Override
+    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        UIInput dayComp   = (UIInput)component.getAttributes().get("dob_dotm");
+        UIInput monthComp = (UIInput)component.getAttributes().get("dob_moty");
+        UIInput yearComp  = (UIInput)component.getAttributes().get("dob_year");
+
+        List<FacesMessage> errors = new ArrayList<>();
+
+        int day = parsePositiveInteger(dayComp.getSubmittedValue());
+        if ( day < 1 || day > 31 ) {
+            errors.add(new FacesMessage(
+                FacesMessage.SEVERITY_ERROR,
+                "{application.dobDay.outOfBounds}",
+                "DOB day must be in the range of 1 to 31 "));
+        }
+        int month = parsePositiveInteger(monthComp.getSubmittedValue());
+        if ( month < 1 || month > 12 ) {
+            errors.add(new FacesMessage(
+                FacesMessage.SEVERITY_ERROR,
+                "{application.dobMonth.outOfBounds}",
+                "DOB month must be in the range of 1 to 12 "));
+        }
+        int year = parsePositiveInteger(yearComp.getSubmittedValue());
+        if ( year < 1900 || year > 1996 ) {
+            errors.add(new FacesMessage(
+                FacesMessage.SEVERITY_ERROR,
+                "{application.dobYear.outOfBounds}",
+                "DOB year: you must be 18 years old or over"));
+        }
+
+        if ( !errors.isEmpty()) {
+            throw new ValidatorException(errors);
+        }
+    }
+
+    public int parsePositiveInteger( Object value ) {
+        if ( value == null ) return -1;
+        try {
+            return Integer.parseInt( value.toString().trim());
+        }
+        catch (NumberFormatException nfe) {
+            return -1;
+        }
+    }
+}
