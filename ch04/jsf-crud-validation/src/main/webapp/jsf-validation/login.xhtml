@@ -69,11 +69,16 @@
                         <h3>Security Device Number</h3>
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Please enter your six digit device number from security dongle device.
-                            This would be a number of the form <code>123456</code> that you see on the device's
-                            display.
-                        </p>
+                        <div class="col-sm-3">
+                            <img src="#{request.contextPath}/resources/images/verificationid.png" />
+                        </div>
+                        <div class="col-sm-9">
+                            <p>
+                                Please enter your six digit device number from security dongle device.
+                                This would be a number of the form <code>123456</code> that you see on the device's
+                                display.
+                            </p>
+                        </div>
                         <div class="form-group">
                             <h:outputLabel for="verificationId" class="col-sm-3 control-label">
                                 Verification ID</h:outputLabel>

@@ -1,5 +1,4 @@
 package uk.co.xenonique.digital;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -7,7 +6,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +19,8 @@ import java.util.List;
 @FacesValidator("dateOfBirthValidator")
 public class FacesDateOfBirthValidator implements Validator {
     @Override
-    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+    public void validate(FacesContext context, UIComponent component, Object value)
+    throws ValidatorException {
         UIInput dayComp   = (UIInput)component.getAttributes().get("dob_dotm");
         UIInput monthComp = (UIInput)component.getAttributes().get("dob_moty");
         UIInput yearComp  = (UIInput)component.getAttributes().get("dob_year");
@@ -55,7 +54,6 @@ public class FacesDateOfBirthValidator implements Validator {
         int year = parsePositiveInteger(yearComp.getSubmittedValue());
         cal.set(year,month,day);
         Date targetDate = cal.getTime();
-
         if ( targetDate.before(hundredthBirthday) ||
                 targetDate.after(eighteenBirthday) ) {
             errors.add(new FacesMessage(
@@ -63,7 +61,6 @@ public class FacesDateOfBirthValidator implements Validator {
                 "{application.dobYear.outOfBounds}",
                 "DOB year: you must be 18 years old or over"));
         }
-
         if ( !errors.isEmpty()) {
             throw new ValidatorException(errors);
         }
