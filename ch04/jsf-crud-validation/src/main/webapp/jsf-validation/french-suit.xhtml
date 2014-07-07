@@ -55,10 +55,10 @@
                                          value="#{frenchSuitController.suit}" >
                             <f:converter converterId="frenchSuitConverter" />
                             <f:selectItem itemLabel="-" itemValue="" />
-                            <f:selectItem itemValue="Hearts" />
-                            <f:selectItem itemValue="Clubs" />
-                            <f:selectItem itemValue="Diamonds" />
-                            <f:selectItem itemValue="Spades" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('HEARTS')}" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('CLUBS')}" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('DIAMONDS')}" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('SPADES')}" />
                             <f:validateRequired/>
                         </h:selectOneMenu>
                         <h:message for="suit" styleClass="alert validation-error"/>
@@ -68,6 +68,11 @@
                 <h:commandButton styleClass="btn btn-primary"
                      action="#{frenchSuitController.doAction()}"
                      value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{frenchSuitController.cancel()}"
+                                 immediate="true" value="Cancel"/>
             </h:form>
 
             <hr class="subfeaturette-divider" />

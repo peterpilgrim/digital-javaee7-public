@@ -15,7 +15,7 @@ import static uk.co.xenonique.digital.FrenchSuit.*;
  * @author Peter Pilgrim
  */
 @FacesConverter("frenchSuitConverter")
-public class FrenchSuitConverter implements Converter{
+public class FrenchSuitConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         String text = value.trim();

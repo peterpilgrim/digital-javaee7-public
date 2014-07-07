@@ -17,7 +17,6 @@ public class FrenchSuitController {
     private String lastName;
     private FrenchSuit suit;
 
-
     public String doAction() {
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
@@ -31,6 +30,9 @@ public class FrenchSuitController {
         return "/index.xhtml?redirect=true";
     }
 
+    public FrenchSuit  suitEnumValue( String name ) {
+        return FrenchSuit.valueOf(name);
+    }
 
     public String getFirstName() {
         return firstName;

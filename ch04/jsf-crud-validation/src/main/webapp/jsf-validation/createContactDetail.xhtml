@@ -148,7 +148,6 @@
                                          binding="#{dob_year}"
                                          label="Registration Year">
                                 <f:validateRequired/>
-                                <f:validateLongRange minimum="1900" />
                             </h:inputText>
                         </div>
                     </div>
@@ -162,7 +161,7 @@
                         <h:message for="dobYear" styleClass="alert validation-error"/>
                     </div>
                     <div class="col-sm-12">
-                        <h:message for="aggregateDobHidden" styleClass="alert validation-error"/>
+                        <h:messages for="aggregateDobHidden" styleClass="alert validation-error"/>
                     </div>
                 </div>
 

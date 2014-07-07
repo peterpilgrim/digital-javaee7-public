@@ -30,15 +30,13 @@ public class FacesDateOfBirthValidator implements Validator {
         if ( day < 1 || day > 31 ) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,
-                "{application.dobDay.outOfBounds}",
-                "DOB day must be in the range of 1 to 31 "));
+                "DOB day must be in the range of 1 to 31 ", null ));
         }
         int month = parsePositiveInteger(monthComp.getSubmittedValue());
         if ( month < 1 || month > 12 ) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,
-                "{application.dobMonth.outOfBounds}",
-                "DOB month must be in the range of 1 to 12 "));
+                "DOB month must be in the range of 1 to 12 ", null));
         }
 
         Calendar cal = Calendar.getInstance();
@@ -54,12 +52,15 @@ public class FacesDateOfBirthValidator implements Validator {
         int year = parsePositiveInteger(yearComp.getSubmittedValue());
         cal.set(year,month,day);
         Date targetDate = cal.getTime();
-        if ( targetDate.before(hundredthBirthday) ||
-                targetDate.after(eighteenBirthday) ) {
+        if (targetDate.after(eighteenBirthday) ) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,
-                "{application.dobYear.outOfBounds}",
-                "DOB year: you must be 18 years old or over"));
+                "DOB year: you must be 18 years old.", null));
+        }
+        if ( targetDate.before(hundredthBirthday)) {
+            errors.add(new FacesMessage(
+                FacesMessage.SEVERITY_ERROR,
+                "DOB year: you must be younger than 100 years old.", null ));
         }
         if ( !errors.isEmpty()) {
             throw new ValidatorException(errors);
