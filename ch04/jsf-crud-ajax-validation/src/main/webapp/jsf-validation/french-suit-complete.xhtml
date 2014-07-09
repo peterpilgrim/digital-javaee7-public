@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF CRUD Validation Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent">
+
+            <h1> House of Cards with JSF Validation</h1>
+
+            <h:messages globalOnly="true" styleClass="alert alert-danger" />
+
+            <div class="jumbotron">
+                <h1> Complete </h1>
+                <p>
+                    Terrific! You completed the French suit action.
+                    Your first name is <b>#{flash['firstName']}</b> and
+                    your last name is <b>#{flash['lastName']}</b> and
+                    you chose <b>#{flash['suit']}</b> as the playcard suit.
+                </p>
+            </div>
+
+            <hr class="subfeaturette-divider" />
+
+            <ul>
+                <li>
+                    <a class="btn btn-primary btn-lg" href="#{request.contextPath}/"> Go back to the start </a>
+                    <p>
+                        Back to Start
+                    </p>
+                </li>
+            </ul>
+
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

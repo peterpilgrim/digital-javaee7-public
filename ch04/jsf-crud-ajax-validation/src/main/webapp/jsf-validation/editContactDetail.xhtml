@@ -19,7 +19,7 @@
             <h1> Edit Contact Details </h1>
 
             <div class="alert alert-info">
-                <p> This page uses JSF Validation on the back end.</p>
+                <p> This page uses JSF AJAX Validation on the front and  back end.</p>
             </div>
 
             <h:messages globalOnly="true"  styleClass="alert alert-danger" />
@@ -43,8 +43,10 @@
                             <f:selectItem itemValue="Ms" />
                             <f:selectItem itemValue="Dr" />
                             <f:validateRequired/>
+                            <f:ajax event="blur" render="titleError"/>
                         </h:selectOneMenu>
-                        <h:message for="title" styleClass="alert validation-error"/>
+                        <h:message id="titleError"
+                                   for="title" styleClass="alert validation-error"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -56,8 +58,10 @@
                                      id="firstName" placeholder="First name">
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="firstNameError"/>
                         </h:inputText>
-                        <h:message for="firstName" styleClass="alert validation-error"/>
+                        <h:message id="firstNameError"
+                                   for="firstName" styleClass="alert validation-error"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -79,8 +83,10 @@
                                      id="lastName" placeholder="Last name">
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="lastNameError"/>
                         </h:inputText>
-                        <h:message for="lastName" styleClass="alert validation-error"/>
+                        <h:message id="lastNameError"
+                                   for="lastName" styleClass="alert validation-error"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -96,8 +102,10 @@
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            <f:ajax event="blur" render="emailError"/>
                         </h:inputText>
-                        <h:message for="email" styleClass="alert validation-error"/>
+                        <h:message id="emailError"
+                                   for="email" styleClass="alert validation-error"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -114,52 +122,57 @@
 
                 <label class="control-label"> Your Date of Birth</label>
 
-                <div class="row  my-group-border">
-                    <div class="col-sm-3">
-                        <label class="control-label" for="dobDay">Day</label>
-                        <div class="controls">
-                            <h:selectOneMenu id="dobDay" value="#{contactDetailControllerJV.dobDay}"
-                                             label="Registration Day">
-                                <f:selectItem itemLabel="----"  itemValue=""/>
-                                <f:selectItems value="#{contactDetailControllerJV.daysOfTheMonth}" var="day"
-                                               itemLabel="#{day}" itemValue="#{day}" />
-                                <f:validateRequired/>
-                                <f:validateLongRange minimum="1" maximum="31" />
-                            </h:selectOneMenu>
+                <f:ajax event="blur" render="dobDayError dobMonthError dobYearError">
+                    <div class="row  my-group-border">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobDay">Day</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobDay" value="#{contactDetailControllerJV.dobDay}"
+                                                 label="Registration Day">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{contactDetailControllerJV.daysOfTheMonth}" var="day"
+                                                   itemLabel="#{day}" itemValue="#{day}" />
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1" maximum="31" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobMonth">Month</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerJV.dobMonth}"
+                                                 label="Registration Month">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{contactDetailControllerJV.monthsOfTheYear}" />
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1" maximum="12" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobYear">Year</label>
+                            <div class="controls">
+                                <h:inputText id="dobYear" value="#{contactDetailControllerJV.dobYear}"
+                                             label="Registration Year">
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1900" />
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobDayError"
+                                       for="dobDay" styleClass="alert validation-error"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobMonthError"
+                                       for="dobMonth" styleClass="alert validation-error"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobYearError"
+                                       for="dobYear" styleClass="alert validation-error"/>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <label class="control-label" for="dobMonth">Month</label>
-                        <div class="controls">
-                            <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerJV.dobMonth}"
-                                             label="Registration Month">
-                                <f:selectItem itemLabel="----"  itemValue=""/>
-                                <f:selectItems value="#{contactDetailControllerJV.monthsOfTheYear}" />
-                                <f:validateRequired/>
-                                <f:validateLongRange minimum="1" maximum="12" />
-                            </h:selectOneMenu>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <label class="control-label" for="dobYear">Year</label>
-                        <div class="controls">
-                            <h:inputText id="dobYear" value="#{contactDetailControllerJV.dobYear}"
-                                         label="Registration Year">
-                                <f:validateRequired/>
-                                <f:validateLongRange minimum="1900" />
-                            </h:inputText>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <h:message for="dobDay" styleClass="alert validation-error"/>
-                    </div>
-                    <div class="col-sm-12">
-                        <h:message for="dobMonth" styleClass="alert validation-error"/>
-                    </div>
-                    <div class="col-sm-12">
-                        <h:message for="dobYear" styleClass="alert validation-error"/>
-                    </div>
-                </div>
+                </f:ajax>
 
                 <h:commandButton styleClass="btn btn-primary"
                                  action="#{contactDetailControllerJV.editContact()}"

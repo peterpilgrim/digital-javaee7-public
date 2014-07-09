@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF Conversion Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent">
+
+            <h1> House of Card with JSF Conversion</h1>
+
+            <h:messages globalOnly="true" styleClass="alert alert-danger" />
+
+            <h:form id="cardForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                <div class="form-group">
+                    <h:outputLabel for="firstName" class="col-sm-3 control-label">
+                        First name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="First name"
+                                     value="#{frenchSuitController.firstName}"
+                                     id="firstName" placeholder="First name">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                        </h:inputText>
+                        <h:message for="firstName" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="lastName" class="col-sm-3 control-label">
+                        Last name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{frenchSuitController.lastName}"
+                                     label="Last name"
+                                     id="lastName" placeholder="Last name">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                        </h:inputText>
+                        <h:message for="lastName" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="suit" class="col-sm-3 control-label">
+                        Card Suit</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu class="form-control"
+                                         label="Suit" id="suit"
+                                         value="#{frenchSuitController.suit}" >
+                            <f:converter converterId="frenchSuitConverter" />
+                            <f:selectItem itemLabel="-" itemValue="" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('HEARTS')}" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('CLUBS')}" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('DIAMONDS')}" />
+                            <f:selectItem itemValue="#{frenchSuitController.suitEnumValue('SPADES')}" />
+                            <f:validateRequired/>
+                        </h:selectOneMenu>
+                        <h:message for="suit" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                     action="#{frenchSuitController.doAction()}"
+                     value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{frenchSuitController.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

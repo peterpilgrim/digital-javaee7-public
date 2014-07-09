@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta charset="utf-8">
+
+    <title>Demonstration Application :: jsf-crud-1.0-SNAPSHOT</title>
+    <meta name="description" content="Demonstration of a Java EE HTML5 application for the digital web" />
+    <meta name="author" content="Author is Simon Templaton by Peter Pilgrim"/>
+
+    <link href="styles/bootstrap.css" rel="stylesheet"/>
+    <!-- <link href="styles/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link href="styles/main.css" rel="stylesheet"/>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</h:head>
+
+<h:body>
+    <div class="headerContent">
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Demo App</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demo Application <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://github.com/peterpilgrim">Github</a></li>
+                                <li class="divider"></li>
+                                <li><a href="http://www.packtpub.com/java-ee-7-developer-handbook/book">Book</a></li>
+                                <li><a href="http://www.amazon.com/Java-EE-7-Developer-Handbook/dp/1849687943/ref=sr_1_1?s=books&ie=UTF8&qid=1380468215&sr=1-1&keywords=java+ee+7+developer+handbook">Amazon USA</a></li>
+                                <li><a href="http://www.amazon.co.uk/Java-EE-Developer-Handbook-ebook/dp/B00FDLOF66/ref=sr_1_cc_1?s=aps&ie=UTF8&qid=1380468106&sr=1-1-catcorr&keywords=java+ee+7+developer+handbook">Amazon UK</a></li>
+                                <li class="nav-header">Friends</li>
+                                <li><a href="http://tlcpowertalk.com/">TLC Powertalk</a></li>
+                                <li><a href="https://java-champions.java.net/">Java Champions</a></li>
+                                <li><a href="http://www.jfrog.com/home/v_artifactory_opensource_overview">Artifactory</a></li>
+                                <li><a href="http://jenkins-ci.org//">Jenkins</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.collapse /.nav-collapse -->
+            </div><!-- /.container -->
+        </div><!-- /.navbar navbar-inverse navbar-fixed-top -->
+
+
+    </div><!-- headerContent -->
+
+    <div class="mainContent">
+
+        <h1> Application Web Page </h1>
+
+        <p>
+            This is your web page for a demo application.
+        </p>
+
+        <p>
+            Group = <span class="blau">uk.co.xenonique.digital.javaee</span> <br/>
+            ArtifactId = <span class="blau" >jsf-crud</span> <br/>
+            Version = <span class="blau">1.0-SNAPSHOT</span> <br/>
+        </p>
+
+        <hr class="subfeaturette-divider" />
+
+        <div ng-controller="HelloWorldController">
+            <h2> Hello {{name}}! </h2>
+            <input type="text" ng-model="name" />
+
+            <ul ng-repeat="fruit in fruits">
+                <li>{{ fruit.name }}</li>
+            </ul>
+        </div>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque ultricies venenatis.
+            Phasellus eu urna sit amet mi cursus gravida. Pellentesque lectus leo, sollicitudin quis risus at,
+            feugiat sollicitudin justo. Duis elementum ultrices risus in condimentum. Sed rhoncus metus massa,
+            rutrum feugiat tortor sagittis ut. Donec accumsan massa risus, quis commodo tellus ullamcorper id.
+            Fusce hendrerit laoreet nisl, hendrerit vehicula erat mattis vel. Nunc nec metus dui.
+            Aliquam vitae facilisis nisi. Suspendisse eu ultrices leo, in imperdiet leo.
+            Aenean egestas laoreet placerat. Donec cursus luctus sodales. Praesent a ante dignissim,
+            ullamcorper justo a, condimentum enim.
+        </p>
+
+        <hr class="subfeaturette-divider" />
+
+        <h2>News</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque ultricies venenatis.
+            Phasellus eu urna sit amet mi cursus gravida. Pellentesque lectus leo, sollicitudin quis risus at,
+            feugiat sollicitudin justo. Duis elementum ultrices risus in condimentum. Sed rhoncus metus massa,
+            rutrum feugiat tortor sagittis ut. Donec accumsan massa risus, quis commodo tellus ullamcorper id.
+            Fusce hendrerit laoreet nisl, hendrerit vehicula erat mattis vel. Nunc nec metus dui.
+            Aliquam vitae facilisis nisi. Suspendisse eu ultrices leo, in imperdiet leo.
+            Aenean egestas laoreet placerat. Donec cursus luctus sodales. Praesent a ante dignissim,
+            ullamcorper justo a, condimentum enim.
+        </p>
+
+        <h2>Leisure</h2>
+
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque ultricies venenatis.
+            Phasellus eu urna sit amet mi cursus gravida. Pellentesque lectus leo, sollicitudin quis risus at,
+            feugiat sollicitudin justo. Duis elementum ultrices risus in condimentum. Sed rhoncus metus massa,
+            rutrum feugiat tortor sagittis ut. Donec accumsan massa risus, quis commodo tellus ullamcorper id.
+            Fusce hendrerit laoreet nisl, hendrerit vehicula erat mattis vel. Nunc nec metus dui.
+            Aliquam vitae facilisis nisi. Suspendisse eu ultrices leo, in imperdiet leo.
+            Aenean egestas laoreet placerat. Donec cursus luctus sodales. Praesent a ante dignissim,
+            ullamcorper justo a, condimentum enim.
+        </p>
+
+    </div><!-- mainContent -->
+
+    <div class="footerContent">
+
+    </div> <!-- footerContent -->
+</h:body>
+<script src="javascripts/jquery-1.11.0.js"></script>
+<script src="javascripts/angular.js"></script>
+<script src="javascripts/ui-bootstrap-tpls-0.11.0.js"></script>
+<script src="app/main.js"></script>
+</html>
