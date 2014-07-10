@@ -84,7 +84,7 @@ public class ContactDetailControllerJV {
         Calendar cal = Calendar.getInstance();
         cal.setTime(contactDetail.getDob());
         dobDay = cal.get(Calendar.DAY_OF_MONTH);
-        dobMonth = cal.get(Calendar.MONTH);
+        dobMonth = cal.get(Calendar.MONTH) + 1;
         dobYear = Integer.toString(cal.get(Calendar.YEAR));
         System.out.println("retrieve item: "+contactDetail);
     }
@@ -92,7 +92,7 @@ public class ContactDetailControllerJV {
     public String editContact() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, dobDay);
-        cal.set(Calendar.MONTH, dobMonth);
+        cal.set(Calendar.MONTH, dobMonth-1);
         int year = Integer.parseInt(dobYear);
         cal.set(Calendar.YEAR, year);
         contactDetail.setDob(cal.getTime());
