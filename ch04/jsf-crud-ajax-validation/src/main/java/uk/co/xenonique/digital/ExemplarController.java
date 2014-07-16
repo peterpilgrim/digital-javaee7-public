@@ -26,7 +26,6 @@ public class ExemplarController {
         return "examplar-methods-complete?redirect=true";
     }
 
-
     public String methodTwoArgs( String alpha, String beta ) {
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
@@ -34,7 +33,6 @@ public class ExemplarController {
                 String.format("executed methodTwoArgs(\"%s\", \"%s\")", alpha, beta ));
         return "examplar-methods-complete?redirect=true";
     }
-
 
     public String methodThreeArgs( String alpha, String beta, String gamma ) {
         Flash flash = FacesContext.getCurrentInstance().
@@ -44,28 +42,23 @@ public class ExemplarController {
         return "examplar-methods-complete?redirect=true";
     }
 
-
-    public String methodPassingParameter() {
+    public String methodPassingParameters() {
         Map<String,String> params = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap();
-
         String ctaText = params.get("callToActionText");
         String custType = params.get("customerType");
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("result",
-                String.format("executed methodPassingAttribute() " +
+                String.format("executed methodPassingParameters() " +
                         "ctaText=\"%s\", custType=%s", ctaText, custType ));
         return "examplar-methods-complete?redirect=true";
     }
 
-
     private String contactName;
 
     public void attributeListener(ActionEvent event){
-
         contactName = (String) event.getComponent().getAttributes().get("contactName");
-
     }
 
     public String performAction() {
