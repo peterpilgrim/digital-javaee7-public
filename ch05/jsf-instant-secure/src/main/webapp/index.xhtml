@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF CRUD Validation Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent">
+
+            <h1> CRUD Example with AJAX Validation</h1>
+
+            <p>
+                This is your web page for a demo application, which allows the user to enter
+                Contact Details with server side validation.
+            </p>
+
+            <p>
+                Group = <span class="blau">uk.co.xenonique.digital.javaee</span> <br/>
+                ArtifactId = <span class="blau" >jsf-crud-ajax-validation</span> <br/>
+                Version = <span class="blau">1.0-SNAPSHOT</span> <br/>
+            </p>
+
+
+            <h2> List of Contact Details </h2>
+
+
+            <ul>
+                <li>
+                    <a class="btn btn-primary btn-lg" href="jsf-validation/index.xhtml"> JSF AJAX Validation</a>
+                    <p>
+                        Contact Details form with JSF AJAX Validation
+                    </p>
+                </li>
+                <li>
+                    <a class="btn btn-primary btn-lg" href="#{request.contextPath}/jsf-validation/login.xhtml"> Login JSF AJAX Validation </a>
+                    <p>
+                        Login form with JSF AJAX Validation
+                    </p>
+                </li>
+                <li>
+                    <a class="btn btn-primary btn-lg" href="#{request.contextPath}/jsf-validation/french-suit.xhtml"> French Suit Conversion</a>
+                    <p>
+                        JSF Conversion for playing cards following the French suit convention using AJAX
+                    </p>
+                </li>
+                <li>
+                    <a class="btn btn-primary btn-lg" href="#{request.contextPath}/jsf-miscellany/index.xhtml"> Miscellaneous JSF</a>
+                    <p>
+                        Miscellaneous JSF Examples
+                    </p>
+                </li>
+            </ul>
+
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

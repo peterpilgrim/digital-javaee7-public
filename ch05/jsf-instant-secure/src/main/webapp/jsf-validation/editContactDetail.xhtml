@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF CRUD Validation Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent" >
+            <f:metadata>
+                <f:viewParam name="id" value="#{contactDetailControllerJV.id}" />
+                <f:event type="preRenderView" listener="#{contactDetailControllerJV.findContactById()}"/>
+            </f:metadata>
+
+            <h1> Edit Contact Details </h1>
+
+            <div class="alert alert-info">
+                <p> This page uses JSF AJAX Validation on the front and  back end.</p>
+            </div>
+
+            <h:messages globalOnly="true"  styleClass="alert alert-danger" />
+
+            <h:form id="editContactDetail"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                <h:inputHidden value="${contactDetailControllerJV.id}" />
+
+                <div class="form-group">
+                    <h:outputLabel for="title" class="col-sm-3 control-label">
+                        Title</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu class="form-control"
+                                         label="Title" id="title"
+                                         value="#{contactDetailControllerJV.contactDetail.title}">
+                            <f:selectItem itemLabel="-" itemValue="" />
+                            <f:selectItem itemValue="Mr" />
+                            <f:selectItem itemValue="Mrs" />
+                            <f:selectItem itemValue="Miss" />
+                            <f:selectItem itemValue="Ms" />
+                            <f:selectItem itemValue="Dr" />
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="titleError"/>
+                        </h:selectOneMenu>
+                        <h:message id="titleError"
+                                   for="title" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="firstName" class="col-sm-3 control-label">
+                        First name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="First name"
+                                     value="#{contactDetailControllerJV.contactDetail.firstName}"
+                                     id="firstName" placeholder="First name">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="firstNameError"/>
+                        </h:inputText>
+                        <h:message id="firstNameError"
+                                   for="firstName" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="middleName" class="col-sm-3 control-label">
+                        Middle name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{contactDetailControllerJV.contactDetail.middleName}"
+                                     id="middleName" placeholder="Middle name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="lastName" class="col-sm-3 control-label">
+                        Last name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{contactDetailControllerJV.contactDetail.lastName}"
+                                     label="Last name"
+                                     id="lastName" placeholder="Last name">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="lastNameError"/>
+                        </h:inputText>
+                        <h:message id="lastNameError"
+                                   for="lastName" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="email" class="col-sm-3 control-label">Email address
+                    </h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText type="email"
+                                     label="Email" class="form-control" id="email"
+                                     value="#{contactDetailControllerJV.contactDetail.email}"
+                                     validatorMessage="Value must be in the format of an email address"
+                                     converterMessage=""
+                                     placeholder="Enter email">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            <f:ajax event="blur" render="emailError"/>
+                        </h:inputText>
+                        <h:message id="emailError"
+                                   for="email" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel class="col-sm-3 control-label" for="allowEmails">
+                        Newsletter
+                    </h:outputLabel>
+                    <div class="col-sm-9 checkbox">
+                        <h:selectBooleanCheckbox id="allowEmails"
+                                                 value="#{contactDetailControllerJV.contactDetail.allowEmails}">
+                            Send me email promotions
+                        </h:selectBooleanCheckbox>
+                    </div>
+                </div>
+
+                <label class="control-label"> Your Date of Birth</label>
+
+                <f:ajax event="blur" render="dobDayError dobMonthError dobYearError">
+                    <div class="row  my-group-border">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobDay">Day</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobDay" value="#{contactDetailControllerJV.dobDay}"
+                                                 label="Registration Day">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{contactDetailControllerJV.daysOfTheMonth}" var="day"
+                                                   itemLabel="#{day}" itemValue="#{day}" />
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1" maximum="31" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobMonth">Month</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobMonth" value="#{contactDetailControllerJV.dobMonth}"
+                                                 label="Registration Month">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{contactDetailControllerJV.monthsOfTheYear}" />
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1" maximum="12" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobYear">Year</label>
+                            <div class="controls">
+                                <h:inputText id="dobYear" value="#{contactDetailControllerJV.dobYear}"
+                                             label="Registration Year">
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1900" />
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobDayError"
+                                       for="dobDay" styleClass="alert validation-error"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobMonthError"
+                                       for="dobMonth" styleClass="alert validation-error"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobYearError"
+                                       for="dobYear" styleClass="alert validation-error"/>
+                        </div>
+                    </div>
+                </f:ajax>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{contactDetailControllerJV.editContact()}"
+                                 value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{contactDetailControllerJV.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+        </ui:define>
+
+    </ui:composition>
+
+</html>

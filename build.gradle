@@ -55,6 +55,11 @@ allprojects {
         }
     }
 
+    // Java version compatibility to use when compiling Java source 
+    sourceCompatibility = '1.7'
+    // Java version to generate classes
+    targetCompatibility = '1.7'
+
     task wrapper(type: Wrapper) {
         gradleVersion = '2.0'
     }
