@@ -30,6 +30,8 @@ classes/*
 .svn/*
 *.tmp
 *.swp
+.idea
+.idea/*
 
 
 # Compiled source #
@@ -52,7 +54,6 @@ classes/*
 *.rar
 *.tar
 *.zip
-classes
 
 
 # Logs and databases #
