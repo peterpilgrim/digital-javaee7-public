@@ -52,6 +52,8 @@ classes/*
 *.rar
 *.tar
 *.zip
+classes
+
 
 # Logs and databases #
 ######################

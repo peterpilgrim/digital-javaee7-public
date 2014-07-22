@@ -1,66 +1,20 @@
 // Template based on Java EE 7 Developer Handbook by Peter A. Pilgrim
-// http://www.xenonique.co.uk/blog/ (CC) 2013
+// http://www.xenonique.co.uk/blog/ (CC) 2014
 
-apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
 // Define equivalent Maven GAV coordinates.
-group = 'uk.co.xenonique.digital.javaee'
 archivesBaseName = 'jsf-compositions'
-version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-}
-
+// Override master project dependencies
 dependencies {
 //    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
     providedCompile 'javax:javaee-api:7.0'
 
     compile     'joda-time:joda-time:2.2'
     compile     'org.slf4j:slf4j-simple:1.6.4'
-//    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
-//    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
-//    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
-
-    testCompile 'junit:junit:4.11'
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
-// Override Gradle defaults - a force an exploded JAR view
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-        output.classesDir   = 'build/classes/main'
-    }
-    test {
-        resources {
-            srcDir 'src/test/resources'
-        }
-        resources {
-            srcDir 'src/test/resources-glassfish-embedded'
-        }
-//        resources {
-//            srcDir 'src/test/resources-jbossas-embedded'
-//        }
-
-        output.resourcesDir = 'build/classes/test'
-        output.classesDir   = 'build/classes/test'
-    }
-}
 
 war {
     // classpath  configurations.extralibs

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013,2014 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
+ * Copyright (c) 2014,2015 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU GPL v3.0
@@ -22,33 +22,92 @@
 //    D I G I T A L      J A V A    E E   7    W E B     D E V E L O P M E N T
 // ================================================================================
 //
-// This Gradle build is the root and does compile any software explicitly
-// 
+// This is a multi-mode Gradle build. This is the root file.
+// See also: http://www.gradle.org/docs/current/userguide/multi_project_builds.html
 
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+apply plugin: 'java'
 
-// Define equivalent Maven GAV coordinates.
-group = 'uk.co.xenonique.digital'
-archivesBaseName = 'digital-javaee7-web-root'
-version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
+// The name of this project
+project.archivesBaseName = 'digital-javaee7-web-root'
+
+// --------------------------------------------------------------------------------
+// Settings for all Digital Java EE 7 projects
+// --------------------------------------------------------------------------------
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    // Define equivalent Maven GAV coordinates.
+    group = 'uk.co.xenonique.digital'
+    version = '1.0-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url 'https://maven.java.net/content/groups/promoted'
+        }
+        maven {
+            url 'http://repository.jboss.org/nexus/content/groups/public'
+        }
     }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '2.0'
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
+
+
+// --------------------------------------------------------------------------------
+// Configure settings for Digital Java EE 7 sub projects
+// --------------------------------------------------------------------------------
+
+subprojects {
+    dependencies {
+//        compile     'joda-time:joda-time:2.2'
+//        compile     'org.slf4j:slf4j-simple:1.6.4'
+
+//    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+//    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+//    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+
+        testCompile 'junit:junit:4.11'
+    }
+
+    // Override Gradle defaults - a force an exploded JAR view
+    sourceSets {
+        main {
+            output.resourcesDir = 'build/classes/main'
+            output.classesDir   = 'build/classes/main'
+        }
+        test {
+            resources {
+                srcDir 'src/test/resources'
+            }
+            resources {
+                srcDir 'src/test/resources-glassfish-embedded'
+            }
+    //        resources {
+    //            srcDir 'src/test/resources-jbossas-embedded'
+    //        }
+
+            output.resourcesDir = 'build/classes/test'
+            output.classesDir   = 'build/classes/test'
+        }
+    }
 }
 
+
+
+// --------------------------------------------------------------------------------
+// Specific tasks and configuration for the current gradle module
+// --------------------------------------------------------------------------------
+
+// Specific task to build the ZIP 
 task myZip(type: Zip) {
     description = "Creates a ZIP distribution of the `${archivesBaseName}' project."
     from '.'
@@ -70,133 +129,6 @@ task myZip(type: Zip) {
             details.file.name.equals('.gradle')
     }
     */
-}
-
-// This is the root build file
-File currentFile = new File(".","build.gradle")
-
-def cleanTaskNames = []
-def buildTaskNames = []
-def installTaskNames = []
-def stubTaskNames = []
-def cleanBuildTaskNames = []
-def cleanInstallTaskNames = []
-
-// Build dynamic task names for each sub project, ensure we avoid
-// recursion by excluding the root build file.
-new File(".").eachFileRecurse{ file ->
-    if ( file.isFile() && "build.gradle".equals(file.name) 
-        && !file.equals(currentFile)) {
-        String stubTaskName     = file.getParentFile().getName()
-        String cleanTaskName    = "clean_"+stubTaskName
-        String buildTaskName    = "build_"+stubTaskName
-        String installTaskName  = "install_"+stubTaskName
-        String ideaTaskName     = "idea_"+stubTaskName
-        String cleanBuildTaskName    = "clean_build_"+stubTaskName
-        String cleanInstallTaskName  = "clean_install_"+stubTaskName
-
-        /* +++ DEBUG+++
-        println "--+---" + file.getPath()
-        println "  +-- " + file.getParentFile().getPath()
-        println "  +-- " + file.getParentFile().getName()
-        println "  +-->>> " + buildTaskName
-        */
-
-        cleanTaskNames << cleanTaskName
-        stubTaskNames << stubTaskName
-
-        // Dynamically create GradleBuildType tasks on the fly
-        task "${cleanTaskName}"(type: GradleBuild) { 
-            description = "Cleans the sub project [${stubTaskName}]"
-            dir = file.getParentFile().getPath()
-            tasks = ['clean']
-        } 
-        task "${ideaTaskName}"(type: GradleBuild) { 
-            description = "Generate IDEA project meta files for the sub project [${stubTaskName}]"
-            dir = file.getParentFile().getPath()
-            tasks = ['idea']
-        }
-
-        // We have to block Chapter 11 example JPA Advanced, because these examples
-        // require a managed application server to already be running.
-        // Application server: GlassFish 4.0
-        if (!file.getPath().contains("/ch11/") && 
-            !file.getPath().contains("jms-async")) {
-            buildTaskNames << buildTaskName
-            installTaskNames << installTaskName
-            cleanBuildTaskNames << cleanBuildTaskName
-            cleanInstallTaskNames << cleanInstallTaskName
-
-            task "${buildTaskName}"(type: GradleBuild) { 
-                description = "Builds the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['build']
-            } 
-            task "${installTaskName}"(type: GradleBuild) { 
-                description = "Installs the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['build','install']
-            } 
-            task "${cleanBuildTaskName}"(type: GradleBuild) { 
-                description = "Cleans and builds the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['clean', 'build']
-            } 
-            task "${cleanInstallTaskName}"(type: GradleBuild) { 
-                description = "Cleans and installs the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['clean', 'install']
-            } 
-        }
-    }
-}
-
-task build {
-    description = "Builds and installs only the initial project (*Embedded GlassFish utility)"
-    // dependsOn 'install_glassfish-embedded'
-}
-
-task build_everything {
-    description = "Build every subproject"
-    dependsOn build
-    buildTaskNames.each{ subTask1 -> 
-        dependsOn subTask1
-    }
-}
-
-task install_everything {
-    description = "Builds and install every subproject"
-    installTaskNames.each{ subTask1 -> 
-        dependsOn subTask1
-    }
-}
-
-task clean_everything {
-    description = "Cleans out and reset every subproject"
-    cleanTaskNames.each{ subTask1 -> 
-        dependsOn subTask1
-    }
-}
-
-task clean_build_everything {
-    description = "Cleans and builds every subproject"
-    cleanBuildTaskNames.each{ subTask1 -> 
-        dependsOn subTask1
-    }
-}
-
-task clean_install_everything {
-    description = "Cleans and installs every subproject"
-    cleanInstallTaskNames.each{ subTask1 -> 
-        dependsOn subTask1
-    }
-}
-
-task generate_idea_everything {
-    description = "Create IDEA project files for every subproject"
-    stubTaskNames.each{ subTask1 -> 
-        dependsOn "idea_${subTask1}"
-    }
 }
 
 // End.
