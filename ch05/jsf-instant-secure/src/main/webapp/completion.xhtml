@@ -14,25 +14,18 @@
 
             <h1> JSF Instant Secure Lending</h1>
 
-            <p>
-                This is your web page for a demo application, which allows the applicant
-                for instant secured loan
-            </p>
+            <div class="jumbotron">
+                <h1> Complete </h1>
+                <p>
+                    Terrific! You completed the instant secure loan application.
+                </p>
+            </div>
 
-            <p>
-                Group = <span class="blau">uk.co.xenonique.digital.javaee</span> <br/>
-                ArtifactId = <span class="blau" >jsf-instant-secure</span> <br/>
-                Version = <span class="blau">1.0-SNAPSHOT</span> <br/>
-            </p>
 
             <h:link styleClass="btn btn-primary btn-lg"
-                    outcome="#{lendingController.gotoStart()}">
-                Apply Now!
+                    outcome="#{lendingController.doCompletion()}">
+                Next
             </h:link>
-            <p>
-                Apply for a Dukes Dollar loan between £5,000 and £25,000
-            </p>
-
             <hr class="subfeaturette-divider" />
 
         </ui:define> <!--name="mainContent" -->
