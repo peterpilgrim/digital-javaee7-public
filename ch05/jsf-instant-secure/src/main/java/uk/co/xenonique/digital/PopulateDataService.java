@@ -2,6 +2,9 @@ package uk.co.xenonique.digital;
 
 //import org.joda.time.DateTime;
 
+import uk.co.xenonique.digital.instant.boundary.ContactDetailService;
+import uk.co.xenonique.digital.instant.entity.ContactDetail;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;

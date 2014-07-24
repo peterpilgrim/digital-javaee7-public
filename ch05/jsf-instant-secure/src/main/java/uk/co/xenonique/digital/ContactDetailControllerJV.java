@@ -1,5 +1,8 @@
 package uk.co.xenonique.digital;
 
+import uk.co.xenonique.digital.instant.boundary.ContactDetailService;
+import uk.co.xenonique.digital.instant.entity.ContactDetail;
+
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -22,7 +25,8 @@ import java.util.regex.Pattern;
 @ViewScoped
 public class ContactDetailControllerJV {
 
-    @EJB ContactDetailService contactDetailService;
+    @EJB
+    ContactDetailService contactDetailService;
 
     private ContactDetail contactDetail = new ContactDetail();
 

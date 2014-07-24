@@ -1,4 +1,6 @@
-package uk.co.xenonique.digital;
+package uk.co.xenonique.digital.instant.boundary;
+
+import uk.co.xenonique.digital.instant.entity.ContactDetail;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;

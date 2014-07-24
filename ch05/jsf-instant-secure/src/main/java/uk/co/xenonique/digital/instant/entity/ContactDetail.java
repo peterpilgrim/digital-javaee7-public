@@ -1,4 +1,4 @@
-package uk.co.xenonique.digital;
+package uk.co.xenonique.digital.instant.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package uk.co.xenonique.digital.instant;
+package uk.co.xenonique.digital.instant.control;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
