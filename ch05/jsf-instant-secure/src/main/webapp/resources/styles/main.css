@@ -127,3 +127,56 @@ body {
     padding: 10px 20px 10px 20px;
     font-family: Consolas, Courier;
 }
+
+.workflow-wrapper {
+    margin: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    overflow: hidden;
+}
+
+.workflow-title.active {
+    background-color: #1802CC;
+    border: 1px solid #1802CC;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.workflow-title {
+    background-color: #FFB55C;
+    border: 1px solid #FFB55C;
+    color: #666666;
+    margin: 0px;
+    font-size: 1.10em;
+    min-height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.workflow-arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #FFB55C;
+}
+
+.workflow-arrow-right {
+    width: 0;
+    height: 0;
+    border-top:     26px solid transparent;
+    border-bottom:  26px solid transparent;
+    border-left:    20px solid #FFB55C;
+}
+
+.workflow-arrow-down.active {
+    border-top: 20px solid #1802CC;
+}
+.workflow-arrow-right.active {
+    border-left: 20px solid #1802CC;
+}

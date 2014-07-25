@@ -1,4 +1,4 @@
-package uk.co.xenonique.digital;
+package uk.co.xenonique.digital.instant.util;
 
 //import org.joda.time.DateTime;
 
