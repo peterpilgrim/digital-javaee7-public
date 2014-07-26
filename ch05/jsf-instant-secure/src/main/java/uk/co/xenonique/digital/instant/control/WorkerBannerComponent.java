@@ -15,6 +15,7 @@ public class WorkerBannerComponent extends UINamingContainer {
     public String gettingStartedActive;
     public String yourDetailsActive;
     public String yourRateActive;
+    public String confirmActive;
     public String completedActive;
 
     @Override
@@ -34,6 +35,9 @@ public class WorkerBannerComponent extends UINamingContainer {
         }
         else if ( "yourRate".equalsIgnoreCase(sectionName)) {
             yourRateActive = "active";
+        }
+        else if ( "confirm".equalsIgnoreCase(sectionName)) {
+            confirmActive = "active";
         }
         else if ( "completed".equalsIgnoreCase(sectionName)) {
             completedActive = "active";
@@ -65,6 +69,14 @@ public class WorkerBannerComponent extends UINamingContainer {
 
     public void setYourRateActive(String yourRateActive) {
         this.yourRateActive = yourRateActive;
+    }
+
+    public String getConfirmActive() {
+        return confirmActive;
+    }
+
+    public void setConfirmActive(String confirmActive) {
+        this.confirmActive = confirmActive;
     }
 
     public String getCompletedActive() {

@@ -4,6 +4,7 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
 
     <ui:composition template="/basic_layout.xhtml">
@@ -22,14 +23,66 @@
                 Enter your rate
             </p>
 
+            <h:form id="yourDetailsForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                <div class="form-group">
+                    <h:outputLabel for="loanAmount" class="col-sm-3 control-label">
+                        Loan Amount</h:outputLabel>
+                    <div class="col-sm-9">
+                        <input class="form-control" jsf:label="Loan Amount"
+                                     jsf:value="#{lendingController.applicant.contactDetail.firstName}"
+                                     type="range"
+                                     min="#{lendingController.minimumLoanAmount}"
+                                     max="#{lendingController.maximumLoanAmount}"
+                                     id="loanAmount" >
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="loanAmountError"/>
+                        </input>
+                        <h:message id="loanAmountError"
+                                   for="loanAmount" styleClass="alert validation-error"/>
+                    </div>
+                </div>
 
-            <h:link styleClass="btn btn-primary btn-lg"
-                    outcome="#{lendingController.doYourRate()}">
-                Next
-            </h:link>
+
+
+                <div class="progress">
+                    <div id="loanAmountProgress" class="progress-bar" role="progressbar" aria-valuenow="60"
+                         aria-valuemin="#{lendingController.minimumLoanAmount}"
+                         aria-valuemax="#{lendingController.maximumLoanAmount}" style="width: 60%;">
+                        60%
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{lendingController.doYourRate()}"
+                                 value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{lendingController.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+
             <hr class="subfeaturette-divider" />
 
         </ui:define> <!--name="mainContent" -->
 
+        <ui:define name="javascriptContent">
+            <script>
+                $(document).ready( function() {
+                    var loanAmount = $('#loanAmount');
+                    var loanAmountProgress = $('#loanAmountProgress');
+
+                    loanAmount.change( function() {
+                        var value = $('loanAmount').val();
+                        loanAmountProgress.html(value);
+                        loanAmountProgress.attr ("aria-valuenow",value);
+                    })
+                });
+            </script>
+        </ui:define>
     </ui:composition>
 </html>

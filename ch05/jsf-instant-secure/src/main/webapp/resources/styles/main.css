@@ -137,6 +137,11 @@ body {
     overflow: hidden;
 }
 
+.workflow-column {
+    width: 20%;
+    float: left;
+}
+
 .workflow-title.active {
     background-color: #1802CC;
     border: 1px solid #1802CC;

@@ -56,6 +56,7 @@ public class Applicant {
         return "Applicant{" +
                 "id=" + id +
                 ", contactDetail=" + contactDetail +
+                ", address=" + address +
                 ", workPhone='" + workPhone + '\'' +
                 ", homePhone='" + homePhone + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
@@ -165,5 +166,13 @@ public class Applicant {
 
     public void setSubmitDate(Date submitDate) {
         this.submitDate = submitDate;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
