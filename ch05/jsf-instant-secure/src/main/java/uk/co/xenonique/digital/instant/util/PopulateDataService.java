@@ -25,6 +25,9 @@ public class PopulateDataService {
 
     @PostConstruct
     public void populate() {
+    }
+
+    public void populate2() {
         Calendar cal = Calendar.getInstance();
 
         ContactDetail contact1 = new ContactDetail();

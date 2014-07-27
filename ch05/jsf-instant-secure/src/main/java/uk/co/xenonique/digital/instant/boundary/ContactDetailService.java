@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Stateful
 public class ContactDetailService {
-    @PersistenceContext(unitName = "applicationDB", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "instantLendingDB", type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
     public void add(ContactDetail contactDetail) {

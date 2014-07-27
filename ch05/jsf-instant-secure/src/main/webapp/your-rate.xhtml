@@ -31,7 +31,7 @@
                         Loan Amount</h:outputLabel>
                     <div class="col-sm-9">
                         <input class="form-control" jsf:label="Loan Amount"
-                                     jsf:value="#{lendingController.applicant.contactDetail.firstName}"
+                                     jsf:value="#{lendingController.applicant.loanAmount}"
                                      type="range"
                                      min="#{lendingController.minimumLoanAmount}"
                                      max="#{lendingController.maximumLoanAmount}"
@@ -48,10 +48,12 @@
 
 
                 <div class="progress">
-                    <div id="loanAmountProgress" class="progress-bar" role="progressbar" aria-valuenow="60"
+                    <div id="loanAmountProgress" class="progress-bar  progress-bar-striped"
+                         role="progressbar" aria-valuenow="#{lendingController.applicant.loanAmount}"
                          aria-valuemin="#{lendingController.minimumLoanAmount}"
-                         aria-valuemax="#{lendingController.maximumLoanAmount}" style="width: 60%;">
-                        60%
+                         aria-valuemax="#{lendingController.maximumLoanAmount}"
+                         style="width: 60%;">
+                        #{lendingController.applicant.loanAmount}
                     </div>
                 </div>
 
@@ -75,11 +77,18 @@
                 $(document).ready( function() {
                     var loanAmount = $('#loanAmount');
                     var loanAmountProgress = $('#loanAmountProgress');
+                    console.log("loanAmount="+loanAmount);
+                    console.log("loanAmountProgress="+loanAmountProgress);
 
                     loanAmount.change( function() {
-                        var value = $('loanAmount').val();
+                        var value = loanAmount.val();
+                        console.log("val="+value);
                         loanAmountProgress.html(value);
-                        loanAmountProgress.attr ("aria-valuenow",value);
+                        loanAmountProgress.attr("aria-valuenow", value);
+
+                        var percentage = 100.0 * ( value - 5000.0) / ( 25000.0 - 5000.0 ) ;
+                        console.log("percentage="+percentage);
+                        loanAmountProgress.css("width", percentage+"%");
                     })
                 });
             </script>

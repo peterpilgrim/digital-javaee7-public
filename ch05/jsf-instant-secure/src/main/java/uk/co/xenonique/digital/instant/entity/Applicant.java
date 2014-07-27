@@ -23,9 +23,9 @@ public class Applicant {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ContactDetail  contactDetail;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address  address;
 
     private String workPhone;

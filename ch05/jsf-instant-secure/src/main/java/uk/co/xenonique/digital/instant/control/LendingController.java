@@ -29,17 +29,25 @@ public class LendingController implements Serializable {
     @Inject
     private Conversation    conversation;
 
+    public final static BigDecimal DEFAULT_LOAN_AMOUNT = new BigDecimal("10000");
+    public final static BigDecimal DEFAULT_LOAN_RATE = new BigDecimal("5.50");
+
     private int dobDay;
     private int dobMonth;
     private String dobYear;
     private BigDecimal minimumLoanAmount = new BigDecimal("5000");
     private BigDecimal maximumLoanAmount = new BigDecimal("25000");
+    private BigDecimal minimumLoanRate   = new BigDecimal("3.0");
+    private BigDecimal maximumLoanRate   = new BigDecimal("9.0");
 
 
     private Applicant applicant;
 
     public LendingController() {
         applicant = new Applicant();
+        applicant.setLoanAmount( DEFAULT_LOAN_AMOUNT);
+        applicant.setLoanRate( DEFAULT_LOAN_RATE );
+
         applicant.setAddress(new Address());
         applicant.setContactDetail(new ContactDetail());
     }
@@ -132,5 +140,21 @@ public class LendingController implements Serializable {
 
     public BigDecimal getMaximumLoanAmount() {
         return maximumLoanAmount;
+    }
+
+    public BigDecimal getMinimumLoanRate() {
+        return minimumLoanRate;
+    }
+
+    public void setMinimumLoanRate(BigDecimal minimumLoanRate) {
+        this.minimumLoanRate = minimumLoanRate;
+    }
+
+    public BigDecimal getMaximumLoanRate() {
+        return maximumLoanRate;
+    }
+
+    public void setMaximumLoanRate(BigDecimal maximumLoanRate) {
+        this.maximumLoanRate = maximumLoanRate;
     }
 }
