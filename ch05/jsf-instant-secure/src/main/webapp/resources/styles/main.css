@@ -185,3 +185,11 @@ body {
 .workflow-arrow-right.active {
     border-left: 20px solid #1802CC;
 }
+
+.monetary-text {
+    font-size: 2.0em;
+}
+
+.content-wrapper {
+    margin: 10px;
+}

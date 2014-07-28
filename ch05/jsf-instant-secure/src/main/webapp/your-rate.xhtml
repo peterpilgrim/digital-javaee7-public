@@ -4,6 +4,7 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
 
@@ -46,15 +47,69 @@
                 </div>
 
 
+                <c:set var="loanAmountWidth" value="#{100.0 * (lendingController.applicant.loanAmount - lendingController.minimumLoanAmount) / (lendingController.maximumLoanAmount - lendingController.minimumLoanAmount)}" />
 
                 <div class="progress">
                     <div id="loanAmountProgress" class="progress-bar  progress-bar-striped"
                          role="progressbar" aria-valuenow="#{lendingController.applicant.loanAmount}"
                          aria-valuemin="#{lendingController.minimumLoanAmount}"
                          aria-valuemax="#{lendingController.maximumLoanAmount}"
-                         style="width: 60%;">
+                         style="width: ${loanAmountWidth}%;">
                         #{lendingController.applicant.loanAmount}
                     </div>
+                </div>
+
+                <div class="content-wrapper">
+                    <p id="loanAmountText" class="monetary-text">
+                        #{lendingController.currencySymbol}
+                        <h:outputText value="#{lendingController.applicant.loanAmount}" >
+                            <f:convertNumber pattern="#00,000" />
+                        </h:outputText>
+                    </p>
+                </div>
+
+
+
+                <div class="form-group">
+                    <h:outputLabel for="loanRate" class="col-sm-3 control-label">
+                        Loan Rate</h:outputLabel>
+                    <div class="col-sm-9">
+                        <input class="form-control" jsf:label="Loan Amount"
+                               jsf:value="#{lendingController.applicant.loanRate}"
+                               type="range"
+                               min="#{lendingController.minimumLoanRate}"
+                               max="#{lendingController.maximumLoanRate}"
+                               id="loanRate" >
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="loanAmountError"/>
+                        </input>
+                        <h:message id="loanRateError"
+                                   for="loanRate" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+
+                <c:set var="loanRateWidth" value="#{100.0 * (lendingController.applicant.loanRate - lendingController.minimumLoanRate) / (lendingController.maximumLoanRate - lendingController.minimumLoanRate)}" />
+
+
+
+                <div class="progress">
+                    <div id="loanRateProgress" class="progress-bar  progress-bar-striped"
+                         role="progressbar" aria-valuenow="#{lendingController.applicant.loanRate}"
+                         aria-valuemin="#{lendingController.minimumLoanRate}"
+                         aria-valuemax="#{lendingController.maximumLoanRate}"
+                         style="width: ${loanRateWidth}%;">
+                        #{lendingController.applicant.loanRate}
+                    </div>
+                </div>
+
+                <div class="content-wraper">
+                    <p id="loanRateText" class="monetary-text">
+                        <h:outputText value="#{lendingController.applicant.loanRate}" >
+                            <f:convertNumber pattern="0.00%" />
+                        </h:outputText>
+                    </p>
                 </div>
 
                 <h:commandButton styleClass="btn btn-primary"
@@ -72,26 +127,5 @@
 
         </ui:define> <!--name="mainContent" -->
 
-        <ui:define name="javascriptContent">
-            <script>
-                $(document).ready( function() {
-                    var loanAmount = $('#loanAmount');
-                    var loanAmountProgress = $('#loanAmountProgress');
-                    console.log("loanAmount="+loanAmount);
-                    console.log("loanAmountProgress="+loanAmountProgress);
-
-                    loanAmount.change( function() {
-                        var value = loanAmount.val();
-                        console.log("val="+value);
-                        loanAmountProgress.html(value);
-                        loanAmountProgress.attr("aria-valuenow", value);
-
-                        var percentage = 100.0 * ( value - 5000.0) / ( 25000.0 - 5000.0 ) ;
-                        console.log("percentage="+percentage);
-                        loanAmountProgress.css("width", percentage+"%");
-                    })
-                });
-            </script>
-        </ui:define>
     </ui:composition>
 </html>

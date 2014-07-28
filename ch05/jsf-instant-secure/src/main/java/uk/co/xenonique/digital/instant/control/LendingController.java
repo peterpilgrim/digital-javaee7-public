@@ -40,6 +40,7 @@ public class LendingController implements Serializable {
     private BigDecimal minimumLoanRate   = new BigDecimal("3.0");
     private BigDecimal maximumLoanRate   = new BigDecimal("9.0");
 
+    private String currencySymbol = "£";
 
     private Applicant applicant;
 
@@ -156,5 +157,13 @@ public class LendingController implements Serializable {
 
     public void setMaximumLoanRate(BigDecimal maximumLoanRate) {
         this.maximumLoanRate = maximumLoanRate;
+    }
+
+    public String getCurrencySymbol() {
+        return currencySymbol;
+    }
+
+    public void setCurrencySymbol(String currencySymbol) {
+        this.currencySymbol = currencySymbol;
     }
 }
