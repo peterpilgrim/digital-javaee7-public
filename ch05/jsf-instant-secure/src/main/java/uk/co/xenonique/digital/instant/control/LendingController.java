@@ -92,6 +92,10 @@ public class LendingController implements Serializable {
     }
 
     public String doYourRate() {
+        return "your-address?faces-redirect=true";
+    }
+
+    public String doYourAddress() {
         return "confirm?faces-redirect=true";
     }
 

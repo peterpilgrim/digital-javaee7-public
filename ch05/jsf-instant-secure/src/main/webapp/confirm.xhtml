@@ -17,23 +17,32 @@
 
             <h1> JSF Instant Secure Lending</h1>
 
+            <h:form id="yourConfirmForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
 
-            <p>
-                Confirmation of your loan
-            </p>
+                <p>
+                    Confirmation of your loan
+                </p>
 
-            <p>
-                Please confirm your happiness?
-            </p>
+                <p>
+                    Please confirm your happiness?
+                </p>
 
-            <p>
-                Terms and condition of the loan to goto here
-            </p>
+                <p>
+                    Terms and condition of the loan to goto here
+                </p>
 
-            <h:link styleClass="btn btn-primary btn-lg"
-                    outcome="#{lendingController.doConfirm()}">
-                Next
-            </h:link>
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{lendingController.doConfirm()}"
+                                 value="Next" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{lendingController.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
             <hr class="subfeaturette-divider" />
 
         </ui:define> <!--name="mainContent" -->

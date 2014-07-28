@@ -17,14 +17,39 @@
 
             <xen:workflow-banner sectionName="yourRate"/>
 
-            <h1> JSF Instant Secure Lending</h1>
+            <div class="content-wrapper">
+                <h1> JSF Instant Secure Lending</h1>
+                <p>
+                    Enter your loan amount and rate.
+                    You borrow from
+                    <b>
+                    <h:outputText value="#{lendingController.minimumLoanAmount}" >
+                        <f:convertNumber currencyCode="GBP" type="currency" />
+                    </h:outputText>
+                    </b>
+                    to
+                    <b>
+                    <h:outputText value="#{lendingController.maximumLoanAmount}" >
+                        <f:convertNumber currencyCode="GBP" type="currency" />
+                    </h:outputText>
+                    </b>
+                    on a rate from
+                    <b>
+                    <h:outputText value="#{lendingController.minimumLoanRate}" >
+                        <f:convertNumber pattern="0.00" />
+                    </h:outputText>&#37;
+                    </b>
+                    to
+                    <b>
+                    <h:outputText value="#{lendingController.maximumLoanRate}" >
+                        <f:convertNumber pattern="0.00" />
+                    </h:outputText>&#37;
+                    </b>.
 
+                </p>
+            </div>
 
-            <p>
-                Enter your rate
-            </p>
-
-            <h:form id="yourDetailsForm"
+            <h:form id="yourRateForm"
                     styleClass="form-horizontal"
                     p:role="form">
                 <div class="form-group">
@@ -36,6 +61,7 @@
                                      type="range"
                                      min="#{lendingController.minimumLoanAmount}"
                                      max="#{lendingController.maximumLoanAmount}"
+                                     step="250"
                                      id="loanAmount" >
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
@@ -74,11 +100,12 @@
                     <h:outputLabel for="loanRate" class="col-sm-3 control-label">
                         Loan Rate</h:outputLabel>
                     <div class="col-sm-9">
-                        <input class="form-control" jsf:label="Loan Amount"
+                        <input class="form-control" jsf:label="Loan Rate"
                                jsf:value="#{lendingController.applicant.loanRate}"
                                type="range"
                                min="#{lendingController.minimumLoanRate}"
                                max="#{lendingController.maximumLoanRate}"
+                               step="0.25"
                                id="loanRate" >
                             <f:validateRequired/>
                             <f:validateLength maximum="64" />
@@ -104,11 +131,11 @@
                     </div>
                 </div>
 
-                <div class="content-wraper">
+                <div class="content-wrapper">
                     <p id="loanRateText" class="monetary-text">
                         <h:outputText value="#{lendingController.applicant.loanRate}" >
-                            <f:convertNumber pattern="0.00%" />
-                        </h:outputText>
+                            <f:convertNumber pattern="0.00" />
+                        </h:outputText>&#37;
                     </p>
                 </div>
 

@@ -25,12 +25,25 @@ instantLending.Main = function()
     {
         console.log("instantLending.Main.init()");
         $(document).ready( function() {
-            associateRangeToText('#loanAmount', '#loanAmountProgress', '#loanAmountText', 5000.0, 25000.0 );
-            associateRangeToText('#loanRate', '#loanRateProgress', '#loanRateText', 3.0, 9.0 );
+            associateRangeToText(
+                '#loanAmount', '#loanAmountProgress', '#loanAmountText',
+                5000.0, 25000.0,
+                function(value) {
+                    var valueNumber = parseFloat(value);
+                    return "£" + valueNumber.formatMoney(2, '.', ',');
+                });
+            associateRangeToText(
+                '#loanRate', '#loanRateProgress', '#loanRateText',
+                3.0, 9.0,
+                function(value) {
+                    var valueNumber = parseFloat(value);
+                    return valueNumber.formatMoney(2, '.', ',') + "&#37;";
+                }
+            );
         });
     };
 
-    var associateRangeToText = function( rangeElementId, rangeProgressId, rangeTextId, minimumValue, maximumValue) {
+    var associateRangeToText = function( rangeElementId, rangeProgressId, rangeTextId, minimumValue, maximumValue, convertor) {
         var valueElem = $(rangeElementId);
         var progressElem = $(rangeProgressId);
         var textElem = $(rangeTextId);
@@ -47,12 +60,12 @@ instantLending.Main = function()
             console.log("percentage="+percentage);
             progressElem.css("width", percentage+"%");
 
-            var valueNumber = parseFloat(value);
-            var monetaryText = "£" + valueNumber.formatMoney(2, '.', ',');
+            var monetaryText = convertor( value )
             textElem.html( monetaryText );
         })
 
     }
+
     // This is the part that separates the private and public stuff.  Anything
     // in this object becomes public.  Anything NOT in this object becomes
     // private.

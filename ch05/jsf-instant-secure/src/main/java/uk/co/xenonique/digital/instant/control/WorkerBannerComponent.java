@@ -15,6 +15,7 @@ public class WorkerBannerComponent extends UINamingContainer {
     public String gettingStartedActive;
     public String yourDetailsActive;
     public String yourRateActive;
+    public String yourAddressActive;
     public String confirmActive;
     public String completedActive;
 
@@ -23,10 +24,13 @@ public class WorkerBannerComponent extends UINamingContainer {
         if (context == null) {
             throw new NullPointerException("no faces context supplied");
         }
-        Object sectionNameObj = getAttributes().get("sectionName");
-        String sectionName = sectionNameObj.toString();
+
+        String sectionName = (String)getAttributes().get("sectionName");
+
         gettingStartedActive = yourDetailsActive =
-                yourRateActive = completedActive = "";
+            yourRateActive = yourAddressActive =
+                confirmActive = completedActive = "";
+
         if ( "gettingStarted".equalsIgnoreCase(sectionName)) {
             gettingStartedActive = "active";
         }
@@ -35,6 +39,9 @@ public class WorkerBannerComponent extends UINamingContainer {
         }
         else if ( "yourRate".equalsIgnoreCase(sectionName)) {
             yourRateActive = "active";
+        }
+        else if ( "yourAddress".equalsIgnoreCase(sectionName)) {
+            yourAddressActive = "active";
         }
         else if ( "confirm".equalsIgnoreCase(sectionName)) {
             confirmActive = "active";
@@ -69,6 +76,14 @@ public class WorkerBannerComponent extends UINamingContainer {
 
     public void setYourRateActive(String yourRateActive) {
         this.yourRateActive = yourRateActive;
+    }
+
+    public String getYourAddressActive() {
+        return yourAddressActive;
+    }
+
+    public void setYourAddressActive(String yourAddressActive) {
+        this.yourAddressActive = yourAddressActive;
     }
 
     public String getConfirmActive() {
