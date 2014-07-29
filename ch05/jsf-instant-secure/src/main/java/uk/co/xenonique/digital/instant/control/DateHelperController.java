@@ -3,6 +3,7 @@ package uk.co.xenonique.digital.instant.control;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.*;
 
@@ -13,7 +14,7 @@ import java.util.*;
  */
 @Named("dateHelperController")
 @ApplicationScoped
-public class DateHelperController {
+public class DateHelperController implements Serializable {
     private List<Integer> daysOfTheMonth = new ArrayList<>();
     private Map<String,Integer> monthsOfTheYear = new LinkedHashMap<>();
 

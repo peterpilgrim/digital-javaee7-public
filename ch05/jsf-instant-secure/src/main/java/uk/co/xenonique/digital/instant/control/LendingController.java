@@ -4,6 +4,7 @@ import uk.co.xenonique.digital.instant.boundary.ApplicantService;
 import uk.co.xenonique.digital.instant.entity.Address;
 import uk.co.xenonique.digital.instant.entity.Applicant;
 import uk.co.xenonique.digital.instant.entity.ContactDetail;
+import uk.co.xenonique.digital.instant.util.Utility;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
@@ -23,12 +24,11 @@ import java.util.Calendar;
 @Named("lendingController")
 @ConversationScoped
 public class LendingController implements Serializable {
-    @EJB
-    ApplicantService applicantService;
+    @EJB ApplicantService applicantService;
+    @Inject Conversation conversation;
+    @Inject Utility utility;
 
-    @Inject
-    private Conversation    conversation;
-
+    public final static int DEFAULT_LOAN_TERM = 24;
     public final static BigDecimal DEFAULT_LOAN_AMOUNT = new BigDecimal("10000");
     public final static BigDecimal DEFAULT_LOAN_RATE = new BigDecimal("5.50");
 
@@ -42,27 +42,40 @@ public class LendingController implements Serializable {
 
     private String currencySymbol = "£";
 
+    private BigDecimal paymentMonthlyAmount = BigDecimal.ZERO;
+
     private Applicant applicant;
 
     public LendingController() {
         applicant = new Applicant();
         applicant.setLoanAmount( DEFAULT_LOAN_AMOUNT);
         applicant.setLoanRate( DEFAULT_LOAN_RATE );
-
+        applicant.setLoanTermMonths( DEFAULT_LOAN_TERM );
         applicant.setAddress(new Address());
         applicant.setContactDetail(new ContactDetail());
     }
 
-    public void start() {
+    public void checkAndStart() {
         if ( conversation.isTransient()) {
             conversation.begin();
         }
+        recalculatePMT();
     }
 
     public void end() {
         if (!conversation.isTransient()) {
             conversation.end();
         }
+    }
+
+    public BigDecimal recalculatePMT() {
+        paymentMonthlyAmount =
+                new BigDecimal(utility.calculateMonthlyPayment(
+                        applicant.getLoanAmount().doubleValue(),
+                        applicant.getLoanRate().doubleValue(),
+                        applicant.getLoanTermMonths()));
+        System.out.printf("***** this.paymentMonthlyAmount=%f\n", paymentMonthlyAmount);
+        return paymentMonthlyAmount;
     }
 
     public String cancel() {
@@ -75,11 +88,12 @@ public class LendingController implements Serializable {
     }
 
     public String doGettingStarted() {
-        start();
+        checkAndStart();
         return "your-details?faces-redirect=true";
     }
 
     public String doYourDetails() {
+        checkAndStart();
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, dobDay);
         cal.set(Calendar.MONTH, dobMonth-1);
@@ -92,24 +106,37 @@ public class LendingController implements Serializable {
     }
 
     public String doYourRate() {
+        checkAndStart();
         return "your-address?faces-redirect=true";
     }
 
     public String doYourAddress() {
+        checkAndStart();
         return "confirm?faces-redirect=true";
     }
 
     public String doConfirm() {
+        checkAndStart();
         return "completion?faces-redirect=true";
     }
 
     public String doCompletion() {
-        applicantService.add(applicant);
-        end();
+        try {
+            applicantService.add(applicant);
+            end();
+        }
+        catch (Throwable t) {
+            t.printStackTrace(System.err);
+            throw t;
+        }
         return "index?faces-redirect=true";
     }
 
-    // Getters and setters ommitted
+    // Getters and setters omitted
+
+    public BigDecimal getPaymentMonthlyAmount() {
+        return paymentMonthlyAmount;
+    }
 
     /**
      * Access to the conversation context - in a production application you would never provide such a getter!!

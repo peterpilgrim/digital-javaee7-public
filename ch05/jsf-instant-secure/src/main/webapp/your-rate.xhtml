@@ -64,8 +64,10 @@
                                      step="250"
                                      id="loanAmount" >
                             <f:validateRequired/>
-                            <f:validateLength maximum="64" />
                             <f:ajax event="blur" render="loanAmountError"/>
+                            <f:ajax event="valueChange"
+                                    listener="#{lendingController.recalculatePMT()}"
+                                    render="paymentMonthlyOutput" />
                         </input>
                         <h:message id="loanAmountError"
                                    for="loanAmount" styleClass="alert validation-error"/>
@@ -76,7 +78,7 @@
                 <c:set var="loanAmountWidth" value="#{100.0 * (lendingController.applicant.loanAmount - lendingController.minimumLoanAmount) / (lendingController.maximumLoanAmount - lendingController.minimumLoanAmount)}" />
 
                 <div class="progress">
-                    <div id="loanAmountProgress" class="progress-bar  progress-bar-striped"
+                    <div id="loanAmountProgress" class="progress-bar  progress-bar-success  progress-bar-striped"
                          role="progressbar" aria-valuenow="#{lendingController.applicant.loanAmount}"
                          aria-valuemin="#{lendingController.minimumLoanAmount}"
                          aria-valuemax="#{lendingController.maximumLoanAmount}"
@@ -89,7 +91,7 @@
                     <p id="loanAmountText" class="monetary-text">
                         #{lendingController.currencySymbol}
                         <h:outputText value="#{lendingController.applicant.loanAmount}" >
-                            <f:convertNumber pattern="#00,000" />
+                            <f:convertNumber pattern="#0,000" />
                         </h:outputText>
                     </p>
                 </div>
@@ -108,21 +110,20 @@
                                step="0.25"
                                id="loanRate" >
                             <f:validateRequired/>
-                            <f:validateLength maximum="64" />
-                            <f:ajax event="blur" render="loanAmountError"/>
+                            <f:ajax event="blur" render="loanRateError"/>
+                            <f:ajax event="valueChange"
+                                    listener="#{lendingController.recalculatePMT()}"
+                                    render="paymentMonthlyOutput" />
                         </input>
                         <h:message id="loanRateError"
                                    for="loanRate" styleClass="alert validation-error"/>
                     </div>
                 </div>
 
-
                 <c:set var="loanRateWidth" value="#{100.0 * (lendingController.applicant.loanRate - lendingController.minimumLoanRate) / (lendingController.maximumLoanRate - lendingController.minimumLoanRate)}" />
 
-
-
                 <div class="progress">
-                    <div id="loanRateProgress" class="progress-bar  progress-bar-striped"
+                    <div id="loanRateProgress" class="progress-bar  progress-bar-info  progress-bar-striped"
                          role="progressbar" aria-valuenow="#{lendingController.applicant.loanRate}"
                          aria-valuemin="#{lendingController.minimumLoanRate}"
                          aria-valuemax="#{lendingController.maximumLoanRate}"
@@ -136,6 +137,39 @@
                         <h:outputText value="#{lendingController.applicant.loanRate}" >
                             <f:convertNumber pattern="0.00" />
                         </h:outputText>&#37;
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="loanTerm" class="col-sm-3 control-label">
+                        Loan Term Months</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu class="form-control"
+                                         label="Title" id="loanTerm"
+                                         value="#{lendingController.applicant.loanTermMonths}">
+                            <f:selectItem itemDescription="1 year" itemValue="12" />
+                            <f:selectItem itemDescription="2 year" itemValue="24" />
+                            <f:selectItem itemDescription="3 year" itemValue="36" />
+                            <f:selectItem itemDescription="4 year" itemValue="48" />
+                            <f:selectItem itemDescription="5 year" itemValue="60" />
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="loanTermError"/>
+                            <f:ajax event="valueChange"
+                                    listener="#{lendingController.recalculatePMT()}"
+                                    render="paymentMonthlyOutput" />
+                        </h:selectOneMenu>
+                        <h:message id="loanTermError"
+                                   for="loanTerm" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+
+                <div class="content-wrapper" >
+                    <p class="monetary-text-large">
+                        Your monthly payment is #{lendingController.currencySymbol}
+                        <h:outputText id="paymentMonthlyOutput" value="#{lendingController.recalculatePMT()}">
+                            <f:convertNumber pattern="#0.00" />
+                        </h:outputText>
                     </p>
                 </div>
 
