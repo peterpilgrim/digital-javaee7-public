@@ -27,19 +27,19 @@ instantLending.Main = function()
         $(document).ready( function() {
             associateRangeToText(
                 '#loanAmount', '#loanAmountProgress', '#loanAmountText',
-                5000.0, 25000.0,
+                3000.0, 25000.0,
                 function(value) {
                     var valueNumber = parseFloat(value);
-                    return "£" + valueNumber.formatMoney(2, '.', ',');
+                    return "You would like to borrow <b>£" + valueNumber.formatMoney(2, '.', ',') + "</b>";
                 });
-            associateRangeToText(
-                '#loanRate', '#loanRateProgress', '#loanRateText',
-                3.0, 9.0,
-                function(value) {
-                    var valueNumber = parseFloat(value);
-                    return valueNumber.formatMoney(2, '.', ',') + "&#37;";
-                }
-            );
+//            associateRangeToText(
+//                '#loanRate', '#loanRateProgress', '#loanRateText',
+//                3.0, 12.0,
+//                function(value) {
+//                    var valueNumber = parseFloat(value);
+//                    return valueNumber.formatMoney(2, '.', ',') + "&#37;";
+//                }
+//            );
         });
     };
 

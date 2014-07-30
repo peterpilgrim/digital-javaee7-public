@@ -29,16 +29,16 @@ public class LendingController implements Serializable {
     @Inject Utility utility;
 
     public final static int DEFAULT_LOAN_TERM = 24;
-    public final static BigDecimal DEFAULT_LOAN_AMOUNT = new BigDecimal("10000");
+    public final static BigDecimal DEFAULT_LOAN_AMOUNT = new BigDecimal("7000");
     public final static BigDecimal DEFAULT_LOAN_RATE = new BigDecimal("5.50");
 
     private int dobDay;
     private int dobMonth;
     private String dobYear;
-    private BigDecimal minimumLoanAmount = new BigDecimal("5000");
+    private BigDecimal minimumLoanAmount = new BigDecimal("3000");
     private BigDecimal maximumLoanAmount = new BigDecimal("25000");
     private BigDecimal minimumLoanRate   = new BigDecimal("3.0");
-    private BigDecimal maximumLoanRate   = new BigDecimal("9.0");
+    private BigDecimal maximumLoanRate   = new BigDecimal("12.0");
 
     private String currencySymbol = "£";
 
@@ -69,6 +69,7 @@ public class LendingController implements Serializable {
     }
 
     public BigDecimal recalculatePMT() {
+        recalculateLoanRate();
         paymentMonthlyAmount =
                 new BigDecimal(utility.calculateMonthlyPayment(
                         applicant.getLoanAmount().doubleValue(),
@@ -76,6 +77,12 @@ public class LendingController implements Serializable {
                         applicant.getLoanTermMonths()));
         System.out.printf("***** this.paymentMonthlyAmount=%f\n", paymentMonthlyAmount);
         return paymentMonthlyAmount;
+    }
+
+    public BigDecimal recalculateLoanRate() {
+        applicant.setLoanRate( utility.getTaxRate( applicant.getLoanAmount() ));
+        System.out.printf("***** applicant.getLoanRate=%f\n", applicant.getLoanRate());
+        return applicant.getLoanRate();
     }
 
     public String cancel() {

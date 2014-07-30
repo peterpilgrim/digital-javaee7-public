@@ -1,9 +1,12 @@
-package uk.co.xenonique.digital;
+package uk.co.xenonique.digital.instant.util;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
-public class  AppTest {
+import java.math.BigDecimal;
+
+public class UtilityTest {
+    Utility utility = new Utility();
 
     /*
     Basic payment formula
@@ -47,6 +50,21 @@ public class  AppTest {
     double calculateMonthlyPayment( double pv, double apr, int np ) {
         double ir = apr / 100 / 12;
         return (pv * ir) / (1 - Math.pow(1+ir, -np));
+    }
+
+    @Test
+    public void calculate() {
+        double pmt1 = utility.calculateMonthlyPayment(10000.0, 5.50, 60);
+        System.out.printf("pmt1 (monthly payment) = %.2f\n", pmt1);
+        assertEquals( 191.01, pmt1, 0.005);
+    }
+
+    @Test
+    public void bounds() {
+        assertEquals( 22.50, utility.getTaxRate( new BigDecimal("1000")).doubleValue(), 0.005);
+        assertEquals( 9.79, utility.getTaxRate( new BigDecimal("4500")).doubleValue(), 0.005);
+        assertEquals( 9.79, utility.getTaxRate( new BigDecimal("5000")).doubleValue(), 0.005);
+        assertEquals( 7.49, utility.getTaxRate( new BigDecimal("6000")).doubleValue(), 0.005);
     }
 }
 

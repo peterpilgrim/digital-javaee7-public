@@ -15,19 +15,120 @@
 
             <xen:workflow-banner sectionName="confirm"/>
 
-            <h1> JSF Instant Secure Lending</h1>
+            <div class="content-wrapper">
+                <h1> JSF Instant Secure Lending</h1>
+
+                <p>
+                    Confirmation of your loan.
+                    Please check the details of your application.
+                </p>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th> Item </th>
+                            <th> Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Your Name </td>
+                            <td>
+                             #{lendingController.applicant.contactDetail.title}
+                             #{lendingController.applicant.contactDetail.firstName}
+                             #{lendingController.applicant.contactDetail.middleName}
+                             #{lendingController.applicant.contactDetail.lastName}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth</td>
+                            <td>#{lendingController.applicant.contactDetail.dob}</td>
+                        </tr>
+                        <tr>
+                            <td>Loan Amount</td>
+                            <td>
+                                #{lendingController.applicant.loanAmount}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Loan Rate</td>
+                            <td>
+                                #{lendingController.applicant.loanRate}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Loan Term (months)</td>
+                            <td>
+                                #{lendingController.applicant.loanTermMonths}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>House or Flat</td>
+                            <td>#{lendingController.applicant.address.houseOrFlatNumber}</td>
+                        </tr>
+                        <tr>
+                            <td>Street 1</td>
+                            <td>#{lendingController.applicant.address.street1}</td>
+                        </tr>
+                        <tr>
+                            <td>Street 2</td>
+                            <td>#{lendingController.applicant.address.street2}</td>
+                        </tr>
+                        <tr>
+                            <td>Town / City</td>
+                            <td>#{lendingController.applicant.address.townOrCity}</td>
+                        </tr>
+                        <tr>
+                            <td>County / Region</td>
+                            <td>#{lendingController.applicant.address.region}</td>
+                        </tr>
+                        <tr>
+                            <td>Post Code</td>
+                            <td>#{lendingController.applicant.address.areaCode}</td>
+                        </tr>
+                        <tr>
+                            <td>Country</td>
+                            <td>#{lendingController.applicant.address.country}</td>
+                        </tr>
+                        <tr>
+                            <td>Home telephone</td>
+                            <td>#{lendingController.applicant.homePhone}</td>
+                        </tr>
+                        <tr>
+                            <td>Work telephone</td>
+                            <td>#{lendingController.applicant.workPhone}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile telephone</td>
+                            <td>#{lendingController.applicant.mobileNumber}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h:form id="yourConfirmForm"
                     styleClass="form-horizontal"
                     p:role="form">
 
                 <p>
-                    Confirmation of your loan
-                </p>
-
-                <p>
                     Please confirm your happiness?
                 </p>
+
+                <div class="form-group">
+                    <h:outputLabel for="tocAgreed" class="col-sm-6 control-label">
+                        Do you agree with the <a href="#">Terms of Conditions</a>?
+                    </h:outputLabel>
+                    <div class="col-sm-6">
+                        <h:selectBooleanCheckbox class="form-control"
+                                         label="TOC Agreement" id="tocAgreed"
+                                         value="#{lendingController.applicant.tocAgreed}">
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="tocAgreedError"/>
+                        </h:selectBooleanCheckbox>
+                        <h:message id="tocAgreedError"
+                                   for="tocAgreed" styleClass="alert validation-error"/>
+                    </div>
+                </div>
 
                 <p>
                     Terms and condition of the loan to goto here
