@@ -9,6 +9,10 @@ import uk.co.xenonique.digital.instant.util.Utility;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -43,7 +47,7 @@ public class LendingController implements Serializable {
     private String currencySymbol = "£";
 
     private BigDecimal paymentMonthlyAmount = BigDecimal.ZERO;
-
+    private BigDecimal totalPayable = BigDecimal.ZERO;
     private Applicant applicant;
 
     public LendingController() {
@@ -75,13 +79,13 @@ public class LendingController implements Serializable {
                         applicant.getLoanAmount().doubleValue(),
                         applicant.getLoanRate().doubleValue(),
                         applicant.getLoanTermMonths()));
-        System.out.printf("***** this.paymentMonthlyAmount=%f\n", paymentMonthlyAmount);
+
+        totalPayable = paymentMonthlyAmount.multiply( new BigDecimal( applicant.getLoanTermMonths()));
         return paymentMonthlyAmount;
     }
 
     public BigDecimal recalculateLoanRate() {
         applicant.setLoanRate( utility.getTaxRate( applicant.getLoanAmount() ));
-        System.out.printf("***** applicant.getLoanRate=%f\n", applicant.getLoanRate());
         return applicant.getLoanRate();
     }
 
@@ -108,7 +112,6 @@ public class LendingController implements Serializable {
         cal.set(Calendar.YEAR, year);
 
         applicant.getContactDetail().setDob(cal.getTime());
-        System.out.printf("applicant=%s\n", applicant);
         return "your-rate?faces-redirect=true";
     }
 
@@ -122,20 +125,27 @@ public class LendingController implements Serializable {
         return "confirm?faces-redirect=true";
     }
 
+
+    public void validateTermsOrConditions(
+        FacesContext context, UIComponent component, Object value)
+    throws ValidatorException {
+        Boolean selectedCheckbox = (Boolean) value;
+        if ( !selectedCheckbox) {
+            throw new ValidatorException(
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "You must agree to the Terms and Agreement", null));
+        }
+    }
+
     public String doConfirm() {
         checkAndStart();
         return "completion?faces-redirect=true";
     }
 
     public String doCompletion() {
-        try {
-            applicantService.add(applicant);
-            end();
-        }
-        catch (Throwable t) {
-            t.printStackTrace(System.err);
-            throw t;
-        }
+        recalculatePMT();
+        applicantService.add(applicant);
+        end();
         return "index?faces-redirect=true";
     }
 
@@ -143,6 +153,10 @@ public class LendingController implements Serializable {
 
     public BigDecimal getPaymentMonthlyAmount() {
         return paymentMonthlyAmount;
+    }
+
+    public BigDecimal getTotalPayable() {
+        return totalPayable;
     }
 
     /**

@@ -35,7 +35,7 @@ public class Applicant {
     private BigDecimal loanAmount;
     private BigDecimal loanRate;
     private int loanTermMonths;
-    private boolean tocAgreed;
+    private boolean termsAgreed;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date submitDate;
@@ -63,7 +63,7 @@ public class Applicant {
                 ", loanAmount=" + loanAmount +
                 ", loanRate=" + loanRate +
                 ", loanTermMonths=" + loanTermMonths +
-                ", tocAgreed=" + tocAgreed +
+                ", termsAgreed=" + termsAgreed +
                 ", submitDate=" + submitDate +
                 '}';
     }
@@ -152,12 +152,12 @@ public class Applicant {
         this.loanTermMonths = loanTermMonths;
     }
 
-    public boolean isTocAgreed() {
-        return tocAgreed;
+    public boolean isTermsAgreed() {
+        return termsAgreed;
     }
 
-    public void setTocAgreed(boolean tocAgreed) {
-        this.tocAgreed = tocAgreed;
+    public void setTermsAgreed(boolean tocAgreed) {
+        this.termsAgreed = tocAgreed;
     }
 
     public Date getSubmitDate() {

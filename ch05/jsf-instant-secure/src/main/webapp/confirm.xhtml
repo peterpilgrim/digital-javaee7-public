@@ -106,6 +106,8 @@
                 </table>
             </div>
 
+            <h:messages globalOnly="true"  styleClass="alert alert-danger" />
+
             <h:form id="yourConfirmForm"
                     styleClass="form-horizontal"
                     p:role="form">
@@ -116,13 +118,13 @@
 
                 <div class="form-group">
                     <h:outputLabel for="tocAgreed" class="col-sm-6 control-label">
-                        Do you agree with the <a href="#">Terms of Conditions</a>?
+                        Do you agree with the <em>Terms of Conditions</em>?
                     </h:outputLabel>
                     <div class="col-sm-6">
                         <h:selectBooleanCheckbox class="form-control"
                                          label="TOC Agreement" id="tocAgreed"
-                                         value="#{lendingController.applicant.tocAgreed}">
-                            <f:validateRequired/>
+                                         value="#{lendingController.applicant.termsAgreed}"
+                                         validator="#{lendingController.validateTermsOrConditions}" >
                             <f:ajax event="blur" render="tocAgreedError"/>
                         </h:selectBooleanCheckbox>
                         <h:message id="tocAgreedError"
@@ -131,7 +133,8 @@
                 </div>
 
                 <p>
-                    Terms and condition of the loan to goto here
+                    Please ensure that you read and agreed with our
+                    <h:link target="new" outcome="/terms-and-conditions.xhtml" >Terms and Conditions</h:link> of the loan.
                 </p>
 
                 <h:commandButton styleClass="btn btn-primary"

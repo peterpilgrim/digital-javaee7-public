@@ -8,17 +8,17 @@ import java.math.BigDecimal;
  * @author Peter Pilgrim
  */
 public class LoanRateBounds {
-    final BigDecimal lower;
-    final BigDecimal upper;
-    final BigDecimal rate;
+    private final BigDecimal lower;
+    private final BigDecimal upper;
+    private final BigDecimal rate;
 
     public LoanRateBounds(String lower, String upper, String rate) {
         this(new BigDecimal(lower), new BigDecimal(upper),
                 new BigDecimal(rate));
     }
 
-    public LoanRateBounds(BigDecimal lower, BigDecimal upper,
-                          BigDecimal rate) {
+    public LoanRateBounds(final BigDecimal lower, final BigDecimal upper,
+                          final BigDecimal rate) {
         this.lower = lower;
         this.upper = upper;
         this.rate = rate;

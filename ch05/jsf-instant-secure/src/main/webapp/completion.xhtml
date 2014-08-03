@@ -21,13 +21,64 @@
                 <h1> Complete </h1>
                 <p>
                     Terrific! You completed the instant secure loan application.
+                    You have successfully applied for a loan.
+                    We will be in touch within 48 hours to let you know when you can expect your money.
                 </p>
+            </div>
+
+            <div class="content-wrapper" >
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="monetary-text-large">
+                            Your loan amount <b>
+                            #{lendingController.currencySymbol}<h:outputText value="#{lendingController.applicant.loanAmount}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText></b>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="monetary-text-large">
+                            Your loan rate <b>
+                            <h:outputText value="#{lendingController.applicant.loanRate}">
+                                <f:convertNumber pattern="#0.000" />
+                            </h:outputText>&#37;</b>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="monetary-text-large">
+                            Your monthly payment is <b> #{lendingController.currencySymbol}
+                            <h:outputText value="#{lendingController.paymentMonthlyAmount}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText></b>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="monetary-text">
+                            Loan term
+                            <h:outputText id="monthTermsOutput"
+                                          value="#{lendingController.applicant.loanTermMonths}"/> months
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="monetary-text">
+                            Total payable #{lendingController.currencySymbol}
+                            <h:outputText id="totalPayableOutput"
+                                          value="#{lendingController.totalPayable}">
+                                <f:convertNumber pattern="#0,000" />
+                            </h:outputText>
+                        </p>
+                    </div>
+                </div>
             </div>
 
 
             <h:link styleClass="btn btn-primary btn-lg"
                     outcome="#{lendingController.doCompletion()}">
-                Next
+                Finish
             </h:link>
             <hr class="subfeaturette-divider" />
 

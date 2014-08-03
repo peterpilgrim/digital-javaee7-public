@@ -67,7 +67,7 @@
                             <f:ajax event="blur" render="loanAmountError"/>
                             <f:ajax event="valueChange"
                                     listener="#{lendingController.recalculatePMT()}"
-                                    render="paymentMonthlyOutput loanRateOutput" />
+                                    render="paymentMonthlyOutput loanRateOutput  totalPayableOutput" />
                         </input>
                         <h:message id="loanAmountError"
                                    for="loanAmount" styleClass="alert validation-error"/>
@@ -116,7 +116,7 @@
                         <p id="loanRateText" class="monetary-text">
                             The tax rate will be
                             <b> <h:outputText value="#{lendingController.applicant.loanRate}" >
-                                <f:convertNumber pattern="0.00" />
+                                <f:convertNumber pattern="0.000" />
                             </h:outputText>&#37;</b>
                         </p>
                     </div>
@@ -139,7 +139,7 @@
                             <f:ajax event="blur" render="loanTermError"/>
                             <f:ajax event="valueChange"
                                     listener="#{lendingController.recalculatePMT()}"
-                                    render="paymentMonthlyOutput  loanRateOutput" />
+                                    render="paymentMonthlyOutput  loanRateOutput  monthTermsOutput  totalPayableOutput" />
                         </h:selectOneMenu>
                         <h:message id="loanTermError"
                                    for="loanTerm" styleClass="alert validation-error"/>
@@ -148,12 +148,34 @@
 
 
                 <div class="content-wrapper" >
-                    <p class="monetary-text-large">
-                        Your monthly payment is <b> #{lendingController.currencySymbol}
-                        <h:outputText id="paymentMonthlyOutput" value="#{lendingController.recalculatePMT()}">
-                            <f:convertNumber pattern="#0.00" />
-                        </h:outputText></b>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="monetary-text-large">
+                                Your monthly payment is <b> #{lendingController.currencySymbol}
+                                <h:outputText id="paymentMonthlyOutput" value="#{lendingController.recalculatePMT()}">
+                                    <f:convertNumber pattern="#0.00" />
+                                </h:outputText></b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="monetary-text">
+                                Loan term
+                                <h:outputText id="monthTermsOutput"
+                                    value="#{lendingController.applicant.loanTermMonths}"/> months
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="monetary-text">
+                                Total payable #{lendingController.currencySymbol}
+                                <h:outputText id="totalPayableOutput"
+                                              value="#{lendingController.totalPayable}">
+                                    <f:convertNumber pattern="#0,000" />
+                                </h:outputText>
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <h:commandButton styleClass="btn btn-primary"

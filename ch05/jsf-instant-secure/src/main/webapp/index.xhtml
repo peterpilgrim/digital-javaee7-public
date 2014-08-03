@@ -28,13 +28,45 @@
 
             <br clear="all"/>
 
-            <h:link styleClass="btn btn-primary btn-lg"
-                    outcome="#{lendingController.jumpGettingStarted()}">
-                Apply Now!
-            </h:link>
-            <p>
-                Apply for a Dukes Dollar loan between £5,000 and £25,000
-            </p>
+
+
+            <div class="content-wrapper">
+                <h:link styleClass="btn btn-primary btn-lg"
+                        outcome="#{lendingController.jumpGettingStarted()}">
+                    Apply Now!
+                </h:link>
+            </div>
+
+            <div class="content-wrapper">
+                <p>
+                    Apply for a Dukes Dollar loan.
+                    You borrow from
+                    <b>
+                        <h:outputText value="#{lendingController.minimumLoanAmount}" >
+                            <f:convertNumber currencyCode="GBP" type="currency" />
+                        </h:outputText>
+                    </b>
+                    to
+                    <b>
+                        <h:outputText value="#{lendingController.maximumLoanAmount}" >
+                            <f:convertNumber currencyCode="GBP" type="currency" />
+                        </h:outputText>
+                    </b>
+                    on a rate from
+                    <b>
+                        <h:outputText value="#{lendingController.minimumLoanRate}" >
+                            <f:convertNumber pattern="0.00" />
+                        </h:outputText>&#37;
+                    </b>
+                    to
+                    <b>
+                        <h:outputText value="#{lendingController.maximumLoanRate}" >
+                            <f:convertNumber pattern="0.00" />
+                        </h:outputText>&#37;
+                    </b>.
+                </p>
+            </div>
+
 
             <hr class="subfeaturette-divider" />
 

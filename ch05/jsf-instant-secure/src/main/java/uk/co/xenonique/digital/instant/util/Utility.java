@@ -14,7 +14,7 @@ import java.util.List;
 @ApplicationScoped
 public class Utility implements Serializable {
 
-    private List<LoanRateBounds> bounds = Arrays.asList(
+    protected List<LoanRateBounds> bounds = Arrays.asList(
             new LoanRateBounds("0.0",       "4500.0",   "22.50"),
             new LoanRateBounds("4500.0",    "6000.0",   "9.79"),
             new LoanRateBounds("6000.0",    "9000.0",   "7.49"),
@@ -36,7 +36,32 @@ public class Utility implements Serializable {
         throw new IllegalArgumentException("no tax rate found in bounds");
     }
     /**
-     * Calculates the monthly payment for a loan.
+     * Calculates the monthly payment for a loan using the Basic payment formula.
+     *
+     * <p>
+     * To calculate the mortgage payment, use the following formula:
+     * <code>PMT = (PV x IR) / (1 - (1 + IR)-NP) </code>
+     *
+     *</p>
+     *
+     * <p>
+     * Java implementation: <br><code>PMT = (PV * IR) / (1 – Math.pow(1 + IR, -NP))</code>
+     * </p>
+     *
+     * <p>Where:
+     *
+     * <br>PMT = Monthly Payment
+     * <br>PV = Principle Value (amount of loan)
+     * <br>IR = Interest Rate, by month
+     * <br>NP = Note Period, or mortgage term in months
+     * <br>IR = APR / 100 / 12
+     * <br>NP = Years * 12 (for example, 5 years means NP = 60)
+     * <br>APR = Annual Percentage Rate (for example 6.25)
+     * <br>Use the formula above when APR > 0.
+     * If APR = 0 (an interest-free loan), then PMT = PV / NP.
+     *
+     * </p>
+     *
      *
      * @param pv the principal amount value
      * @param apr the Annual Percentage Rate
