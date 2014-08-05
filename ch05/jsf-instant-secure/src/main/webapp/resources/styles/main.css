@@ -199,3 +199,12 @@ body {
 .content-wrapper {
     margin: 1.5em 0.25em 2em 0.25em;
 }
+
+
+#completionImage {
+    max-height: 300px;
+}
+
+.completion {
+    background: #f0f0ff;
+}

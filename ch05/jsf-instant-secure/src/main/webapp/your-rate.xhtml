@@ -97,9 +97,6 @@
                     </p>
                 </div>
 
-
-
-
                 <c:set var="loanRateWidth" value="#{100.0 * (lendingController.applicant.loanRate - lendingController.minimumLoanRate) / (lendingController.maximumLoanRate - lendingController.minimumLoanRate)}" />
 
                 <h:panelGroup layout="block" id="loanRateOutput">
@@ -151,8 +148,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p class="monetary-text-large">
-                                Your monthly payment is <b> #{lendingController.currencySymbol}
-                                <h:outputText id="paymentMonthlyOutput" value="#{lendingController.recalculatePMT()}">
+                                Your monthly payment is <b>
+                                #{lendingController.currencySymbol}<h:outputText id="paymentMonthlyOutput" value="#{lendingController.recalculatePMT()}">
                                     <f:convertNumber pattern="#0.00" />
                                 </h:outputText></b>
                             </p>
@@ -168,8 +165,8 @@
                         </div>
                         <div class="col-md-6">
                             <p class="monetary-text">
-                                Total payable #{lendingController.currencySymbol}
-                                <h:outputText id="totalPayableOutput"
+                                Total payable
+                                #{lendingController.currencySymbol}<h:outputText id="totalPayableOutput"
                                               value="#{lendingController.totalPayable}">
                                     <f:convertNumber pattern="#0,000" />
                                 </h:outputText>

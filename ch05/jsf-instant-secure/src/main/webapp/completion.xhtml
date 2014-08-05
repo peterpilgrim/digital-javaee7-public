@@ -26,6 +26,10 @@
                 </p>
             </div>
 
+            <div class="content-wrapper completion" >
+                <img id="completionImage" class="center-block" src="#{request.contextPath}/resources/images/IMG_0226_1024x683.JPG" />
+            </div>
+
             <div class="content-wrapper" >
                 <div class="row">
                     <div class="col-md-6">
@@ -48,8 +52,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="monetary-text-large">
-                            Your monthly payment is <b> #{lendingController.currencySymbol}
-                            <h:outputText value="#{lendingController.paymentMonthlyAmount}">
+                            Your monthly payment is
+                            <b>#{lendingController.currencySymbol}<h:outputText value="#{lendingController.paymentMonthlyAmount}">
                                 <f:convertNumber pattern="#0.00" />
                             </h:outputText></b>
                         </p>
@@ -59,17 +63,17 @@
                     <div class="col-md-6">
                         <p class="monetary-text">
                             Loan term
-                            <h:outputText id="monthTermsOutput"
-                                          value="#{lendingController.applicant.loanTermMonths}"/> months
+                            <b><h:outputText id="monthTermsOutput"
+                                          value="#{lendingController.applicant.loanTermMonths}"/> months</b>
                         </p>
                     </div>
                     <div class="col-md-6">
                         <p class="monetary-text">
-                            Total payable #{lendingController.currencySymbol}
-                            <h:outputText id="totalPayableOutput"
+                            Total payable
+                            <b>#{lendingController.currencySymbol} <h:outputText id="totalPayableOutput"
                                           value="#{lendingController.totalPayable}">
                                 <f:convertNumber pattern="#0,000" />
-                            </h:outputText>
+                            </h:outputText></b>
                         </p>
                     </div>
                 </div>

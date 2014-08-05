@@ -66,7 +66,7 @@ public class LendingController implements Serializable {
         recalculatePMT();
     }
 
-    public void end() {
+    public void checkAndEnd() {
         if (!conversation.isTransient()) {
             conversation.end();
         }
@@ -85,12 +85,12 @@ public class LendingController implements Serializable {
     }
 
     public BigDecimal recalculateLoanRate() {
-        applicant.setLoanRate( utility.getTaxRate( applicant.getLoanAmount() ));
+        applicant.setLoanRate(utility.getTaxRate(applicant.getLoanAmount()));
         return applicant.getLoanRate();
     }
 
     public String cancel() {
-        end();
+        checkAndEnd();
         return "index?faces-redirect=true";
     }
 
@@ -145,7 +145,7 @@ public class LendingController implements Serializable {
     public String doCompletion() {
         recalculatePMT();
         applicantService.add(applicant);
-        end();
+        checkAndEnd();
         return "index?faces-redirect=true";
     }
 
