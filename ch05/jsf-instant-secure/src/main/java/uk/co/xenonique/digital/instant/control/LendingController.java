@@ -18,6 +18,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * The type LendingController
@@ -144,6 +145,7 @@ public class LendingController implements Serializable {
 
     public String doCompletion() {
         recalculatePMT();
+        applicant.setSubmitDate(new Date());
         applicantService.add(applicant);
         checkAndEnd();
         return "index?faces-redirect=true";

@@ -9,10 +9,6 @@
       xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
 
     <ui:composition template="/basic_layout.xhtml">
-        <ui:define name="title">
-            <title> JSF CRUD Validation Example </title>
-        </ui:define>
-
         <ui:define name="mainContent">
 
             <xen:workflow-banner sectionName="yourRate"/>
@@ -21,7 +17,7 @@
                 <h1> JSF Instant Secure Lending</h1>
                 <p>
                     Enter your loan amount and rate.
-                    You borrow from
+                    You can borrow from
                     <b>
                     <h:outputText value="#{lendingController.minimumLoanAmount}" >
                         <f:convertNumber currencyCode="GBP" type="currency" />
