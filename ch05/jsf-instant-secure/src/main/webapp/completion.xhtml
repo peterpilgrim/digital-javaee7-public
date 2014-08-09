@@ -20,6 +20,14 @@
                     You have successfully applied for a loan.
                     We will be in touch within 48 hours to let you know when you can expect your money.
                 </p>
+                <h:form id="completionForm"
+                        styleClass="form-horizontal"
+                        p:role="form">
+                    <h:commandButton styleClass="btn btn-primary"
+                                     action="#{lendingController.doCompletion()}"
+                                     value="Finish" />
+                </h:form>
+
             </div>
 
             <div class="content-wrapper completion" >
@@ -29,7 +37,7 @@
             <div class="content-wrapper" >
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="monetary-text-large">
+                        <p class="monetary-text">
                             Your loan amount <b>
                             #{lendingController.currencySymbol}<h:outputText value="#{lendingController.applicant.loanAmount}">
                                 <f:convertNumber pattern="#0.00" />
@@ -37,7 +45,7 @@
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <p class="monetary-text-large">
+                        <p class="monetary-text">
                             Your loan rate <b>
                             <h:outputText value="#{lendingController.applicant.loanRate}">
                                 <f:convertNumber pattern="#0.000" />
@@ -47,7 +55,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="monetary-text-large">
+                        <p class="monetary-text">
                             Your monthly payment is
                             <b>#{lendingController.currencySymbol}<h:outputText value="#{lendingController.paymentMonthlyAmount}">
                                 <f:convertNumber pattern="#0.00" />
@@ -76,10 +84,6 @@
             </div>
 
 
-            <h:link styleClass="btn btn-primary btn-lg"
-                    outcome="#{lendingController.doCompletion()}">
-                Finish
-            </h:link>
             <hr class="subfeaturette-divider" />
 
         </ui:define> <!--name="mainContent" -->

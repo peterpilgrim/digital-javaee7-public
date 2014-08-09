@@ -43,19 +43,23 @@
                         <tr>
                             <td>Loan Amount</td>
                             <td>
-                                #{lendingController.applicant.loanAmount}
+                                #{lendingController.currencySymbol}<h:outputText value="#{lendingController.applicant.loanAmount}" >
+                                    <f:convertNumber pattern="#0,000" />
+                                </h:outputText>
                             </td>
                         </tr>
                         <tr>
                             <td>Loan Rate</td>
                             <td>
-                                #{lendingController.applicant.loanRate}
+                                <h:outputText value="#{lendingController.applicant.loanRate}" >
+                                    <f:convertNumber pattern="#0,000" />
+                                </h:outputText>&#37;
                             </td>
                         </tr>
                         <tr>
                             <td>Loan Term (months)</td>
                             <td>
-                                #{lendingController.applicant.loanTermMonths}
+                                #{lendingController.applicant.loanTermMonths} months
                             </td>
                         </tr>
                         <tr>

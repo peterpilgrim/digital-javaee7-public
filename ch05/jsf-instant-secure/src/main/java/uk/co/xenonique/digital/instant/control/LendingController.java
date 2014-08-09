@@ -140,13 +140,16 @@ public class LendingController implements Serializable {
 
     public String doConfirm() {
         checkAndStart();
+        if ( applicant.isTermsAgreed()) {
+            throw new IllegalStateException("terms of agreements not set to true");
+        }
+        recalculatePMT();
+        applicant.setSubmitDate(new Date());
+        applicantService.add(applicant);
         return "completion?faces-redirect=true";
     }
 
     public String doCompletion() {
-        recalculatePMT();
-        applicant.setSubmitDate(new Date());
-        applicantService.add(applicant);
         checkAndEnd();
         return "index?faces-redirect=true";
     }
