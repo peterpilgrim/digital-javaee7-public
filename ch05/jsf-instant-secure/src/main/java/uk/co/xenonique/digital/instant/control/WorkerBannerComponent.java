@@ -11,22 +11,19 @@ import java.io.IOException;
  */
 @FacesComponent("workerBannerComponent")
 public class WorkerBannerComponent extends UINamingContainer {
-
-    public String gettingStartedActive;
-    public String yourDetailsActive;
-    public String yourRateActive;
-    public String yourAddressActive;
-    public String confirmActive;
-    public String completedActive;
+    private String gettingStartedActive;
+    private String yourDetailsActive;
+    private String yourRateActive;
+    private String yourAddressActive;
+    private String confirmActive;
+    private String completedActive;
 
     @Override
     public void encodeAll(FacesContext context) throws IOException {
         if (context == null) {
             throw new NullPointerException("no faces context supplied");
         }
-
         String sectionName = (String)getAttributes().get("sectionName");
-
         gettingStartedActive = yourDetailsActive =
             yourRateActive = yourAddressActive =
                 confirmActive = completedActive = "";
