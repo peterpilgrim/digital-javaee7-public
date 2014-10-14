@@ -23,23 +23,4 @@ war {
     rootSpec.exclude("**/glassfish-embedded-runner-*.jar")
 }
 
-task(run, dependsOn: 'classes', type: JavaExec) {
-    description = 'Runs the main application'
-    main = 'uk.co.xenonique.digital.AppMain'
-    classpath = sourceSets.main.runtimeClasspath
-    args 'Mary', 'Peter', 'Jane'
-    standardInput = System.in
-}
-
-task(generateScript, dependsOn: 'classes') {
-    description = 'Generates UNIX bash script that launches the program.'
-    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
-        // Not Microsoft Windows
-        new File("SampleRunner").withWriter { out ->
-            out.println("#!/bin/bash")
-            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  uk.co.xenonique.digital.AppMain")
-        }
-        "chmod 755 SampleRunner".execute()
-    }
-}
 

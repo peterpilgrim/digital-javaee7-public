@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="mainContent">
+
+            <xen:workflow-banner sectionName="yourAddress"/>
+
+            <h1> JSF Instant Secure Lending</h1>
+
+            <h:form id="yourAddressForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                <div class="form-group">
+                    <h:outputLabel for="houseOrFlatNumber" class="col-sm-3 control-label">
+                        House number</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="House or Flat Number"
+                                     value="#{lendingController.applicant.address.houseOrFlatNumber}"
+                                     id="houseOrFlatNumber" placeholder="First name">
+                            <f:validateLength maximum="16" />
+                            <f:ajax event="blur" render="houseOrFlatNumberError"/>
+                        </h:inputText>
+                        <h:message id="houseOrFlatNumberError"
+                                   for="houseOrFlatNumber" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="street1" class="col-sm-3 control-label">
+                        Street 1</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Street 1"
+                                     value="#{lendingController.applicant.address.street1}"
+                                     id="street1" placeholder="Street 1" maxlength="64">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="street1Error"/>
+                        </h:inputText>
+                        <h:message id="street1Error"
+                                   for="street1" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="street2" class="col-sm-3 control-label">
+                        Street 2</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Street 2"
+                                     value="#{lendingController.applicant.address.street2}"
+                                     id="street2" maxlength="64" >
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="street2Error"/>
+                        </h:inputText>
+                        <h:message id="street2Error"
+                                   for="street2" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="townOrCity" class="col-sm-3 control-label">
+                        Town/City</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Town or City"
+                                     value="#{lendingController.applicant.address.townOrCity}"
+                                     id="townOrCity" placeholder="Town or City" maxlength="64" >
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="townOrCityError"/>
+                        </h:inputText>
+                        <h:message id="townOrCityError"
+                                   for="townOrCity" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="region" class="col-sm-3 control-label">
+                        Region </h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Region"
+                                     value="#{lendingController.applicant.address.region}"
+                                     id="region" placeholder="Region" maxlength="64">
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="regionError"/>
+                        </h:inputText>
+                        <h:message id="regionError"
+                                   for="region" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="region" class="col-sm-3 control-label">
+                        Country </h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Country"
+                                     value="#{lendingController.applicant.address.country}"
+                                     id="country" placeholder="Country" maxlength="64">
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="regionError"/>
+                        </h:inputText>
+                        <h:message id="countryError"
+                                   for="country" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="postCode" class="col-sm-3 control-label">
+                        Postal Code</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Post Code"
+                                     value="#{lendingController.applicant.address.areaCode}"
+                                     id="postCode" placeholder="Post code" >
+                            <f:validateRequired/>
+                            <f:validateLength maximum="16" />
+                            <f:ajax event="blur" render="postCodeError"/>
+                        </h:inputText>
+                        <h:message id="postCodeError"
+                                   for="postCode" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="postCode" class="col-sm-3 control-label">
+                        Home telephone</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Home Telephone"
+                                     value="#{lendingController.applicant.homePhone}"
+                                     id="homePhone" placeholder="01234 567 890" >
+                            <f:validateRequired/>
+                            <f:validateLength maximum="20" />
+                            <f:ajax event="blur" render="homePhoneError"/>
+                        </h:inputText>
+                        <h:message id="homePhoneError"
+                                   for="homePhone" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="postCode" class="col-sm-3 control-label">
+                        Work telephone</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="Work Telephone"
+                                     value="#{lendingController.applicant.workPhone}"
+                                     id="workPhone" placeholder="01234 567 890" >
+                            <f:validateLength maximum="20" />
+                            <f:ajax event="blur" render="postCodeError"/>
+                        </h:inputText>
+                        <h:message id="workPhoneError"
+                                   for="workPhone" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="postCode" class="col-sm-3 control-label">
+                        Mobile telephone</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="mobile Telephone"
+                                     value="#{lendingController.applicant.mobileNumber}"
+                                     id="mobilePhone" placeholder="07654 567 890" >
+                            <f:validateLength maximum="20" />
+                            <f:ajax event="blur" render="postCodeError"/>
+                        </h:inputText>
+                        <h:message id="mobilePhoneError"
+                                   for="mobilePhone" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{lendingController.doYourAddress()}"
+                                 value="Next" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{lendingController.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

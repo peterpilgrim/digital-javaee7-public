@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite" >
+
+    <cc:interface componentType="workerBannerComponent">
+        <cc:attribute name="sectionName" required="true"/>
+        <cc:attribute name="sectionName" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <div class="workflow-wrapper">
+
+            <c:forEach var="navElement" items="#{cc.navigation.elements}">
+                <div class="workflow-column">
+                    <div class="workflow-title  #{navElement.style}  pull-left" >
+                        #{navElement.title}
+                    </div>
+                    <div class="workflow-title  #{navElement.style}  pull-right" >
+                        <c:choose>
+                            <c:when test="#{navElement.visited}">
+                                <h:outputLink value="#{navElement.editLink}" > Edit </h:outputLink>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <div class="workflow-arrow-right   #{cc.gettingStartedActive}  pull-left"></div>
+                </div>
+            </c:forEach>
+
+        </div>
+    </cc:implementation>
+</html>

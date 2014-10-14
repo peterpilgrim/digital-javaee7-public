@@ -81,6 +81,7 @@ subprojects {
 //    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
 
         testCompile 'junit:junit:4.11'
+        testCompile 'org.hamcrest:hamcrest-all:1.3'
     }
 
     // Override Gradle defaults - a force an exploded JAR view
@@ -116,8 +117,9 @@ subprojects {
 task myZip(type: Zip) {
     description = "Creates a ZIP distribution of the `${archivesBaseName}' project."
     from '.'
-    def targetName = "7942-${archivesBaseName}-sources-${version}.zip"
-    println "Creating targetName=${targetName}"
+    def datestamp = new Date().format("yyyyMMdd")
+    def targetName = "6640EN-${archivesBaseName}-sources-${version}-${datestamp}.zip"
+    println "**** Creating achive targetName=${targetName} ****"
     archiveName "${targetName}"
     include '**/src/**'
     include '**/*.xml'
@@ -127,7 +129,7 @@ task myZip(type: Zip) {
     exclude '**/build/**'
     exclude '**/out/**'
     exclude '**/target/**'
-    exclude '**/ch08-olde/**'
+    exclude '**/jsf-instant-secure-smart/**'
     /*
     exclude {
         details ->

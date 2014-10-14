@@ -1,0 +1,61 @@
+package uk.co.xenonique.digital.instant.control;
+
+import static org.junit.Assert.*;
+
+import org.junit.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Verifies the operation of the SmartNavigationTest
+ *
+ * @author Peter Pilgrim
+ */
+public class SmartNavigationTest {
+
+    @Test
+    public void shouldInitialisedWithNotVisited() {
+
+        List<String> tabNames = Arrays.asList("Order", "Delivery", "Payment");
+        SmartNavigation nav = new SmartNavigation(tabNames);
+
+        assertThat( nav.size(), is(3));
+        for (NavElement e: nav.toList()) {
+            assertThat(e.isVisited(), is(false));
+        }
+
+        for ( int j=0; j<tabNames.size(); ++j) {
+            NavElement e1 = nav.get(j);
+            assertThat(e1.getName(), is(tabNames.get(j)));
+        }
+    }
+
+
+    @Test
+    public void shouldSetVisitRangeOnNavigationElements() {
+
+        List<NavElement> tabNames = Arrays.asList(
+                new NavElement("Order", "order", "order.xhtml"),
+                new NavElement("Finance", "finance", "finance.xhtml"),
+                new NavElement("Delivery", "delivery", "delivery.xhtml"),
+                new NavElement("Address", "address", "address.xhtml"),
+                new NavElement("Payment", "payment", "payment.xhtml"),
+                new NavElement("Confirm", "confirm", "confirm.xhtml"));
+        SmartNavigation nav = new SmartNavigation(tabNames);
+
+        final int N = 1;
+        final int P = 3;
+
+        nav.setVisitedRange(N, P);
+
+        for ( int j=N; j<P; ++j) {
+            NavElement e1 = nav.get(j);
+            assertThat(e1.getName(), is(tabNames.get(j).getName()));
+            assertThat(e1.getStyle(), is(tabNames.get(j).getStyle()));
+            assertThat(e1.getEditLink(), is(tabNames.get(j).getEditLink()));
+            assertThat(e1.isVisited(), is( j >= N && j <= P));
+        }
+    }
+}

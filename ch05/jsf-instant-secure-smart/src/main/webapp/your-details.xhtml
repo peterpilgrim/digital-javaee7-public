@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:xen="http://xmlns.jcp.org/jsf/composite/components"  >
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="title">
+            <title> JSF CRUD Validation Example </title>
+        </ui:define>
+
+        <ui:define name="mainContent">
+
+            <h1> JSF Instant Secure Lending</h1>
+
+            <xen:workflow-banner sectionName="yourDetails"/>
+
+            <div class="content-wrapper">
+                <h2> Contact Details </h2>
+                <p>
+                    Enter your details
+                </p>
+            </div>
+
+            <h:form id="yourDetailsForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                <div class="form-group">
+                    <h:outputLabel for="title" class="col-sm-3 control-label">
+                        Title</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu class="form-control"
+                                         label="Title" id="title"
+                                         value="#{lendingController.applicant.contactDetail.title}">
+                            <f:selectItem itemLabel="-" itemValue="" />
+                            <f:selectItem itemValue="Mr" />
+                            <f:selectItem itemValue="Mrs" />
+                            <f:selectItem itemValue="Miss" />
+                            <f:selectItem itemValue="Ms" />
+                            <f:selectItem itemValue="Dr" />
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="titleError"/>
+                        </h:selectOneMenu>
+                        <h:message id="titleError"
+                                   for="title" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="firstName" class="col-sm-3 control-label">
+                        First name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" label="First name"
+                                     value="#{lendingController.applicant.contactDetail.firstName}"
+                                     id="firstName" placeholder="First name">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="firstNameError"/>
+                        </h:inputText>
+                        <h:message id="firstNameError"
+                                   for="firstName" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="middleName" class="col-sm-3 control-label">
+                        Middle name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{lendingController.applicant.contactDetail.middleName}"
+                                     id="middleName" placeholder="Middle name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="lastName" class="col-sm-3 control-label">
+                        Last name</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     value="#{lendingController.applicant.contactDetail.lastName}"
+                                     label="Last name"
+                                     id="lastName" placeholder="Last name">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="lastNameError"/>
+                        </h:inputText>
+                        <h:message id="lastNameError"
+                                   for="lastName" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="email" class="col-sm-3 control-label">Email address
+                    </h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText type="email"
+                                     label="Email" class="form-control" id="email"
+                                     value="#{lendingController.applicant.contactDetail.email}"
+                                     validator="emailValidator"
+                                     placeholder="Enter email">
+                            <f:validateRequired/>
+                            <f:validateLength maximum="64" />
+                            <f:ajax event="blur" render="emailError"/>
+                        </h:inputText>
+                        <h:message id="emailError"
+                                   for="email" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel class="col-sm-3 control-label" for="allowEmails">
+                        Newsletter
+                    </h:outputLabel>
+                    <div class="col-sm-9 checkbox">
+                        <h:selectBooleanCheckbox id="allowEmails"
+                                                 value="#{lendingController.applicant.contactDetail.allowEmails}">
+                            Send me email promotions
+                        </h:selectBooleanCheckbox>
+                    </div>
+                </div>
+
+                <label class="control-label"> Your Date of Birth</label>
+                <h:inputHidden id="aggregateDobHidden"
+                               label="hiddenField1" value="true">
+                    <f:validator validatorId="dateOfBirthValidator" />
+                    <f:attribute name="dob_dotm" value="#{dob_dotm}" />
+                    <f:attribute name="dob_moty" value="#{dob_moty}" />
+                    <f:attribute name="dob_year" value="#{dob_year}" />
+                </h:inputHidden>
+
+                <f:ajax event="blur" render="dobDayError dobMonthError dobYearError">
+                    <div class="row  my-group-border">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobDay">Day</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobDay" value="#{lendingController.dobDay}"
+                                                 binding="#{dob_dotm}"
+                                                 label="Registration Day">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{dateHelperController.daysOfTheMonth}" var="day"
+                                                   itemLabel="#{day}" itemValue="#{day}" />
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1" maximum="31" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobMonth">Month</label>
+                            <div class="controls">
+                                <h:selectOneMenu id="dobMonth" value="#{lendingController.dobMonth}"
+                                                 binding="#{dob_moty}"
+                                                 label="Registration Month">
+                                    <f:selectItem itemLabel="----"  itemValue=""/>
+                                    <f:selectItems value="#{dateHelperController.monthsOfTheYear}" />
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="1" maximum="12" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label" for="dobYear">Year</label>
+                            <div class="controls">
+                                <h:inputText id="dobYear" value="#{lendingController.dobYear}"
+                                             binding="#{dob_year}"
+                                             label="Registration Year">
+                                    <f:validateRequired/>
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobDayError"
+                                       for="dobDay" styleClass="alert validation-error"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobMonthError"
+                                       for="dobMonth" styleClass="alert validation-error"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:message id="dobYearError"
+                                       for="dobYear" styleClass="alert validation-error"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:messages for="aggregateDobHidden" styleClass="alert validation-error"/>
+                        </div>
+                    </div>
+                </f:ajax>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{lendingController.doYourDetails()}"
+                                 value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{lendingController.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

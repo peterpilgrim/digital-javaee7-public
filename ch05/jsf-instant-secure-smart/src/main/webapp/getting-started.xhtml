@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pro="http:/www.xenonique.co.uk/jsf/instant/lending"
+      xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
+
+<ui:composition template="/basic_layout.xhtml">
+        <ui:define name="mainContent">
+
+            <xen:workflow-banner sectionName="gettingStarted"/>
+            <pro:infoSec message="Hello world - this is a custom component" />
+            <xen:component-report/>
+
+            <h1> JSF Instant Secure Lending</h1>
+
+            <p>
+                Getting started with your loan
+            </p>
+
+            <div class="content-wrapper">
+                <h2> Your Application </h2>
+                <p>
+                    You are applying for instant loan security.
+                    A <strong>Duke Penny Loan</strong> could help you with everything from home improvements to buying a new car.
+                    Please be aware that all loans are subject to status. On some of our loans, we may require
+                    early settlement fees.
+                </p>
+
+                <h2>Your Eligibility</h2>
+                <p>
+                    At <strong>Duke Penny Loans</strong>, we go through an eligibility process, but once you are valid, then you
+                    will get your money fast.
+                </p>
+
+                <p>
+                    You may be eligible to apply for a Duke Penny Loan online if you:
+                </p>
+
+                <ul>
+                    <li>
+                    Are a Java Virtual Machine resident (program with Java, Scala, Groovy etc )
+                    </li>
+                    <li>
+                        Are at least 18 years old
+                    </li>
+                </ul>
+
+                <p>
+                    You can use a <strong>Duke Penny Loan</strong> to buy a lot of things.
+                    Your loan can last from 24 months to 60 months long.
+                </p>
+
+                <ul>
+                    <li>
+                        A Duke Penny Loan can be used for almost any purpose, apart from:
+                    </li>
+                    <li>
+                        Paying existing debt from another lender
+                    </li>
+                    <li>
+                        Duke Penny Loan is not designed for business loans so that excludes anything purposes related to starting or running a business
+                    </li>
+                    <li>
+                        Timeshares
+                    </li>
+                    <li>
+                        Investment purposes, loans against the stock market, including buying stocks and shares
+                    </li>
+                    <li>
+                        Other property finance, including purchases, part payment or deposits on purchases and property development – although home improvements are fine
+                    </li>
+                    <li>
+                        The repayment of Court Courtesy, Bailaff Fees, Recovery of Assets or Gambling debts
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-wrapper">
+                <h2> Continue</h2>
+                If you are happy about the eligibility requirements for a Duke Penny Loan, then please continue.
+            </div>
+
+            <h:link styleClass="btn btn-primary btn-lg"
+                    outcome="#{lendingController.doGettingStarted()}">
+                Next
+            </h:link>
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>
