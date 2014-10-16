@@ -20,6 +20,7 @@ public class WorkerBannerComponent extends UINamingContainer {
             throw new NullPointerException("no faces context supplied");
         }
         String sectionName = (String)getAttributes().get("sectionName");
+        navigation = (SmartNavigation)getAttributes().get("navigation");
 
         for (NavElement element: navigation.getElements()) {
             if ( sectionName.endsWith( element.getName())) {

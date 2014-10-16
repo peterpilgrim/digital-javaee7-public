@@ -44,4 +44,18 @@ public class SmartNavigation {
     public List<NavElement> getElements() {
         return elements;
     }
+
+    public NavElement getElementByName(String name) {
+        for (NavElement element: elements) {
+            if ( element.getName().equals(name)) return element;
+        }
+        throw new IllegalArgumentException("element not found");
+    }
+
+    public boolean hasElementByName(String name) {
+        for (NavElement element: elements) {
+            if ( element.getName().equals(name)) return true;
+        }
+        return false;
+    }
 }

@@ -10,7 +10,7 @@
 <ui:composition template="/basic_layout.xhtml">
         <ui:define name="mainContent">
 
-            <xen:workflow-banner sectionName="gettingStarted"/>
+            <xen:workflow-banner sectionName="gettingStarted" navigation="#{lendingController.navigation}" />
             <pro:infoSec message="Hello world - this is a custom component" />
             <xen:component-report/>
 

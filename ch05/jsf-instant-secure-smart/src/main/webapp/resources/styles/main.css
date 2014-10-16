@@ -138,10 +138,12 @@ body {
 }
 
 .workflow-column {
-    min-width: 16%;
+    min-width: 40.0%;
     float: left;
     margin-left: 0.05%;
     margin-right: 0.05%;
+    margin-top: 0.0325%;
+    margin-bottom: 0.0325%;
 }
 
 .workflow-title.active {

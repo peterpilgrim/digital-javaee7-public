@@ -58,4 +58,28 @@ public class SmartNavigationTest {
             assertThat(e1.isVisited(), is( j >= N && j <= P));
         }
     }
+
+
+    @Test
+    public void shouldRetrieveNavigationElements() {
+
+        List<NavElement> tabNames = Arrays.asList(
+                new NavElement("Order", "order", "", "order.xhtml"),
+                new NavElement("Finance", "finance", "", "finance.xhtml"),
+                new NavElement("Delivery", "delivery", "style1", "delivery.xhtml"),
+                new NavElement("Address", "address", "", "address.xhtml"),
+                new NavElement("Payment", "payment", "", "payment.xhtml"),
+                new NavElement("Confirm", "confirm", "", "confirm.xhtml"));
+        SmartNavigation nav = new SmartNavigation(tabNames);
+
+        assertThat( nav.hasElementByName("Unknown"), is(false));
+        assertThat( nav.hasElementByName("Order"), is(true));
+        assertThat( nav.hasElementByName("Delivery"), is(true));
+
+        NavElement element = nav.getElementByName("Delivery");
+        assertThat(element.getName(), is("Delivery"));
+        assertThat(element.getTitle(), is("delivery"));
+        assertThat(element.getStyle(), is("style1"));
+        assertThat(element.getEditLink(), is("delivery.xhtml"));
+    }
 }

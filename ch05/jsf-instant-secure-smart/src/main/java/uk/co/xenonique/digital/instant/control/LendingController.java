@@ -30,6 +30,12 @@ import java.util.Date;
 @Named("lendingController")
 @ConversationScoped
 public class LendingController implements Serializable {
+    public static final String STAGE_GETTING_STARTED = "gettingStarted";
+    public static final String STAGE_YOUR_DETAILS = "yourDetails";
+    public static final String STAGE_YOUR_RATE = "yourRate";
+    public static final String STAGE_YOUR_ADDRESS = "yourAddress";
+    public static final String STAGE_CONFIRM = "confirm";
+    public static final String STAGE_COMPLETION = "completion";
     @EJB ApplicantService applicantService;
     @Inject Conversation conversation;
     @Inject Utility utility;
@@ -64,22 +70,23 @@ public class LendingController implements Serializable {
         navigation = new SmartNavigation(
                 Arrays.asList(
                         new NavElement(
-                                "gettingStarted", "Getting Started",
-                                "", "getting-started?faces-redirect=true" ),
+                                STAGE_GETTING_STARTED, "Getting Started",
+                                "", "getting-started.xhtml?faces-redirect=true" ),
                         new NavElement(
-                                "yourDetails", "Your Details",
-                                "", "your-details?faces-redirect=true"),
+                                STAGE_YOUR_DETAILS, "Your Details",
+                                "", "your-details.xhtml?faces-redirect=true"),
                         new NavElement(
-                                "yourRate", "Your Rate",
-                                "", "your-rate?faces-redirect=true"),
+                                STAGE_YOUR_RATE, "Your Rate",
+                                "", "your-rate.xhtml?faces-redirect=true"),
                         new NavElement(
-                                "yourAddress", "Your Address",
-                                "", "your-address?faces-redirect=true"),
+                                STAGE_YOUR_ADDRESS, "Your Address",
+                                "", "your-address.xhtml?faces-redirect=true"),
                         new NavElement(
-                                "confirm","Confirm",
-                                "", "confirm?faces-redirect=true"),
-                        new NavElement("completion", "Completion",
-                                "", "completion?faces-redirect=true")));
+                                STAGE_CONFIRM,"Confirm",
+                                "", "confirm.xhtml?faces-redirect=true"),
+                        new NavElement(
+                                STAGE_COMPLETION, "Completion",
+                                "", "completion.xhtml?faces-redirect=true")));
     }
 
     public void checkAndStart() {
@@ -123,6 +130,7 @@ public class LendingController implements Serializable {
 
     public String doGettingStarted() {
         checkAndStart();
+        navigation.getElementByName(STAGE_GETTING_STARTED).setVisited(true);
         return "your-details?faces-redirect=true";
     }
 
@@ -133,6 +141,7 @@ public class LendingController implements Serializable {
         cal.set(Calendar.MONTH, dobMonth-1);
         int year = Integer.parseInt(dobYear);
         cal.set(Calendar.YEAR, year);
+        navigation.getElementByName(STAGE_YOUR_DETAILS).setVisited(true);
 
         applicant.getContactDetail().setDob(cal.getTime());
         return "your-rate?faces-redirect=true";
@@ -140,11 +149,13 @@ public class LendingController implements Serializable {
 
     public String doYourRate() {
         checkAndStart();
+        navigation.getElementByName(STAGE_YOUR_RATE).setVisited(true);
         return "your-address?faces-redirect=true";
     }
 
     public String doYourAddress() {
         checkAndStart();
+        navigation.getElementByName(STAGE_YOUR_ADDRESS).setVisited(true);
         return "confirm?faces-redirect=true";
     }
 
@@ -168,11 +179,13 @@ public class LendingController implements Serializable {
         recalculatePMT();
         applicant.setSubmitDate(new Date());
         applicantService.add(applicant);
+        navigation.getElementByName(STAGE_CONFIRM).setVisited(true);
         return "completion?faces-redirect=true";
     }
 
     public String doCompletion() {
         checkAndEnd();
+        navigation.getElementByName(STAGE_COMPLETION).setVisited(true);
         return "index?faces-redirect=true";
     }
 
