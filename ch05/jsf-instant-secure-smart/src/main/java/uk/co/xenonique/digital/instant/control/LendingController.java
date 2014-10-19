@@ -6,6 +6,7 @@ import uk.co.xenonique.digital.instant.entity.Applicant;
 import uk.co.xenonique.digital.instant.entity.ContactDetail;
 import uk.co.xenonique.digital.instant.util.Utility;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -62,35 +63,40 @@ public class LendingController implements Serializable {
 
     public LendingController() {
         applicant = new Applicant();
-        applicant.setLoanAmount( DEFAULT_LOAN_AMOUNT);
-        applicant.setLoanRate( DEFAULT_LOAN_RATE );
-        applicant.setLoanTermMonths( DEFAULT_LOAN_TERM );
+        applicant.setLoanAmount(DEFAULT_LOAN_AMOUNT);
+        applicant.setLoanRate(DEFAULT_LOAN_RATE);
+        applicant.setLoanTermMonths(DEFAULT_LOAN_TERM);
         applicant.setAddress(new Address());
         applicant.setContactDetail(new ContactDetail());
         navigation = new SmartNavigation(
                 Arrays.asList(
                         new NavElement(
                                 STAGE_GETTING_STARTED, "Getting Started",
-                                "", "getting-started.xhtml" ),
+                                "", "/getting-started.xhtml"),
                         new NavElement(
                                 STAGE_YOUR_DETAILS, "Your Details",
-                                "", "your-details.xhtml" ),
+                                "", "/your-details.xhtml"),
                         new NavElement(
                                 STAGE_YOUR_RATE, "Your Rate",
-                                "", "your-rate.xhtml" ),
+                                "", "/your-rate.xhtml"),
                         new NavElement(
                                 STAGE_YOUR_ADDRESS, "Your Address",
-                                "", "your-address.xhtml?faces-redirect=true"),
+                                "", "/your-address.xhtml?faces-redirect=true"),
                         new NavElement(
-                                STAGE_CONFIRM,"Confirm",
-                                "", "confirm.xhtml?faces-redirect=true"),
+                                STAGE_CONFIRM, "Confirm",
+                                "", "/confirm.xhtml?faces-redirect=true"),
                         new NavElement(
                                 STAGE_COMPLETION, "Completion",
-                                "", "completion.xhtml?faces-redirect=true")));
+                                "", "/completion.xhtml?faces-redirect=true")));
+    }
+
+    @PostConstruct
+    public void init() {
+//        conversation.begin();
     }
 
     public void checkAndStart() {
-        System.out.printf("checkAndStart() conversation.transient=%s\n", conversation.isTransient());
+        System.out.printf("checkAndStart() conversation=%s conversation.id=%s conversation.transient=%s\n", conversation, conversation.getId(), conversation.isTransient());
         if ( conversation.isTransient()) {
             System.out.printf("checkAndStart() conversation.begin()\n");
             conversation.begin();
@@ -99,7 +105,7 @@ public class LendingController implements Serializable {
     }
 
     public void checkAndEnd() {
-        System.out.printf("checkAndEnd() conversation.transient=%s\n", conversation.isTransient());
+        System.out.printf("checkAndEnd() conversation=%s conversation.id=%s conversation.transient=%s\n", conversation, conversation.getId(), conversation.isTransient());
         if (!conversation.isTransient()) {
             System.out.printf("checkAndStart() conversation.end()\n");
             conversation.end();

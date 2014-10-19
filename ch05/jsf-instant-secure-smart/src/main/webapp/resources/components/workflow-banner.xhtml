@@ -13,15 +13,17 @@
     <cc:implementation>
         <div class="workflow-wrapper">
 
-            <ui:repeat var="navElement" value="#{cc.navigation.elements}" >
-                <div class="workflow-column">
-                    <div class="workflow-title  #{navElement.style}  pull-left" >
-                        #{navElement.title}
-                                <h:outputLink value="#{navElement.editLink}" rendered="#{navElement.visited}"> Edit </h:outputLink>
+            <h:form>
+                <ui:repeat var="navElement" value="#{cc.navigation.elements}" >
+                    <div class="workflow-column">
+                        <div class="workflow-title  #{navElement.style}  pull-left" >
+                            #{navElement.title}
+                            <h:commandButton styleClass="btn" action="#{navElement.editLink}" rendered="#{navElement.visited}" value="Edit #{navElement.editLink}"/>
+                        </div>
+                        <div class="workflow-arrow-right   #{navElement.style}  pull-left"></div>
                     </div>
-                    <div class="workflow-arrow-right   #{navElement.style}  pull-left"></div>
-                </div>
-            </ui:repeat>
+                </ui:repeat>
+            </h:form>
 
         </div>
     </cc:implementation>

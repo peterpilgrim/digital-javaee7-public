@@ -16,6 +16,8 @@
             <pre>
             lendingController = #{lendingController}
             lendingController.conversation = #{lendingController.conversation}
+            lendingController.conversation.id = #{lendingController.conversation.id}
+            lendingController.conversation.transient = #{lendingController.conversation.transient}
             </pre>
 
             <h1> JSF Instant Secure Lending</h1>
@@ -87,10 +89,9 @@
                 If you are happy about the eligibility requirements for a Duke Penny Loan, then please continue.
             </div>
 
-            <h:link styleClass="btn btn-primary btn-lg"
-                    outcome="#{lendingController.doGettingStarted()}">
-                Next
-            </h:link>
+            <h:form>
+                <h:commandButton styleClass="btn btn-primary btn-lg" action="#{lendingController.doGettingStarted()}" value="Next" />
+            </h:form>
             <hr class="subfeaturette-divider" />
 
         </ui:define> <!--name="mainContent" -->

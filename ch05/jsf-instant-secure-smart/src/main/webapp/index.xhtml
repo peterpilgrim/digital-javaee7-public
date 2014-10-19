@@ -54,14 +54,16 @@
 
             <pre>
             lendingController = #{lendingController}
-                lendingController.conversation = #{lendingController.conversation}
+            lendingController.conversation = #{lendingController.conversation}
+            lendingController.conversation.id = #{lendingController.conversation.id}
+            lendingController.conversation.transient = #{lendingController.conversation.transient}
             </pre>
 
             <div class="content-wrapper">
-                <h:link styleClass="btn btn-primary btn-lg"
-                        outcome="#{lendingController.jumpGettingStarted()}">
-                    Apply Now!
-                </h:link>
+                <h:form>
+                    <h:commandButton styleClass="btn btn-primary btn-lg"
+                            action="#{lendingController.jumpGettingStarted()}" value="Apply Now!" />
+                </h:form>
             </div>
 
             <div class="content-wrapper">
@@ -104,7 +106,26 @@
             </p>
 
             <hr class="subfeaturette-divider" />
+            <h3>H:FORM</h3>
+            <p>Use a JSF HTML Form and command buttons custom tags to ensure that the conversation scope is
+                retained as the user navigates between pages. The conversation id is passed implicitly as part of the JSF HTML Form</p>
+            <h:form>
+                <h:commandButton styleClass="btn btn-info" value="View Scoped" action="view-scoped.xhtml"/>
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-info" value="Conversation" action="conversation.xhtml"/>
+            </h:form>
 
+            <hr class="subfeaturette-divider" />
+            <h3>H:LINK</h3>
+            <p>
+                Using JSF hyperlink outside of form. Conversational scope fails to work, because the implicit ID is not
+                passed as a request and therefore JSF believes that every submission is a brand new conversation!!!
+            </p>
+            <h:link styleClass="btn btn-info" outcome="view-scoped.xhtml"> View Scoped </h:link>
+            &#160;
+            &#160;
+            <h:link styleClass="btn btn-info" outcome="conversation.xhtml"> Conversational </h:link>
         </ui:define> <!--name="mainContent" -->
 
     </ui:composition>

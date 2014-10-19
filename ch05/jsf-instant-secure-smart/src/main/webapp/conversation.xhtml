@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+        >
+<h:head>
+    <title>Family Members - @ConversationScoped</title>
+</h:head>
+<h:body>
+    <h1>
+        Family Members - @ConversationScoped</h1>
+    <p>
+        You can delete elements from the table below. The page will reload on submit, or you can use
+
+        the command button to force a reload of the page. The elements which you delete will remain
+
+        deleted.
+    </p>
+    <p>
+        If you choose to navigate back to the index page, or view scope and return, the list of
+
+        family members will remain in the previous state. If you press the command button to end
+
+        the conversation, the list will return to the original state.
+    </p>
+    <h:form>
+        <h:dataTable id="namesTable" value="#{conversationBean.names}" var="name">
+            <f:facet name="header">
+                <h:outputText value="Family Members"/>
+            </f:facet>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name"/>
+                </f:facet>
+                <h:outputText value="#{name}" />
+            </h:column>
+            <h:column>
+                <h:commandButton value="Delete" action="#{conversationBean.delete(name)}"/>
+            </h:column>
+            <f:facet name="footer">
+                <h:outputText value="Count: #{conversationBean.names.size()}"/>
+            </f:facet>
+        </h:dataTable>
+        <h:panelGroup>
+            <h:commandButton value="Reload"/>
+            <h:commandButton action="#{conversationBean.destroy()}" value="End"/>
+            <h:commandButton value="Index" action="index.xhtml"/>
+            <h:commandButton value="View Scoped" action="view-scoped.xhtml"/>
+        </h:panelGroup>
+    </h:form>
+</h:body>
+</html>
