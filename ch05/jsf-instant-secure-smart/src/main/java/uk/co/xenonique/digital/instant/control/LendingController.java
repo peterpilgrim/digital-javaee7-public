@@ -71,13 +71,13 @@ public class LendingController implements Serializable {
                 Arrays.asList(
                         new NavElement(
                                 STAGE_GETTING_STARTED, "Getting Started",
-                                "", "getting-started.xhtml?faces-redirect=true" ),
+                                "", "getting-started.xhtml" ),
                         new NavElement(
                                 STAGE_YOUR_DETAILS, "Your Details",
-                                "", "your-details.xhtml?faces-redirect=true"),
+                                "", "your-details.xhtml" ),
                         new NavElement(
                                 STAGE_YOUR_RATE, "Your Rate",
-                                "", "your-rate.xhtml?faces-redirect=true"),
+                                "", "your-rate.xhtml" ),
                         new NavElement(
                                 STAGE_YOUR_ADDRESS, "Your Address",
                                 "", "your-address.xhtml?faces-redirect=true"),
@@ -90,14 +90,18 @@ public class LendingController implements Serializable {
     }
 
     public void checkAndStart() {
+        System.out.printf("checkAndStart() conversation.transient=%s\n", conversation.isTransient());
         if ( conversation.isTransient()) {
+            System.out.printf("checkAndStart() conversation.begin()\n");
             conversation.begin();
         }
         recalculatePMT();
     }
 
     public void checkAndEnd() {
+        System.out.printf("checkAndEnd() conversation.transient=%s\n", conversation.isTransient());
         if (!conversation.isTransient()) {
+            System.out.printf("checkAndStart() conversation.end()\n");
             conversation.end();
         }
     }
@@ -125,12 +129,17 @@ public class LendingController implements Serializable {
     }
 
     public String jumpGettingStarted() {
+        checkAndStart();
         return "getting-started?faces-redirect=true";
     }
 
     public String doGettingStarted() {
         checkAndStart();
         navigation.getElementByName(STAGE_GETTING_STARTED).setVisited(true);
+        return "your-details?faces-redirect=true";
+    }
+
+    public String jumpDoYourDetails() {
         return "your-details?faces-redirect=true";
     }
 
@@ -144,6 +153,10 @@ public class LendingController implements Serializable {
         navigation.getElementByName(STAGE_YOUR_DETAILS).setVisited(true);
 
         applicant.getContactDetail().setDob(cal.getTime());
+        return "your-rate?faces-redirect=true";
+    }
+
+    public String jumpDoYourRate() {
         return "your-rate?faces-redirect=true";
     }
 

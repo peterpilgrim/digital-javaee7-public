@@ -1,8 +1,12 @@
 package uk.co.xenonique.digital.instant.control;
 
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.*;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * The type WorkerBannerComponent
@@ -10,7 +14,7 @@ import java.io.IOException;
  * @author Peter Pilgrim
  */
 @FacesComponent("workerBannerComponent")
-public class WorkerBannerComponent extends UINamingContainer {
+public class WorkerBannerComponent extends UINamingContainer implements Serializable{
 
     private SmartNavigation navigation;
 
