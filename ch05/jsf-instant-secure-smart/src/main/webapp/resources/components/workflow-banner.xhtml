@@ -9,7 +9,6 @@
     <cc:interface componentType="workerBannerComponent">
         <cc:attribute name="sectionName" required="true"/>
         <cc:attribute name="controller" required="true"/>
-        <cc:attribute name="navigation" required="true"/>
     </cc:interface>
 
     <cc:implementation>
@@ -23,15 +22,7 @@
                                              action="#{lendingController.computeEditView(myStatus.index)}"
                                              rendered="#{navElement.visited}"
                                              immediate="true"
-                                             value="Edit #{navElement.editLink} (#{myStatus.index})" />
-
-                            <!--<h:link styleClass="btn"-->
-                                    <!--value="Edit #{navElement.editLink} (#{myStatus.index})!"-->
-                                    <!--rendered="#{navElement.visited}"-->
-                                    <!--outcome="#{navElement.editLink}" >-->
-                                <!--&lt;!&ndash;<f:param name="userId" value="#{entity.user.id}" />&ndash;&gt;-->
-                                <!--&lt;!&ndash;<f:param name="productId" value="#{entity.product.id}" disable="#{entity.entityType != 'Comment'}" />&ndash;&gt;-->
-                            <!--</h:link>-->
+                                             value="Edit" />
                         </div>
                         <div class="workflow-arrow-right   #{navElement.style}  pull-left"></div>
                     </div>
