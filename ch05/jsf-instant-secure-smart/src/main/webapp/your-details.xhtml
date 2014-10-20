@@ -15,24 +15,24 @@
 
             <h1> JSF Instant Secure Lending</h1>
 
-            <xen:workflow-banner sectionName="yourDetails" navigation="#{lendingController.navigation}"/>
-            <pre>
-            lendingController = #{lendingController}
-            lendingController.conversation = #{lendingController.conversation}
-            lendingController.conversation.id = #{lendingController.conversation.id}
-            lendingController.conversation.transient = #{lendingController.conversation.transient}
-            </pre>
-
-            <div class="content-wrapper">
-                <h2> Contact Details </h2>
-                <p>
-                    Enter your details
-                </p>
-            </div>
-
             <h:form id="yourDetailsForm"
                     styleClass="form-horizontal"
                     p:role="form">
+                <xen:workflow-banner sectionName="yourDetails" controller="#{lendingController}" navigation="#{lendingController.navigation}"/>
+                <pre>
+                lendingController = #{lendingController}
+                lendingController.conversation = #{lendingController.conversation}
+                lendingController.conversation.id = #{lendingController.conversation.id}
+                lendingController.conversation.transient = #{lendingController.conversation.transient}
+                </pre>
+
+                <div class="content-wrapper">
+                    <h2> Contact Details </h2>
+                    <p>
+                        Enter your details
+                    </p>
+                </div>
+
                 <div class="form-group">
                     <h:outputLabel for="title" class="col-sm-3 control-label">
                         Title</h:outputLabel>
@@ -196,6 +196,7 @@
                 <h:commandButton styleClass="btn btn-default"
                                  action="#{lendingController.cancel()}"
                                  immediate="true" value="Cancel"/>
+
             </h:form>
 
             <hr class="subfeaturette-divider" />

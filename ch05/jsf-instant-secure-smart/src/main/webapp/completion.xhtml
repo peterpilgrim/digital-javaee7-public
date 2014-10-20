@@ -9,32 +9,33 @@
     <ui:composition template="/basic_layout.xhtml">
         <ui:define name="mainContent">
 
-            <xen:workflow-banner sectionName="completed" navigation="#{lendingController.navigation}"/>
-            <pre>
-            lendingController = #{lendingController}
-            lendingController.conversation = #{lendingController.conversation}
-            lendingController.conversation.id = #{lendingController.conversation.id}
-            lendingController.conversation.transient = #{lendingController.conversation.transient}
-            </pre>
+            <h:form id="completionForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
 
-            <h1> JSF Instant Secure Lending</h1>
+                <xen:workflow-banner sectionName="completed" controller="#{lendingController}" navigation="#{lendingController.navigation}"/>
+                <pre>
+                lendingController = #{lendingController}
+                lendingController.conversation = #{lendingController.conversation}
+                lendingController.conversation.id = #{lendingController.conversation.id}
+                lendingController.conversation.transient = #{lendingController.conversation.transient}
+                </pre>
 
-            <div class="jumbotron">
-                <h1> Complete </h1>
-                <p>
-                    Terrific! You completed the instant secure loan application.
-                    You have successfully applied for a loan.
-                    We will be in touch within 48 hours to let you know when you can expect your money.
-                </p>
-                <h:form id="completionForm"
-                        styleClass="form-horizontal"
-                        p:role="form">
-                    <h:commandButton styleClass="btn btn-primary"
-                                     action="#{lendingController.doCompletion()}"
-                                     value="Finish" />
-                </h:form>
+                <h1> JSF Instant Secure Lending</h1>
 
-            </div>
+                <div class="jumbotron">
+                    <h1> Complete </h1>
+                    <p>
+                        Terrific! You completed the instant secure loan application.
+                        You have successfully applied for a loan.
+                        We will be in touch within 48 hours to let you know when you can expect your money.
+                    </p>
+                        <h:commandButton styleClass="btn btn-primary"
+                                         action="#{lendingController.doCompletion()}"
+                                         value="Finish" />
+
+                </div>
+            </h:form>
 
             <div class="content-wrapper completion" >
                 <img id="completionImage" class="center-block" src="#{request.contextPath}/resources/images/IMG_0226_1024x683.JPG" />

@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite" >
 
     <cc:interface componentType="workerBannerComponent">
         <cc:attribute name="sectionName" required="true"/>
+        <cc:attribute name="controller" required="true"/>
         <cc:attribute name="navigation" required="true"/>
     </cc:interface>
 
     <cc:implementation>
         <div class="workflow-wrapper">
 
-            <h:form>
-                <ui:repeat var="navElement" value="#{cc.navigation.elements}" >
+                <ui:repeat var="navElement" value="#{cc.attrs.controller.navigation.elements}" varStatus="myStatus">
                     <div class="workflow-column">
                         <div class="workflow-title  #{navElement.style}  pull-left" >
                             #{navElement.title}
-                            <h:commandButton styleClass="btn" action="#{navElement.editLink}" rendered="#{navElement.visited}" value="Edit #{navElement.editLink}"/>
+                            <h:commandButton styleClass="btn"
+                                             action="#{lendingController.computeEditView(myStatus.index)}"
+                                             rendered="#{navElement.visited}"
+                                             immediate="true"
+                                             value="Edit #{navElement.editLink} (#{myStatus.index})" />
+
+                            <!--<h:link styleClass="btn"-->
+                                    <!--value="Edit #{navElement.editLink} (#{myStatus.index})!"-->
+                                    <!--rendered="#{navElement.visited}"-->
+                                    <!--outcome="#{navElement.editLink}" >-->
+                                <!--&lt;!&ndash;<f:param name="userId" value="#{entity.user.id}" />&ndash;&gt;-->
+                                <!--&lt;!&ndash;<f:param name="productId" value="#{entity.product.id}" disable="#{entity.entityType != 'Comment'}" />&ndash;&gt;-->
+                            <!--</h:link>-->
                         </div>
                         <div class="workflow-arrow-right   #{navElement.style}  pull-left"></div>
                     </div>
                 </ui:repeat>
-            </h:form>
 
         </div>
     </cc:implementation>

@@ -1,10 +1,7 @@
 package uk.co.xenonique.digital.instant.control;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.*;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -16,6 +13,7 @@ import java.io.Serializable;
 @FacesComponent("workerBannerComponent")
 public class WorkerBannerComponent extends UINamingContainer implements Serializable{
 
+    private LendingController controller;
     private SmartNavigation navigation;
 
     @Override
@@ -24,7 +22,12 @@ public class WorkerBannerComponent extends UINamingContainer implements Serializ
             throw new NullPointerException("no faces context supplied");
         }
         String sectionName = (String)getAttributes().get("sectionName");
+//        setSectionName(sectionName);
+        controller = (LendingController)getAttributes().get("controller");
         navigation = (SmartNavigation)getAttributes().get("navigation");
+        System.out.printf(">>>>> WorkerBannerComponent.encodeAll() navigation=%s\n", navigation);
+
+//        setNavigation(navigation);
 
         for (NavElement element: navigation.getElements()) {
             if ( sectionName.endsWith( element.getName())) {
@@ -37,15 +40,7 @@ public class WorkerBannerComponent extends UINamingContainer implements Serializ
         super.encodeAll(context);
     }
 
-    // Getters and setters omitted
-
-
     public SmartNavigation getNavigation() {
         return navigation;
     }
-
-    public void setNavigation(SmartNavigation navigation) {
-        this.navigation = navigation;
-    }
-
 }

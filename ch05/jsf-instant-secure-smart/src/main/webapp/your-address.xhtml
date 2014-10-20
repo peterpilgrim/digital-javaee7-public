@@ -9,19 +9,19 @@
     <ui:composition template="/basic_layout.xhtml">
         <ui:define name="mainContent">
 
-            <xen:workflow-banner sectionName="yourAddress" navigation="#{lendingController.navigation}"/>
-            <pre>
-            lendingController = #{lendingController}
-            lendingController.conversation = #{lendingController.conversation}
-            lendingController.conversation.id = #{lendingController.conversation.id}
-            lendingController.conversation.transient = #{lendingController.conversation.transient}
-            </pre>
-
-            <h1> JSF Instant Secure Lending</h1>
-
             <h:form id="yourAddressForm"
                     styleClass="form-horizontal"
                     p:role="form">
+                <xen:workflow-banner sectionName="yourAddress" controller="#{lendingController}" navigation="#{lendingController.navigation}"/>
+                <pre>
+                lendingController = #{lendingController}
+                lendingController.conversation = #{lendingController.conversation}
+                lendingController.conversation.id = #{lendingController.conversation.id}
+                lendingController.conversation.transient = #{lendingController.conversation.transient}
+                </pre>
+
+                <h1> JSF Instant Secure Lending</h1>
+
                 <div class="form-group">
                     <h:outputLabel for="houseOrFlatNumber" class="col-sm-3 control-label">
                         House number</h:outputLabel>

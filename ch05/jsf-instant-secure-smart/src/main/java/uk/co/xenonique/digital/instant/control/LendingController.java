@@ -31,12 +31,23 @@ import java.util.Date;
 @Named("lendingController")
 @ConversationScoped
 public class LendingController implements Serializable {
-    public static final String STAGE_GETTING_STARTED = "gettingStarted";
-    public static final String STAGE_YOUR_DETAILS = "yourDetails";
-    public static final String STAGE_YOUR_RATE = "yourRate";
-    public static final String STAGE_YOUR_ADDRESS = "yourAddress";
-    public static final String STAGE_CONFIRM = "confirm";
-    public static final String STAGE_COMPLETION = "completion";
+
+    // Stage names inside the wizard
+    public static final String WIZARD_STAGE_GETTING_STARTED = "gettingStarted";
+    public static final String WIZARD_STAGE_YOUR_DETAILS = "yourDetails";
+    public static final String WIZARD_STAGE_YOUR_RATE = "yourRate";
+    public static final String WIZARD_STAGE_YOUR_ADDRESS = "yourAddress";
+    public static final String WIZARD_STAGE_CONFIRM = "confirm";
+    public static final String WIZARD_STAGE_COMPLETED = "completed";
+
+    // The title for each stage
+    public static final String WIZARD_TITLE_GETTING_STARTED = "Getting Started";
+    public static final String WIZARD_TITLE_YOUR_DETAILS = "Your Details";
+    public static final String WIZARD_TITLE_YOUR_RATE = "Your Rate";
+    public static final String WIZARD_TITLE_YOUR_ADDRESS = "Your Address";
+    public static final String WIZARD_TITLE_CONFIRM = "Confirm";
+    public static final String WIZARD_TITLE_COMPLETION = "Completion";
+
     @EJB ApplicantService applicantService;
     @Inject Conversation conversation;
     @Inject Utility utility;
@@ -68,46 +79,47 @@ public class LendingController implements Serializable {
         applicant.setLoanTermMonths(DEFAULT_LOAN_TERM);
         applicant.setAddress(new Address());
         applicant.setContactDetail(new ContactDetail());
-        navigation = new SmartNavigation(
-                Arrays.asList(
-                        new NavElement(
-                                STAGE_GETTING_STARTED, "Getting Started",
-                                "", "/getting-started.xhtml"),
-                        new NavElement(
-                                STAGE_YOUR_DETAILS, "Your Details",
-                                "", "/your-details.xhtml"),
-                        new NavElement(
-                                STAGE_YOUR_RATE, "Your Rate",
-                                "", "/your-rate.xhtml"),
-                        new NavElement(
-                                STAGE_YOUR_ADDRESS, "Your Address",
-                                "", "/your-address.xhtml?faces-redirect=true"),
-                        new NavElement(
-                                STAGE_CONFIRM, "Confirm",
-                                "", "/confirm.xhtml?faces-redirect=true"),
-                        new NavElement(
-                                STAGE_COMPLETION, "Completion",
-                                "", "/completion.xhtml?faces-redirect=true")));
     }
 
     @PostConstruct
     public void init() {
-//        conversation.begin();
+        conversation.begin();
+        navigation = new SmartNavigation(
+            Arrays.asList(
+                new NavElement(
+                        WIZARD_STAGE_GETTING_STARTED, WIZARD_TITLE_GETTING_STARTED,
+                        "", "/getting-started.xhtml?faces-redirect=true"),
+                new NavElement(
+                        WIZARD_STAGE_YOUR_DETAILS, WIZARD_TITLE_YOUR_DETAILS,
+                        "", "/your-details.xhtml?faces-redirect=true"),
+                new NavElement(
+                        WIZARD_STAGE_YOUR_RATE, WIZARD_TITLE_YOUR_RATE,
+                        "", "/your-rate.xhtml?faces-redirect=true"),
+                new NavElement(
+                        WIZARD_STAGE_YOUR_ADDRESS, WIZARD_TITLE_YOUR_ADDRESS,
+                        "", "/your-address.xhtml?faces-redirect=true"),
+                new NavElement(
+                        WIZARD_STAGE_CONFIRM, WIZARD_TITLE_CONFIRM,
+                        "", "/confirm.xhtml?faces-redirect=true"),
+                new NavElement(
+                        WIZARD_STAGE_COMPLETED, WIZARD_TITLE_COMPLETION,
+                        "", "/completion.xhtml?faces-redirect=true")));
+    }
+
+    public String computeEditView( int index ) {
+        NavElement element =  navigation.getElements().get(index);
+        return element.getEditLink() /*+ "?faces-redirect=true"*/;
     }
 
     public void checkAndStart() {
-        System.out.printf("checkAndStart() conversation=%s conversation.id=%s conversation.transient=%s\n", conversation, conversation.getId(), conversation.isTransient());
         if ( conversation.isTransient()) {
-            System.out.printf("checkAndStart() conversation.begin()\n");
             conversation.begin();
         }
         recalculatePMT();
     }
 
     public void checkAndEnd() {
-        System.out.printf("checkAndEnd() conversation=%s conversation.id=%s conversation.transient=%s\n", conversation, conversation.getId(), conversation.isTransient());
         if (!conversation.isTransient()) {
-            System.out.printf("checkAndStart() conversation.end()\n");
             conversation.end();
         }
     }
@@ -141,11 +153,7 @@ public class LendingController implements Serializable {
 
     public String doGettingStarted() {
         checkAndStart();
-        navigation.getElementByName(STAGE_GETTING_STARTED).setVisited(true);
-        return "your-details?faces-redirect=true";
-    }
-
-    public String jumpDoYourDetails() {
+        navigation.getElementByName(WIZARD_STAGE_GETTING_STARTED).setVisited(true);
         return "your-details?faces-redirect=true";
     }
 
@@ -156,25 +164,21 @@ public class LendingController implements Serializable {
         cal.set(Calendar.MONTH, dobMonth-1);
         int year = Integer.parseInt(dobYear);
         cal.set(Calendar.YEAR, year);
-        navigation.getElementByName(STAGE_YOUR_DETAILS).setVisited(true);
+        navigation.getElementByName(WIZARD_STAGE_YOUR_DETAILS).setVisited(true);
 
         applicant.getContactDetail().setDob(cal.getTime());
         return "your-rate?faces-redirect=true";
     }
 
-    public String jumpDoYourRate() {
-        return "your-rate?faces-redirect=true";
-    }
-
     public String doYourRate() {
         checkAndStart();
-        navigation.getElementByName(STAGE_YOUR_RATE).setVisited(true);
+        navigation.getElementByName(WIZARD_STAGE_YOUR_RATE).setVisited(true);
         return "your-address?faces-redirect=true";
     }
 
     public String doYourAddress() {
         checkAndStart();
-        navigation.getElementByName(STAGE_YOUR_ADDRESS).setVisited(true);
+        navigation.getElementByName(WIZARD_STAGE_YOUR_ADDRESS).setVisited(true);
         return "confirm?faces-redirect=true";
     }
 
@@ -192,19 +196,22 @@ public class LendingController implements Serializable {
 
     public String doConfirm() {
         checkAndStart();
-        if ( applicant.isTermsAgreed()) {
+        if ( !applicant.isTermsAgreed()) {
             throw new IllegalStateException("terms of agreements not set to true");
         }
         recalculatePMT();
         applicant.setSubmitDate(new Date());
         applicantService.add(applicant);
-        navigation.getElementByName(STAGE_CONFIRM).setVisited(true);
+        // If we get here, the applicant has inserted a record into the database and there is no going backwards!
+        // Remove all of the visitation links.
+        for (NavElement element: navigation.getElements()) {
+            element.setVisited(false);
+        }
         return "completion?faces-redirect=true";
     }
 
     public String doCompletion() {
         checkAndEnd();
-        navigation.getElementByName(STAGE_COMPLETION).setVisited(true);
         return "index?faces-redirect=true";
     }
 
