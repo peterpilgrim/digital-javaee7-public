@@ -13,7 +13,7 @@ import java.io.Serializable;
 @FacesComponent("workerBannerComponent")
 public class WorkerBannerComponent extends UINamingContainer implements Serializable{
 
-    private LendingController controller;
+    private NavigatableController controller;
 
     @Override
     public void encodeAll(FacesContext context) throws IOException {
@@ -22,7 +22,7 @@ public class WorkerBannerComponent extends UINamingContainer implements Serializ
         }
         String sectionName = (String)getAttributes().get("sectionName");
 //        setSectionName(sectionName);
-        controller = (LendingController)getAttributes().get("controller");
+        controller = (NavigatableController)getAttributes().get("controller");
         SmartNavigation navigation = controller.getNavigation();
         System.out.printf(">>>>> WorkerBannerComponent.encodeAll() navigation=%s\n", navigation);
 

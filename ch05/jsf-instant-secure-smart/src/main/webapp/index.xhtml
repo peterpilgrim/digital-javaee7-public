@@ -101,8 +101,21 @@
 
             <p>
                 Group = <span class="blau">uk.co.xenonique.digital.javaee</span> <br/>
-                ArtifactId = <span class="blau" >jsf-instant-secure</span> <br/>
+                ArtifactId = <span class="blau" >jsf-instant-secure-smart</span> <br/>
                 Version = <span class="blau">1.0-SNAPSHOT</span> <br/>
+            </p>
+
+            <h3>Project Notes</h3>
+
+            <p>
+                This example project demonstrates a modified lending controller that acts like a wizard where
+                the applicant has a change to go back and change information in the workflow.
+                This is an additional project that is not described in the <b>Digital Java EE 7</b> book, because
+                there is more than enough content for <i>Chapter 5: Conversations and Journeys</i>.
+                The keys to understanding the new functionality are the classes: <code>uk.co.xenonique.digital.instant.control.NavigatableController</code>
+                , <code>uk.co.xenonique.digital.instant.control.SmartNavigation</code> and <code>uk.co.xenonique.digital.instant.control.NavElement</code>.
+                It should be noted that <code>LendingController</code> is an implementation of <code>NavigatableController</code>, and the
+                custom composite component <code>WorkerBannerComponent</code> accepts a <code>NavigatableController</code>.
             </p>
 
             <hr class="subfeaturette-divider" />

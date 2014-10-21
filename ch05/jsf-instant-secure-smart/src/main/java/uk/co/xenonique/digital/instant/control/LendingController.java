@@ -30,7 +30,7 @@ import java.util.Date;
 
 @Named("lendingController")
 @ConversationScoped
-public class LendingController implements Serializable {
+public class LendingController implements Serializable, NavigatableController {
 
     // Stage names inside the wizard
     public static final String WIZARD_STAGE_GETTING_STARTED = "gettingStarted";
@@ -106,7 +106,8 @@ public class LendingController implements Serializable {
                         "", "/completion.xhtml?faces-redirect=true")));
     }
 
-    public String computeEditView( int index ) {
+    @Override
+    public String computeEditView(int index) {
         NavElement element =  navigation.getElements().get(index);
         return element.getEditLink() /*+ "?faces-redirect=true"*/;
     }
@@ -285,6 +286,7 @@ public class LendingController implements Serializable {
         this.currencySymbol = currencySymbol;
     }
 
+    @Override
     public SmartNavigation getNavigation() {
         return navigation;
     }
