@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="mainContent">
+
+            <xen:workflow-banner sectionName="yourRate"/>
+
+            <div class="content-wrapper">
+                <h1> JSF Instant Secure Lending</h1>
+                <p>
+                    Enter your loan amount and rate.
+                    You can borrow from
+                    <b>
+                    <h:outputText value="#{lendingController.minimumLoanAmount}" >
+                        <f:convertNumber currencyCode="GBP" type="currency" />
+                    </h:outputText>
+                    </b>
+                    to
+                    <b>
+                    <h:outputText value="#{lendingController.maximumLoanAmount}" >
+                        <f:convertNumber currencyCode="GBP" type="currency" />
+                    </h:outputText>
+                    </b>
+                    on a rate from
+                    <b>
+                    <h:outputText value="#{lendingController.minimumLoanRate}" >
+                        <f:convertNumber pattern="0.00" />
+                    </h:outputText>&#37;
+                    </b>
+                    to
+                    <b>
+                    <h:outputText value="#{lendingController.maximumLoanRate}" >
+                        <f:convertNumber pattern="0.00" />
+                    </h:outputText>&#37;
+                    </b>.
+
+                </p>
+            </div>
+
+            <h:form id="yourRateForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
+                <div class="form-group">
+                    <h:outputLabel for="loanAmount" class="col-sm-3 control-label">
+                        Loan Amount</h:outputLabel>
+                    <div class="col-sm-9">
+                        <input class="form-control" jsf:label="Loan Amount"
+                                     jsf:value="#{lendingController.applicant.loanAmount}"
+                                     type="range"
+                                     min="#{lendingController.minimumLoanAmount}"
+                                     max="#{lendingController.maximumLoanAmount}"
+                                     step="250"
+                                     id="loanAmount" >
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="loanAmountError"/>
+                            <f:ajax event="valueChange"
+                                    listener="#{lendingController.recalculatePMT()}"
+                                    render="paymentMonthlyOutput loanRateOutput  totalPayableOutput" />
+                        </input>
+                        <h:message id="loanAmountError"
+                                   for="loanAmount" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+
+                <c:set var="loanAmountWidth" value="#{100.0 * (lendingController.applicant.loanAmount - lendingController.minimumLoanAmount) / (lendingController.maximumLoanAmount - lendingController.minimumLoanAmount)}" />
+
+                <div class="progress">
+                    <div id="loanAmountProgress" class="progress-bar  progress-bar-success  progress-bar-striped"
+                         role="progressbar" aria-valuenow="#{lendingController.applicant.loanAmount}"
+                         aria-valuemin="#{lendingController.minimumLoanAmount}"
+                         aria-valuemax="#{lendingController.maximumLoanAmount}"
+                         style="width: ${loanAmountWidth}%;">
+                        #{lendingController.applicant.loanAmount}
+                    </div>
+                </div>
+
+                <div class="content-wrapper">
+                    <p id="loanAmountText" class="monetary-text">
+                        You would like to borrow
+                        <b> #{lendingController.currencySymbol}
+                        <h:outputText value="#{lendingController.applicant.loanAmount}" >
+                            <f:convertNumber pattern="#0,000" />
+                        </h:outputText> </b>
+                    </p>
+                </div>
+
+                <c:set var="loanRateWidth" value="#{100.0 * (lendingController.applicant.loanRate - lendingController.minimumLoanRate) / (lendingController.maximumLoanRate - lendingController.minimumLoanRate)}" />
+
+                <h:panelGroup layout="block" id="loanRateOutput">
+                    <div class="progress">
+                        <div id="loanRateProgress" class="progress-bar  progress-bar-info  progress-bar-striped"
+                             role="progressbar" aria-valuenow="#{lendingController.recalculateLoanRate()}"
+                             aria-valuemin="#{lendingController.minimumLoanRate}"
+                             aria-valuemax="#{lendingController.maximumLoanRate}"
+                             style="width: ${loanRateWidth}%;">
+                            #{lendingController.applicant.loanRate}
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <p id="loanRateText" class="monetary-text">
+                            The tax rate will be
+                            <b> <h:outputText value="#{lendingController.applicant.loanRate}" >
+                                <f:convertNumber pattern="0.000" />
+                            </h:outputText>&#37;</b>
+                        </p>
+                    </div>
+                </h:panelGroup>
+
+
+                <div class="form-group">
+                    <h:outputLabel for="loanTerm" class="col-sm-3 control-label">
+                        Loan Term (Months)</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu class="form-control"
+                                         label="Title" id="loanTerm"
+                                         value="#{lendingController.applicant.loanTermMonths}">
+                            <f:selectItem itemLabel="12 months" itemValue="12" />
+                            <f:selectItem itemLabel="24 months" itemValue="24" />
+                            <f:selectItem itemLabel="36 months" itemValue="36" />
+                            <f:selectItem itemLabel="48 months" itemValue="48" />
+                            <f:selectItem itemLabel="60 months" itemValue="60" />
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="loanTermError"/>
+                            <f:ajax event="valueChange"
+                                    listener="#{lendingController.recalculatePMT()}"
+                                    render="paymentMonthlyOutput  loanRateOutput  monthTermsOutput  totalPayableOutput" />
+                        </h:selectOneMenu>
+                        <h:message id="loanTermError"
+                                   for="loanTerm" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+
+                <div class="content-wrapper" >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="monetary-text-large">
+                                Your monthly payment is <b>
+                                #{lendingController.currencySymbol}<h:outputText id="paymentMonthlyOutput" value="#{lendingController.recalculatePMT()}">
+                                    <f:convertNumber pattern="#0.00" />
+                                </h:outputText></b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="monetary-text">
+                                Loan term
+                                <h:outputText id="monthTermsOutput"
+                                    value="#{lendingController.applicant.loanTermMonths}"/> months
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="monetary-text">
+                                Total payable
+                                #{lendingController.currencySymbol}<h:outputText id="totalPayableOutput"
+                                              value="#{lendingController.totalPayable}">
+                                    <f:convertNumber pattern="#0,000" />
+                                </h:outputText>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{lendingController.doYourRate()}"
+                                 value="Submit" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{lendingController.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

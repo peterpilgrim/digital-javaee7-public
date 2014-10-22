@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <ui:composition template="/basic_layout.xhtml">
+
+        <ui:define name="mainContent">
+
+            <h1> JSF Instant Secure Lending</h1>
+
+            <p>
+                Welcome to Duke Penny Loan where developers, designers and architect can secure
+                an instant loan. <em>You move. We move.</em>
+            </p>
+
+            <div class="content-wrapper   center-block">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"  data-interval="10000">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="#{request.contextPath}/resources/images/IMG_0679_1024x683.JPG" />
+                        </div>
+                        <div class="item">
+                            <img src="#{request.contextPath}/resources/images/IMG_0064_1024x683.JPG" />
+                        </div>
+                        <div class="item">
+                            <img src="#{request.contextPath}/resources/images/IMG_0525_1024x683.JPG" />
+                        </div>
+                        <div class="item">
+                            <img src="#{request.contextPath}/resources/images/IMG_0193_1024x683.JPG" />
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div><!-- content-wrapper  -->
+
+
+            <div class="content-wrapper">
+                <h:link styleClass="btn btn-primary btn-lg"
+                        outcome="#{lendingController.jumpGettingStarted()}">
+                    Apply Now!
+                </h:link>
+            </div>
+
+            <div class="content-wrapper">
+                <p>
+                    Apply for a Dukes Dollar loan.
+                    You borrow from
+                    <b>
+                        <h:outputText value="#{lendingController.minimumLoanAmount}" >
+                            <f:convertNumber currencyCode="GBP" type="currency" />
+                        </h:outputText>
+                    </b>
+                    to
+                    <b>
+                        <h:outputText value="#{lendingController.maximumLoanAmount}" >
+                            <f:convertNumber currencyCode="GBP" type="currency" />
+                        </h:outputText>
+                    </b>
+                    on a rate from
+                    <b>
+                        <h:outputText value="#{lendingController.minimumLoanRate}" >
+                            <f:convertNumber pattern="0.00" />
+                        </h:outputText>&#37;
+                    </b>
+                    to
+                    <b>
+                        <h:outputText value="#{lendingController.maximumLoanRate}" >
+                            <f:convertNumber pattern="0.00" />
+                        </h:outputText>&#37;
+                    </b>.
+                </p>
+            </div>
+
+
+            <hr class="subfeaturette-divider" />
+
+            <p>
+                Group = <span class="blau">uk.co.xenonique.digital.javaee</span> <br/>
+                ArtifactId = <span class="blau" >jsf-instant-secure</span> <br/>
+                Version = <span class="blau">1.0-SNAPSHOT</span> <br/>
+            </p>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

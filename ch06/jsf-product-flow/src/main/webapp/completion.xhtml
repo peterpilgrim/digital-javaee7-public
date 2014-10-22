@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="mainContent">
+
+            <xen:workflow-banner sectionName="completed"/>
+
+            <h1> JSF Instant Secure Lending</h1>
+
+            <div class="jumbotron">
+                <h1> Complete </h1>
+                <p>
+                    Terrific! You completed the instant secure loan application.
+                    You have successfully applied for a loan.
+                    We will be in touch within 48 hours to let you know when you can expect your money.
+                </p>
+                <h:form id="completionForm"
+                        styleClass="form-horizontal"
+                        p:role="form">
+                    <h:commandButton styleClass="btn btn-primary"
+                                     action="#{lendingController.doCompletion()}"
+                                     value="Finish" />
+                </h:form>
+
+            </div>
+
+            <div class="content-wrapper completion" >
+                <img id="completionImage" class="center-block" src="#{request.contextPath}/resources/images/IMG_0226_1024x683.JPG" />
+            </div>
+
+            <div class="content-wrapper" >
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="monetary-text">
+                            Your loan amount <b>
+                            #{lendingController.currencySymbol}<h:outputText value="#{lendingController.applicant.loanAmount}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText></b>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="monetary-text">
+                            Your loan rate <b>
+                            <h:outputText value="#{lendingController.applicant.loanRate}">
+                                <f:convertNumber pattern="#0.000" />
+                            </h:outputText>&#37;</b>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="monetary-text">
+                            Your monthly payment is
+                            <b>#{lendingController.currencySymbol}<h:outputText value="#{lendingController.paymentMonthlyAmount}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText></b>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="monetary-text">
+                            Loan term
+                            <b><h:outputText id="monthTermsOutput"
+                                          value="#{lendingController.applicant.loanTermMonths}"/> months</b>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="monetary-text">
+                            Total payable
+                            <b>#{lendingController.currencySymbol} <h:outputText id="totalPayableOutput"
+                                          value="#{lendingController.totalPayable}">
+                                <f:convertNumber pattern="#0,000" />
+                            </h:outputText></b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>

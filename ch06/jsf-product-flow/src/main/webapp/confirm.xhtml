@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:xen="http://xmlns.jcp.org/jsf/composite/components">
+
+    <ui:composition template="/basic_layout.xhtml">
+        <ui:define name="mainContent">
+
+            <xen:workflow-banner sectionName="confirm"/>
+
+            <div class="content-wrapper">
+                <h1> JSF Instant Secure Lending</h1>
+
+                <p>
+                    Confirmation of your loan.
+                    Please check the details of your application.
+                </p>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th> Item </th>
+                            <th> Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Your Name </td>
+                            <td>
+                             #{lendingController.applicant.contactDetail.title}
+                             #{lendingController.applicant.contactDetail.firstName}
+                             #{lendingController.applicant.contactDetail.middleName}
+                             #{lendingController.applicant.contactDetail.lastName}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth</td>
+                            <td>#{lendingController.applicant.contactDetail.dob}</td>
+                        </tr>
+                        <tr>
+                            <td>Loan Amount</td>
+                            <td>
+                                #{lendingController.currencySymbol}<h:outputText value="#{lendingController.applicant.loanAmount}" >
+                                    <f:convertNumber pattern="#0,000" />
+                                </h:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Loan Rate</td>
+                            <td>
+                                <h:outputText value="#{lendingController.applicant.loanRate}" >
+                                    <f:convertNumber pattern="#0,000" />
+                                </h:outputText>&#37;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Loan Term (months)</td>
+                            <td>
+                                #{lendingController.applicant.loanTermMonths} months
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>House or Flat</td>
+                            <td>#{lendingController.applicant.address.houseOrFlatNumber}</td>
+                        </tr>
+                        <tr>
+                            <td>Street 1</td>
+                            <td>#{lendingController.applicant.address.street1}</td>
+                        </tr>
+                        <tr>
+                            <td>Street 2</td>
+                            <td>#{lendingController.applicant.address.street2}</td>
+                        </tr>
+                        <tr>
+                            <td>Town / City</td>
+                            <td>#{lendingController.applicant.address.townOrCity}</td>
+                        </tr>
+                        <tr>
+                            <td>County / Region</td>
+                            <td>#{lendingController.applicant.address.region}</td>
+                        </tr>
+                        <tr>
+                            <td>Post Code</td>
+                            <td>#{lendingController.applicant.address.areaCode}</td>
+                        </tr>
+                        <tr>
+                            <td>Country</td>
+                            <td>#{lendingController.applicant.address.country}</td>
+                        </tr>
+                        <tr>
+                            <td>Home telephone</td>
+                            <td>#{lendingController.applicant.homePhone}</td>
+                        </tr>
+                        <tr>
+                            <td>Work telephone</td>
+                            <td>#{lendingController.applicant.workPhone}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile telephone</td>
+                            <td>#{lendingController.applicant.mobileNumber}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h:messages globalOnly="true"  styleClass="alert alert-danger" />
+
+            <h:form id="yourConfirmForm"
+                    styleClass="form-horizontal"
+                    p:role="form">
+
+                <p>
+                    Please confirm your happiness?
+                </p>
+
+                <div class="form-group">
+                    <h:outputLabel for="tocAgreed" class="col-sm-6 control-label">
+                        Do you agree with the <em>Terms of Conditions</em>?
+                    </h:outputLabel>
+                    <div class="col-sm-6">
+                        <h:selectBooleanCheckbox class="form-control"
+                                         label="TOC Agreement" id="tocAgreed"
+                                         value="#{lendingController.applicant.termsAgreed}"
+                                         validator="#{lendingController.validateTermsOrConditions}" >
+                            <f:ajax event="blur" render="tocAgreedError"/>
+                        </h:selectBooleanCheckbox>
+                        <h:message id="tocAgreedError"
+                                   for="tocAgreed" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <p>
+                    Please ensure that you read and agreed with our
+                    <h:link target="new" outcome="/terms-and-conditions.xhtml" >Terms and Conditions</h:link> of the loan.
+                </p>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{lendingController.doConfirm()}"
+                                 value="Next" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{lendingController.cancel()}"
+                                 immediate="true" value="Cancel"/>
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>
