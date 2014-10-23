@@ -25,7 +25,6 @@ import java.util.Date;
  *
  * @author Peter Pilgrim
  */
-
 @Named("lendingController")
 @ConversationScoped
 public class LendingController implements Serializable {
@@ -140,7 +139,7 @@ public class LendingController implements Serializable {
 
     public String doConfirm() {
         checkAndStart();
-        if ( applicant.isTermsAgreed()) {
+        if ( !applicant.isTermsAgreed()) {
             throw new IllegalStateException("terms of agreements not set to true");
         }
         recalculatePMT();
