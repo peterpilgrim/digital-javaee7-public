@@ -9,11 +9,11 @@
 
         <ui:define name="mainContent">
 
-            <h1> JSF Instant Secure Lending</h1>
+            <h1> JSF Product Approval Flow </h1>
 
             <p>
-                Welcome to Duke Penny Loan where developers, designers and architect can secure
-                an instant loan. <em>You move. We move.</em>
+                Welcome to Duke Product Approval Flows where developers, designers and architects can
+                market product under business approval. <em>You move. We move.</em>
             </p>
 
             <div class="content-wrapper   center-block">
@@ -54,40 +54,47 @@
 
 
             <div class="content-wrapper">
-                <h:link styleClass="btn btn-primary btn-lg"
-                        outcome="#{lendingController.jumpGettingStarted()}">
-                    Apply Now!
-                </h:link>
-            </div>
+                <h:form id="loginForm"
+                        styleClass="form-horizontal"
+                        p:role="form">
+                    <div class="form-group">
+                        <h:outputLabel for="username" class="col-sm-3 control-label">
+                            User name </h:outputLabel>
+                        <div class="col-sm-9">
+                            <h:inputText class="form-control" label="User name"
+                                         value="#{loginController.username}"
+                                         id="username" placeholder="User name">
+                                <f:validateRequired/>
+                                <f:validateLength maximum="32" />
+                                <f:ajax event="blur" render="username"/>
+                            </h:inputText>
+                            <h:message id="usernameError"
+                                       for="username" styleClass="alert validation-error"/>
+                        </div>
+                    </div>
 
-            <div class="content-wrapper">
-                <p>
-                    Apply for a Dukes Dollar loan.
-                    You borrow from
-                    <b>
-                        <h:outputText value="#{lendingController.minimumLoanAmount}" >
-                            <f:convertNumber currencyCode="GBP" type="currency" />
-                        </h:outputText>
-                    </b>
-                    to
-                    <b>
-                        <h:outputText value="#{lendingController.maximumLoanAmount}" >
-                            <f:convertNumber currencyCode="GBP" type="currency" />
-                        </h:outputText>
-                    </b>
-                    on a rate from
-                    <b>
-                        <h:outputText value="#{lendingController.minimumLoanRate}" >
-                            <f:convertNumber pattern="0.00" />
-                        </h:outputText>&#37;
-                    </b>
-                    to
-                    <b>
-                        <h:outputText value="#{lendingController.maximumLoanRate}" >
-                            <f:convertNumber pattern="0.00" />
-                        </h:outputText>&#37;
-                    </b>.
-                </p>
+                    <div class="form-group">
+                        <h:outputLabel for="password" class="col-sm-3 control-label">
+                            User name </h:outputLabel>
+                        <div class="col-sm-9">
+                            <h:inputSecret class="form-control" label="User name"
+                                         value="#{loginController.password}"
+                                         id="password" placeholder="User name">
+                                <f:validateRequired/>
+                                <f:validateLength maximum="32" />
+                                <f:ajax event="blur" render="password"/>
+                            </h:inputSecret>
+                            <h:message id="passwordError"
+                                       for="password" styleClass="alert validation-error"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h:commandButton styleClass="btn btn-primary"
+                                         action="#{loginController.submit()}"
+                                         value="Submit" />
+                    </div>
+                </h:form>
             </div>
 
 
@@ -95,7 +102,7 @@
 
             <p>
                 Group = <span class="blau">uk.co.xenonique.digital.javaee</span> <br/>
-                ArtifactId = <span class="blau" >jsf-instant-secure</span> <br/>
+                ArtifactId = <span class="blau" >jsf-product-flow</span> <br/>
                 Version = <span class="blau">1.0-SNAPSHOT</span> <br/>
             </p>
 

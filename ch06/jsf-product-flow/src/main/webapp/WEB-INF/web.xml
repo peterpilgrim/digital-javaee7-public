@@ -26,6 +26,16 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>LoginAuthenticationFilter</filter-name>
+        <filter-class>uk.co.xenonique.digital.product.security.LoginAuthenticationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>LoginAuthenticationFilter</filter-name>
+        <url-pattern>/simple/*</url-pattern>
+    </filter-mapping>
+
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
