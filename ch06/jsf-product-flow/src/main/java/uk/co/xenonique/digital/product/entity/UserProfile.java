@@ -3,37 +3,41 @@ package uk.co.xenonique.digital.product.entity;
 import javax.persistence.*;
 
 /**
- * The type User
+ * The type UserProfile.
  *
  * @author Peter Pilgrim (peter)
  */
 @Entity
-@Table(name="USER")
+@Table(name="USER_PROFILE")
 @NamedQueries({
-        @NamedQuery(name="User.findAll",
-                query = "select u from User u "),
-        @NamedQuery(name="User.findById",
-                query = "select u from User u where u.id = :id"),
-        @NamedQuery(name="User.findByUsername",
-                query = "select u from User u where u.username = :username"),
+        @NamedQuery(name="UserProfile.findAll",
+                query = "select u from UserProfile u "),
+        @NamedQuery(name="UserProfile.findById",
+                query = "select u from UserProfile u where u.id = :id"),
+        @NamedQuery(name="UserProfile.findByUsername",
+                query = "select u from UserProfile u where u.username = :username"),
 })
-public class User {
+public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="USER", nullable = false,
+    @Column(name="USER_ID", nullable = false,
             insertable = true, updatable = true,
-            table = "USER")
+            table = "USER_PROFILE")
     private long id;
     private String username;
     private String password;
 
-    public User() {
-        this(null,null);
+    @ManyToOne(cascade = CascadeType.ALL)
+    private UserRole role;
+
+    public UserProfile() {
+        this(null,null, null);
     }
 
-    public User(String username, String password) {
+    public UserProfile(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     public long getId() {
@@ -60,12 +64,20 @@ public class User {
         this.password = password;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (!(o instanceof UserProfile)) return false;
 
-        User user = (User) o;
+        UserProfile user = (UserProfile) o;
 
         if (id != user.id) return false;
 
@@ -79,10 +91,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserProfile{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

@@ -1,6 +1,6 @@
 package uk.co.xenonique.digital.product.boundary;
 
-import uk.co.xenonique.digital.product.entity.User;
+import uk.co.xenonique.digital.product.entity.UserProfile;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -15,20 +15,20 @@ import java.util.List;
  * @author Peter Pilgrim
  */
 @Stateful
-public class UserService {
+public class UserProfileService {
     @PersistenceContext(unitName = "productFlowDB", type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
-    public void add(User user) {
+    public void add(UserProfile user) {
         entityManager.persist(user);
     }
 
-    public void update(User user) {
-        User userUpdated = entityManager.merge(user);
+    public void update(UserProfile user) {
+        UserProfile userUpdated = entityManager.merge(user);
         entityManager.persist(userUpdated);
     }
 
-    public void delete(User user) {
+    public void delete(UserProfile user) {
         entityManager.remove(user);
     }
 
@@ -36,21 +36,21 @@ public class UserService {
         // TODO: Remove the implicit connection to the stateful EJB
     }
 
-    public List<User> findAll() {
+    public List<UserProfile> findAll() {
         Query query = entityManager.createNamedQuery(
-            "User.findAll");
+            "UserProfile.findAll");
         return query.getResultList();
     }
 
-    public List<User> findById(Integer id) {
+    public List<UserProfile> findById(Integer id) {
         Query query = entityManager.createNamedQuery(
-            "User.findById").setParameter("id", id);
+            "UserProfile.findById").setParameter("id", id);
         return query.getResultList();
     }
 
-    public List<User> findById(String username) {
+    public List<UserProfile> findById(String username) {
         Query query = entityManager.createNamedQuery(
-                "User.findByUsername").setParameter("user", username);
+                "UserProfile.findByUsername").setParameter("username", username);
         return query.getResultList();
     }
 }

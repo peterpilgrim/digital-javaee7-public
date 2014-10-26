@@ -33,7 +33,7 @@
 
     <filter-mapping>
         <filter-name>LoginAuthenticationFilter</filter-name>
-        <url-pattern>/simple/*</url-pattern>
+        <url-pattern>/protected/*</url-pattern>
     </filter-mapping>
 
     <welcome-file-list>

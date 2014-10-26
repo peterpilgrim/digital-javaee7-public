@@ -208,3 +208,10 @@ body {
 .completion {
     background: #f0f0ff;
 }
+
+.login-username-box {
+    padding: 5px 15px 5px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #E0E0FF;
+}
