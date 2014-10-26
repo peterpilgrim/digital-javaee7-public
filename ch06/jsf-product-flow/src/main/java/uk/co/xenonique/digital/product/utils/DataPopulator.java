@@ -30,12 +30,12 @@ public class DataPopulator {
         UserRole managerRole = new UserRole("manager");
 
         List<UserProfile> users = Arrays.asList(
-            new UserProfile("user@poducts.com", DEFAULT_TEST_PASSWORD, userRole),
-            new UserProfile("test@poducts.com","digital", userRole),
-            new UserProfile("developer@poducts.com","digital", userRole),
-            new UserProfile("admin@poducts.com","digital", managerRole),
-            new UserProfile("admin@poducts.com","digital", managerRole),
-            new UserProfile("manager@poducts.com","digital", managerRole)
+            new UserProfile("user@products.com", DEFAULT_TEST_PASSWORD, userRole),
+            new UserProfile("test@products.com","digital", userRole),
+            new UserProfile("developer@products.com","digital", userRole),
+            new UserProfile("admin@products.com","digital", managerRole),
+            new UserProfile("admin@products.com","digital", managerRole),
+            new UserProfile("manager@products.com","digital", managerRole)
             );
 
         for (UserProfile user: users) {
