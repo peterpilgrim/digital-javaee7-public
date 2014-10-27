@@ -9,22 +9,41 @@
 
         <ui:define name="mainContent">
 
-            <h1> JSF Product Return </h1>
+            <h1> JSF Product Flow - Return Page View</h1>
 
             <p>
                 You are now outside of the flow
+                ( <code>simple-return.xhtml</code> ).
             </p>
 
             <div class="content-wrapper   center-block">
             </div><!-- content-wrapper  -->
 
             <div class="content-wrapper">
-                <h:link styleClass="btn btn-primary btn-lg" outcome="#{request.contextPath}" >
-                    Start Over
-                </h:link>
+                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}" >
+                    Home
+                </h:outputLink>
+                <p>
+                    Flow scope: <code>#{simpleFlowController.flowScopeIdentifier}</code>
+                </p>
             </div>
 
-
+            <div class="content-wrapper">
+                <p> Attempting to access the pages in the <b>Simple</b> flow with result in an error </p>
+                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page1.xhtml" >
+                    Page #1
+                </h:outputLink>
+                &#160;
+                &#160;
+                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page2.xhtml" >
+                    Page #2
+                </h:outputLink>
+                &#160;
+                &#160;
+                <h:outputLink styleClass="btn btn-primary btn-lg" value="/simple/page3.xhtml" >
+                    Page #3
+                </h:outputLink>
+            </div>
             <hr class="subfeaturette-divider" />
 
         </ui:define> <!--name="mainContent" -->

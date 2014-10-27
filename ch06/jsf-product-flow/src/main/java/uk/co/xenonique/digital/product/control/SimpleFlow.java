@@ -1,5 +1,6 @@
 package uk.co.xenonique.digital.product.control;
 
+import javax.faces.context.FacesContext;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -15,29 +16,32 @@ public class SimpleFlow implements Serializable{
 
     private final static String DELIMITER = " ++> ";
     private String location;
+    private StringBuilder breadcrumb = new StringBuilder();
 
-    private StringBuilder buffer = new StringBuilder();
 
+    public String getFlowScopeIdentifier() {
+        return FacesContext.getCurrentInstance().getApplication().getFlowHandler().getCurrentFlow().getId();
+    }
 
     public String beginFlow() {
-        buffer.append("BEGIN"+ DELIMITER);
+        breadcrumb.append("BEGIN" + DELIMITER);
         return "/simple/page1";
     }
 
     public String page1() {
-        buffer.append("Page 1"+ DELIMITER);
+        breadcrumb.append("Page 1" + DELIMITER);
 
         return "/simple/page2";
     }
 
     public String page2() {
-        buffer.append("Page 2"+ DELIMITER);
+        breadcrumb.append("Page 2" + DELIMITER);
 
         return "/simple/page3";
     }
 
     public String endFlow() {
-        buffer.append("END"+ DELIMITER);
+        breadcrumb.append("END" + DELIMITER);
 
         return "/simple-return";
     }
@@ -50,7 +54,7 @@ public class SimpleFlow implements Serializable{
         this.location = location;
     }
 
-    public StringBuilder getBuffer() {
-        return buffer;
+    public StringBuilder getBreadcrumb() {
+        return breadcrumb;
     }
 }

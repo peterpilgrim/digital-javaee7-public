@@ -40,6 +40,11 @@
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/view-expired.xhtml</location>
+    </error-page>
+
     <resource-env-ref>
         <description>
             This executor is used for the application’s RESTful operations.
