@@ -5,4 +5,5 @@ include 'ch02/jsf-compositions',
 	'ch04/jsf-crud-validation',
 	'ch05/jsf-instant-secure',
 	'ch05/jsf-instant-secure-smart',
-	'ch06/jsf-product-flow'
+	'ch06/jsf-product-flow',
+	'ch06/jsf-product-flow-stage2'
