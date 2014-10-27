@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+
+        <div class="content-wrapper">
+            <p>
+                Flow scope: <code>#{simpleFlowController.flowScopeIdentifier}</code>
+            </p>
+            <p>
+                Breadcrumb: #{simpleFlowController.breadcrumb}
+            </p>
+            <h:form>
+                <p>
+                    <h:commandButton styleClass="btn btn-info" value="Page 1" action="#{simpleFlowController.beginFlow()}" />
+                </p>
+                <p>
+                    <h:commandButton styleClass="btn btn-info" value="Page 2" action="#{simpleFlowController.page1()}" />
+                </p>
+                <p>
+                    <h:commandButton styleClass="btn btn-info" value="Page 3" action="#{simpleFlowController.page2()}" />
+                </p>
+                <p>
+                    <h:commandButton styleClass="btn btn-info" value="End flow" action="#{simpleFlowController.endFlow()}" />
+                </p>
+                <p>
+                    <h:commandButton styleClass="btn btn-info" value="Home" action="#{request.contextPath}" />    This button will not work when the user inside a flow.
+                </p>
+            </h:form>
+        </div>
+
+</h:body>
+
+</html>
