@@ -5,48 +5,53 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" >
 
-    <ui:composition template="/basic_layout.xhtml">
+<ui:composition template="/basic_layout.xhtml">
 
-        <ui:define name="mainContent">
+    <ui:define name="mainContent">
 
-            <h1> JSF Product Flow - Return Page View</h1>
+        <h1> JSF Product Flow - Return Page View</h1>
 
+        <p>
+            You are now outside of the flow
+            ( <code>simple-return.xhtml</code> ).
+        </p>
+
+        <div class="content-wrapper   center-block">
+        </div><!-- content-wrapper  -->
+
+        <div class="content-wrapper">
+            <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}" >
+                OutputLink : Home
+            </h:outputLink>
             <p>
-                You are now outside of the flow
-                ( <code>simple-return.xhtml</code> ).
+                Flow scope: <code>#{simpleFlowController.flowScopeIdentifier}</code>
             </p>
+            <p>
+                <h:form>
+                    <h:commandButton styleClass="btn btn-info" value="Command Button : Home" action="#{simpleFlowController.goHome()}"/>
+                </h:form>
+            </p>
+        </div>
 
-            <div class="content-wrapper   center-block">
-            </div><!-- content-wrapper  -->
+        <div class="content-wrapper">
+            <p> Attempting to access the pages in the <b>Simple</b> flow with result in an error </p>
+            <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page1.xhtml" >
+                Page #1
+            </h:outputLink>
+            &#160;
+            &#160;
+            <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page2.xhtml" >
+                Page #2
+            </h:outputLink>
+            &#160;
+            &#160;
+            <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page3.xhtml" >
+                Page #3
+            </h:outputLink>
+        </div>
+        <hr class="subfeaturette-divider" />
 
-            <div class="content-wrapper">
-                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}" >
-                    Home
-                </h:outputLink>
-                <p>
-                    Flow scope: <code>#{simpleFlowController.flowScopeIdentifier}</code>
-                </p>
-            </div>
+    </ui:define> <!--name="mainContent" -->
 
-            <div class="content-wrapper">
-                <p> Attempting to access the pages in the <b>Simple</b> flow with result in an error </p>
-                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page1.xhtml" >
-                    Page #1
-                </h:outputLink>
-                &#160;
-                &#160;
-                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page2.xhtml" >
-                    Page #2
-                </h:outputLink>
-                &#160;
-                &#160;
-                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}/simple/page3.xhtml" >
-                    Page #3
-                </h:outputLink>
-            </div>
-            <hr class="subfeaturette-divider" />
-
-        </ui:define> <!--name="mainContent" -->
-
-    </ui:composition>
+</ui:composition>
 </html>

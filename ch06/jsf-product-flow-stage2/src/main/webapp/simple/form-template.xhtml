@@ -26,7 +26,20 @@
                     <h:commandButton styleClass="btn btn-info" value="End flow" action="#{simpleFlowController.endFlow()}" />
                 </p>
                 <p>
-                    <h:commandButton styleClass="btn btn-info" value="Home" action="#{request.contextPath}" />    This button will not work when the user inside a flow.
+                    <h:commandButton styleClass="btn btn-info" value="Command Button : Home" action="#{simpleFlowController.goHome()}"/>
+                    This button <em>will not</em> work when the user inside a flow.
+                    Even if you specify the explicit URI path in a controller method
+                    or in <code>faces-config.xml</code>, JSF
+                    will prevent access to the pages outside of the flow.
+                    The result is the button appears to do nothing, but check the breadcrumb.
+                </p>
+                <p>
+                    <h:outputLink styleClass="btn btn-info" value="#{request.contextPath}" >
+                        Output Link : Home
+                    </h:outputLink>
+                    This button will work inside or outside of the flow, which worth remembering when
+                    you implement a navigation menu bar in your own applications.
+                    A standard JSF RenderKit HTML anchor element works as expected.
                 </p>
             </h:form>
         </div>

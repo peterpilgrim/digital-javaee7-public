@@ -18,32 +18,40 @@ public class SimpleFlow implements Serializable{
     private String location;
     private StringBuilder breadcrumb = new StringBuilder();
 
-
     public String getFlowScopeIdentifier() {
         return FacesContext.getCurrentInstance().getApplication().getFlowHandler().getCurrentFlow().getId();
     }
 
+    private void appendCrumb( String e) {
+        if (breadcrumb.length() > 0) {
+            breadcrumb.append(DELIMITER);
+        }
+        breadcrumb.append(e);
+    }
+    
     public String beginFlow() {
-        breadcrumb.append("BEGIN" + DELIMITER);
+        appendCrumb("BEGIN");
         return "/simple/page1";
     }
 
     public String page1() {
-        breadcrumb.append("Page 1" + DELIMITER);
-
+        appendCrumb("Page 1");
         return "/simple/page2";
     }
 
     public String page2() {
-        breadcrumb.append("Page 2" + DELIMITER);
-
+        appendCrumb("Page 2");
         return "/simple/page3";
     }
 
     public String endFlow() {
-        breadcrumb.append("END" + DELIMITER);
-
+        appendCrumb("END");
         return "/simple-return";
+    }
+
+    public String goHome() {
+        appendCrumb("HOME");
+        return "/index.xhtml";
     }
 
     public String getLocation() {
