@@ -29,12 +29,10 @@ public class LoginValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         UIInput input1 = (UIInput) component.getAttributes().get("username");
         UIInput input2 = (UIInput) component.getAttributes().get("password");
-
         String username = (String) input1.getSubmittedValue();
         String password = (String) input2.getSubmittedValue();
 
         List<FacesMessage> errors = new ArrayList<>();
-
         List<UserProfile> users = userProfileService.findById(username);
         if ( users.isEmpty()) {
             errors.add(new FacesMessage(
@@ -50,7 +48,6 @@ public class LoginValidator implements Validator {
         if ( !errors.isEmpty()) {
             throw new ValidatorException(errors);
         }
-
     }
 
 }

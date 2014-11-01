@@ -32,17 +32,17 @@ public class SimpleFlow implements Serializable{
 
     public String beginFlow() {
         appendCrumb("BEGIN");
-        return "/simple/page1";
+        return "page1";
     }
 
     public String page1() {
         appendCrumb("Page 1");
-        return "/simple/page2";
+        return "page2";
     }
 
     public String page2() {
         appendCrumb("Page 2");
-        return "/simple/page3";
+        return "page3";
     }
 
     public String endFlow() {
@@ -52,7 +52,7 @@ public class SimpleFlow implements Serializable{
 
     public String goHome() {
         appendCrumb("HOME");
-        return "/index.xhtml";
+        return "home";
     }
 
     public String getLocation() {
