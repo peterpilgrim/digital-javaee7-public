@@ -9,7 +9,7 @@
                           res-type="javax.sql.DataSource"
                           datasource-classname="org.apache.derby.jdbc.EmbeddedDataSource"
                           is-isolation-level-guaranteed="false">
-        <property name="databaseName" value="/tmp/jsf-product-flow/derby"/>
+        <property name="databaseName" value="/tmp/jsf-product-flow-stage2/derby"/>
         <property name="createDatabase" value="create"/>
     </jdbc-connection-pool>
 </resources>

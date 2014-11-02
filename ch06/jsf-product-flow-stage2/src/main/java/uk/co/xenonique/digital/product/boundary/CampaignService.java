@@ -47,4 +47,11 @@ public class CampaignService {
                 "Campaign.findById").setParameter("id", id);
         return query.getResultList();
     }
+
+    public List<Campaign> findByUsername(String username) {
+        Query query = entityManager.createNamedQuery(
+                "Campaign.findByUsername").setParameter("username", username);
+        return query.getResultList();
+    }
+
 }

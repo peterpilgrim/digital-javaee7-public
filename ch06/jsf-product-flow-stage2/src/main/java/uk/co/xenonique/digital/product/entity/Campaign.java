@@ -15,6 +15,8 @@ import java.util.List;
             query = "select o from Campaign o "),
     @NamedQuery(name="Campaign.findById",
             query = "select o from Campaign o where o.id = :id"),
+    @NamedQuery(name="Campaign.findByUsername",
+            query = "select o from Campaign o where o.creationUser.username = :username"),
 })
 public class Campaign {
     @Id

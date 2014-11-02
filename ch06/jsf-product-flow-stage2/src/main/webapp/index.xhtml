@@ -9,7 +9,7 @@
 
         <ui:define name="mainContent">
 
-            <h1> JSF Product Approval Flow </h1>
+            <h1> JSF Product Approval Flow (Stage 2) </h1>
 
             <p>
                 Welcome to Duke Product Approval Flows where developers, designers and architects can
@@ -55,7 +55,7 @@
 
             <div class="content-wrapper">
                 <h:outputLink styleClass="btn btn-primary btn-lg" value="login.xhtml" rendered="#{not loginController.loggedIn}">
-                    Start
+                    Start Login
                 </h:outputLink>
             </div>
 
@@ -65,6 +65,11 @@
                 </h:form>
             </div>
 
+            <div class="content-wrapper">
+                <h:form>
+                    <h:commandButton  styleClass="btn btn-primary btn-lg" action="campaign" value="Campaign (Flow)" />
+                </h:form>
+            </div>
             <hr class="subfeaturette-divider" />
 
             <p>

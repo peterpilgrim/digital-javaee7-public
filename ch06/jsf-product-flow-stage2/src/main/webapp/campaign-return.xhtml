@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <ui:composition template="/basic_layout.xhtml">
+
+        <ui:define name="mainContent">
+
+            <h1> JSF Product Flow - Campaign Return View</h1>
+
+            <p>
+                You are now outside of the flow
+                ( <code>campaign-return.xhtml</code> ).
+            </p>
+
+            <div class="content-wrapper   center-block">
+            </div><!-- content-wrapper  -->
+
+            <div class="content-wrapper">
+                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}" >
+                    OutputLink : Home
+                </h:outputLink>
+                <p>
+                    Flow scope: <code>#{campaignController.flowScopeIdentifier}</code>
+                </p>
+                <p>
+                    <h:form>
+                        <h:commandButton styleClass="btn btn-info" value="Command Button : Home" action="#{campaignController.goHome()}"/>
+                    </h:form>
+                </p>
+            </div>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>
