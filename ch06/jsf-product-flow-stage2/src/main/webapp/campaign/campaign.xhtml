@@ -11,6 +11,10 @@
 
         <h1> JSF Product Flow - Create Campaign </h1>
 
+        <div class="login-username-box  pull-right">
+            <b>#{sessionScope['LOGIN_USERNAME']}</b>
+        </div>
+
         <div class="content-wrapper   center-block">
             You are now inside the <b>Campaign</b> ( <code>campaign.xhtml</code> ).
             This is an implicit flow scope.
@@ -30,6 +34,7 @@
                         <h:inputText class="form-control"
                                          label="Title" id="title"
                                          value="#{campaignController.campaign.title}">
+                            <f:validateRequired/>
                             <f:ajax event="blur" render="titleError"/>
                         </h:inputText>
                         <h:message id="titleError"
@@ -44,21 +49,24 @@
                         <h:inputText class="form-control"
                                      label="Description" id="description"
                                      value="#{campaignController.campaign.description}">
+                            <f:validateRequired/>
                             <f:ajax event="blur" render="descriptionError"/>
                         </h:inputText>
                         <h:message id="descriptionError"
-                                   for="title" styleClass="alert validation-error"/>
+                                   for="description" styleClass="alert validation-error"/>
                     </div>
                 </div>
 
                 <h:commandButton styleClass="btn btn-primary"
                                  action="#{campaignController.createCampaign()}"
-                                 value="Submit" />
+                                 value="Add" />
                 &#160;
                 &#160;
                 <h:commandButton styleClass="btn btn-default"
                                  action="#{campaignController.cancel()}"
                                  immediate="true" value="Cancel"/>
+
+
 
 
                 <h2> List of Campaigns</h2>

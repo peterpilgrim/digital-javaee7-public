@@ -35,7 +35,7 @@ public class LoginValidator implements Validator {
 
         List<FacesMessage> errors = new ArrayList<>();
 
-        List<UserProfile> users = userProfileService.findById(username);
+        List<UserProfile> users = userProfileService.findByUsername(username);
         if ( users.isEmpty()) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR, "username is unrecognised", null));

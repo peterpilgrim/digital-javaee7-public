@@ -1,6 +1,8 @@
 package uk.co.xenonique.digital.product.utils;
 
+import uk.co.xenonique.digital.product.boundary.CampaignService;
 import uk.co.xenonique.digital.product.boundary.UserProfileService;
+import uk.co.xenonique.digital.product.entity.Campaign;
 import uk.co.xenonique.digital.product.entity.UserProfile;
 import uk.co.xenonique.digital.product.entity.UserRole;
 
@@ -20,9 +22,11 @@ import java.util.List;
 @Startup
 public class DataPopulator {
 
-    public static final String DEFAULT_TEST_PASSWORD = "digital";
+    public static final String DEFAULT_PASSWORD = "digital";
     @Inject
-    UserProfileService service;
+    UserProfileService userService;
+    @Inject
+    CampaignService campaignService;
 
     @PostConstruct
     public void populate() {
@@ -30,16 +34,26 @@ public class DataPopulator {
         UserRole managerRole = new UserRole("manager");
 
         List<UserProfile> users = Arrays.asList(
-            new UserProfile("user@products.com", DEFAULT_TEST_PASSWORD, userRole),
-            new UserProfile("test@products.com","digital", userRole),
-            new UserProfile("developer@products.com","digital", userRole),
-            new UserProfile("admin@products.com","digital", managerRole),
-            new UserProfile("admin@products.com","digital", managerRole),
-            new UserProfile("manager@products.com","digital", managerRole)
+            new UserProfile("user@products.com", DEFAULT_PASSWORD, userRole),
+            new UserProfile("test@products.com", DEFAULT_PASSWORD, userRole),
+            new UserProfile("developer@products.com", DEFAULT_PASSWORD, userRole),
+            new UserProfile("admin@products.com", DEFAULT_PASSWORD, managerRole),
+            new UserProfile("admin@products.com", DEFAULT_PASSWORD, managerRole),
+            new UserProfile("manager@products.com", DEFAULT_PASSWORD, managerRole)
             );
 
         for (UserProfile user: users) {
-            service.add(user);
+            userService.add(user);
+        }
+
+        List<Campaign> campaigns = Arrays.asList(
+            new Campaign("Promo 100", "simple promotion"),
+            new Campaign("Promo 200", "another promotion"),
+            new Campaign("Promo 300", "yet another promotion")
+        );
+        for (Campaign campaign: campaigns) {
+            campaign.setCreationUser(users.get(0));
+            campaignService.add(campaign);
         }
     }
 }

@@ -1,7 +1,9 @@
 package uk.co.xenonique.digital.product.control;
 
 import uk.co.xenonique.digital.product.boundary.CampaignService;
+import uk.co.xenonique.digital.product.boundary.UserProfileService;
 import uk.co.xenonique.digital.product.entity.Campaign;
+import uk.co.xenonique.digital.product.entity.UserProfile;
 
 import javax.faces.context.FacesContext;
 import javax.faces.flow.FlowScoped;
@@ -9,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+
+import static uk.co.xenonique.digital.product.utils.AppConsts.*;
 
 /**
  * The type CampaignController
@@ -23,6 +27,8 @@ public class CampaignController implements Serializable {
 
     @Inject
     private CampaignService campaignService;
+    @Inject
+    private UserProfileService userService;
 
     public CampaignController() {
         campaign = new Campaign();
@@ -40,6 +46,9 @@ public class CampaignController implements Serializable {
     // Actions
 
     public String createCampaign() {
+        String userKey =  (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LOGIN_KEY);
+        List<UserProfile> users = userService.findByUsername(userKey);
+        campaign.setCreationUser(users.get(0));
         campaignService.add(campaign);
         campaign = new Campaign();
         return "campaign.xthml?faces-redirect=true";

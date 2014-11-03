@@ -27,13 +27,23 @@
     </servlet-mapping>
 
     <filter>
-        <filter-name>LoginAuthenticationFilter</filter-name>
+        <filter-name>loginAuthenticationFilter</filter-name>
         <filter-class>uk.co.xenonique.digital.product.security.LoginAuthenticationFilter</filter-class>
+        <init-param>
+            <param-name>manager</param-name>
+            <param-value>/campaign,/approver</param-value>
+        </init-param>
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>/campaign,/protected</param-value>
+        </init-param>
     </filter>
 
     <filter-mapping>
-        <filter-name>LoginAuthenticationFilter</filter-name>
+        <filter-name>loginAuthenticationFilter</filter-name>
         <url-pattern>/protected/*</url-pattern>
+        <url-pattern>/campaign/*</url-pattern>
+        <url-pattern>/approver/*</url-pattern>
     </filter-mapping>
 
     <welcome-file-list>

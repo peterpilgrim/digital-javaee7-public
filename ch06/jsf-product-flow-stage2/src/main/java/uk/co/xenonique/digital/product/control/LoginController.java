@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
+import static uk.co.xenonique.digital.product.utils.AppConsts.*;
+
 /**
  * The type LoginController
  *
@@ -17,8 +19,6 @@ import java.util.List;
 @Named("loginController")
 @RequestScoped
 public class LoginController {
-
-    public final static String LOGIN_KEY="LOGIN_USERNAME";
 
     private String username;
     private String password;
@@ -31,7 +31,7 @@ public class LoginController {
     }
 
     public String login() {
-        List<UserProfile> users = userProfileService.findById(username);
+        List<UserProfile> users = userProfileService.findByUsername(username);
         if ( users.isEmpty()) {
             throw new IllegalArgumentException("unknown user");
         }

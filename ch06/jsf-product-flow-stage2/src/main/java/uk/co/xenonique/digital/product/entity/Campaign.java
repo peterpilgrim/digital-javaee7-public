@@ -36,6 +36,9 @@ public class Campaign {
         this(null,null,null);
     }
 
+    public Campaign(String title, String description) {
+        this(title, description, null);
+    }
     public Campaign(String title, String description, List<Promotion> promotions) {
         this.title = title;
         this.description = description;

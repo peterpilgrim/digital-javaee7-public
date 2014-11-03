@@ -48,7 +48,7 @@ public class UserProfileService {
         return query.getResultList();
     }
 
-    public List<UserProfile> findById(String username) {
+    public List<UserProfile> findByUsername(String username) {
         Query query = entityManager.createNamedQuery(
                 "UserProfile.findByUsername").setParameter("username", username);
         return query.getResultList();
