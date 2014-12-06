@@ -73,48 +73,6 @@
 
 
 
-
-                <h2> List of Campaigns</h2>
-
-                <h:dataTable id="campaignTable"
-                             value="#{campaignController.retrieveAllCampaigns()}"
-                             styleClass="table-striped table-bordered user-table"
-                             var="campaign">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Title" />
-                        </f:facet>
-                        <h:outputText value="#{campaign.title}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Description" />
-                        </f:facet>
-                        <h:outputText value="#{campaign.description}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Created By" />
-                        </f:facet>
-                        <h:outputText value="#{campaign.creationUser.username}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Action" />
-                        </f:facet>
-                        <h:link styleClass="btn" outcome="editCampaign.xhtml?id=#{contact.id}">
-                            <f:param name="id" value="#{contact.id}" />
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </h:link>
-                        <h:link styleClass="btn" outcome="removeampaign.xhtml?id=#{contact.id}">
-                            <f:param name="id" value="#{contact.id}" />
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </h:link>
-                    </h:column>
-
-                </h:dataTable>
-
             </h:form>
         </div>
 
