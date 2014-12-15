@@ -47,4 +47,5 @@ public class PromotionService {
                 "Promotion.findById").setParameter("id", id);
         return query.getResultList();
     }
+
 }

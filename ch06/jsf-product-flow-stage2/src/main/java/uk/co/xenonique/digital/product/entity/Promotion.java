@@ -36,7 +36,7 @@ public class Promotion implements Serializable {
     )
     private Set<Approver> approvers = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "CAMPAIGN_ID")
     private Campaign campaign;
 

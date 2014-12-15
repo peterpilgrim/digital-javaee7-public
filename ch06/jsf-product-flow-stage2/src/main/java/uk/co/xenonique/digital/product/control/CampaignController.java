@@ -41,6 +41,7 @@ public class CampaignController implements Serializable {
 
     public CampaignController() {
         campaign = new Campaign();
+        promotion = new Promotion();
     }
 
     public String getFlowScopeIdentifier() {
@@ -102,13 +103,12 @@ public class CampaignController implements Serializable {
     // Promotions
 
     public String createPromotion() {
-        updateCreationUser();
+        promotionService.add( new Promotion(promotion.getHeadline(), promotion.getDescription()));
         campaign.getPromotions().add(promotion);
         promotion.setCampaign(campaign);
-        promotionService.add(promotion);
+        campaignService.update(campaign);
         promotion = new Promotion();
-        promotion.setCampaign(campaign);
-        return "promotion-list.xhtml?faces-redirect=true";
+        return "campaign-edit.xhtml?faces-redirect=true";
     }
 
     public Set<Promotion> retrievePromotionsByCampaignById( long campaignId) {
@@ -125,31 +125,37 @@ public class CampaignController implements Serializable {
         }
         List<Campaign> campaigns = campaignService.findById(id);
         this.campaign = campaigns.get(0);
-        List<Promotion> promotions = promotionService.findById(promotionId);
-        this.promotion = promotions.get(0);
+        for ( Promotion promo: campaign.getPromotions()) {
+            if ( promo.getId() == promotionId) {
+                this.promotion = promo;
+            }
+        }
     }
 
     public String editPromotion() {
-        updateCreationUser();
-        campaignService.update(campaign);
         promotionService.update(promotion);
+        promotionId = 0;
         promotion = new Promotion();
-        promotion.setCampaign(campaign);
-        return "promotion.xhtml?faces-redirect=true";
+        return "campaign-edit.xhtml?faces-redirect=true";
     }
 
     public String removePromotion() {
-        updateCreationUser();
         campaign.getPromotions().remove(promotion);
         promotion.setCampaign(null);
-        promotionService.delete(promotion);
+        // Cascade.REMOVE or Cascade obviates the following line
+        //       promotionService.delete(promotion);
+        promotionId = 0;
         promotion = new Promotion();
-        promotion.setCampaign(campaign);
-        return "promotion.xhtml?faces-redirect=true";
+        return "campaign-edit.xhtml?faces-redirect=true";
     }
 
     public String cancel() {
         return "campaign.xhtml?faces-redirect=true";
+    }
+    public String cancelEdit() {
+        promotionId = 0;
+        promotion = new Promotion();
+        return "campaign-edit.xhtml?faces-redirect=true";
     }
 
     public String finish() {

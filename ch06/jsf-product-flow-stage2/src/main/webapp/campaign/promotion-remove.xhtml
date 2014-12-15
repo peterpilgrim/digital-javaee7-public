@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+<f:metadata>
+    <f:viewParam name="id" value="#{campaignController.id}" />
+    <f:viewParam name="promotionId" value="#{campaignController.promotionId}" />
+    <f:event type="preRenderView" listener="#{campaignController.retrieveByPromotionId()}"/>
+</f:metadata>
+
+<ui:composition template="/basic_layout.xhtml">
+
+    <ui:define name="mainContent">
+
+        <h1> JSF Product Flow - Remove Campaign / Promotion </h1>
+
+        <div class="login-username-box  pull-right">
+            <b>#{sessionScope['LOGIN_USERNAME']}</b>
+        </div>
+
+        <div class="content-wrapper   center-block">
+            You are now inside the <b>Campaign</b> ( <code>promotion-removexhtml</code> ).
+            This is an implicit flow scope.
+
+        </div><!-- content-wrapper  -->
+
+
+        <div class="content-wrapper   center-block">
+
+            <h2> Campaign </h2>
+            <p>
+                #{campaignController.campaign.title}
+            </p>
+            <p>
+                #{campaignController.campaign.description}
+            </p>
+
+            <h3> Promotion </h3>
+
+
+            <table class="table-striped table-bordered  user-table">
+                <tr>
+                    <th> Name </th>
+                    <th> Value</th>
+                </tr>
+                <tr>
+                    <td>Title</td>
+                    <td>#{campaignController.promotion.headline}</td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>#{campaignController.promotion.description}</td>
+                </tr>
+                <tr>
+                    <td>Approved</td>
+                    <td>#{campaignController.promotion.approved}</td>
+                </tr>
+                <tr>
+                    <td>Approvers</td>
+                    <td>#{campaignController.promotion.approvers}</td>
+                </tr>
+            </table>
+
+
+            <h:form id="promotionForm"
+                    styleClass="form-horizontal  campaign-form"
+                    p:role="form">
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{campaignController.removePromotion()}"
+                                 value="Remove Promotion" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{campaignController.cancelEdit()}"
+                                 immediate="true" value="Cancel"/>
+
+            </h:form>
+
+
+
+        </div>
+
+
+        <hr class="subfeaturette-divider" />
+
+    </ui:define> <!--name="mainContent" -->
+
+</ui:composition>
+</html>

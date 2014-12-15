@@ -77,6 +77,50 @@
 
             <h2> Promotions </h2>
 
+            <h:form id="promotionForm"
+                    styleClass="form-horizontal  campaign-form"
+                    p:role="form">
+                <p>
+                    Create a promotion
+                </p>
+
+                <div class="form-group">
+                    <h:outputLabel for="promoHeadline" class="col-sm-3 control-label">
+                        Headline</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     label="Headline" id="promoHeadline"
+                                     value="#{campaignController.promotion.headline}">
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="promoHeadlineError"/>
+                        </h:inputText>
+                        <h:message id="promoHeadlineError"
+                                   for="title" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="promoDescription" class="col-sm-3 control-label">
+                        Description</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     label="Description" id="promoDescription"
+                                     value="#{campaignController.promotion.description}">
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="promoDescriptionError"/>
+                        </h:inputText>
+                        <h:message id="promoDescriptionError"
+                                   for="description" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{campaignController.createPromotion()}"
+                                 value="Create Promotion" />
+            </h:form>
+
+            <hr class="subfeaturette-divider" />
+
             <h:dataTable id="promotionTable"
                          value="#{campaignController.retrievePromotionsByCampaignById(campaignController.campaign.id)}"
                          columnClasses="promotion-table-title, promotion-table-description, promotion-table-approved, promotion-table-action"
@@ -106,11 +150,13 @@
                         <h:outputText value="Action" />
                     </f:facet>
                     <h:link styleClass="btn" outcome="promotion-edit.xhtml?campaignId=#{promotion.campaign.id}&amp;promotioinId=#{promotion.id}">
-                        <f:param name="id" value="#{campaign.id}" />
+                        <f:param name="id" value="#{promotion.campaign.id}" />
+                        <f:param name="promotionId" value="#{promotion.id}" />
                         <span class="glyphicon glyphicon-edit"></span>
                     </h:link>
                     <h:link styleClass="btn" outcome="promotion-remove.xhtml?campaignId=#{promotion.campaign.id}&amp;promotioinId=#{promotion.id}">
-                        <f:param name="id" value="#{promotion.id}" />
+                        <f:param name="id" value="#{promotion.campaign.id}" />
+                        <f:param name="promotionId" value="#{promotion.id}" />
                         <span class="glyphicon glyphicon-trash"></span>
                     </h:link>
                 </h:column>

@@ -61,9 +61,9 @@ public class ExtendedPersistenceSetupBean {
         }
 
         List<Campaign> campaigns = Arrays.asList(
-                new Campaign("Campaign 100", "simple promotion"),
-                new Campaign("Advertising 200", "another promotion"),
-                new Campaign("Marketing 300", "yet another promotion")
+                new Campaign("Campaign 100", "simple marketing"),
+                new Campaign("Advertising 200", "another sales campaign"),
+                new Campaign("Marketing 300", "yet another direct marketing event")
         );
 
         int base = 1001;
@@ -77,7 +77,7 @@ public class ExtendedPersistenceSetupBean {
         for (Campaign campaign: campaigns) {
             for (int k=0; k<3; ++k) {
                 final int promoIndex = k + base;
-                Promotion promotion = new Promotion("headline "+promoIndex, "description "+promoIndex);
+                Promotion promotion = new Promotion("promo headline "+promoIndex, "promo description "+promoIndex);
                 promotionService.add(promotion);
                 campaign.getPromotions().add(promotion);
                 promotion.setCampaign(campaign);
