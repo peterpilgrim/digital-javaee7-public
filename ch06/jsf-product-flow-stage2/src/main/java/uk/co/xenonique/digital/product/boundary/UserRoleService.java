@@ -45,7 +45,7 @@ public class UserRoleService {
         return query.getResultList();
     }
 
-    public List<UserRole> findById(Integer id) {
+    public List<UserRole> findById(Long id) {
         Query query = entityManager.createNamedQuery(
             "UserRole.findById").setParameter("id", id);
         return query.getResultList();

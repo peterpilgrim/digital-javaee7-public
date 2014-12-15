@@ -28,7 +28,7 @@ public class Campaign implements Serializable {
     private String title;
     private String description;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="FK_CREATED_USER_ID")
     private UserProfile creationUser;
 

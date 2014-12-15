@@ -6,10 +6,10 @@
          version="3.1" metadata-complete="false">
 
     <display-name>jsf-instant-product-flow-1.0-SNAPSHOT</display-name>
-    <servlet>
-        <servlet-name>javax.ws.rs.core.Application</servlet-name>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>javax.ws.rs.core.Application</servlet-name>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/rest/*</url-pattern>

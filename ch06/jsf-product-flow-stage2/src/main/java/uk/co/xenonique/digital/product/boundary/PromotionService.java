@@ -42,7 +42,7 @@ public class PromotionService {
         return query.getResultList();
     }
 
-    public List<Promotion> findById(Integer id) {
+    public List<Promotion> findById(Long id) {
         Query query = entityManager.createNamedQuery(
                 "Promotion.findById").setParameter("id", id);
         return query.getResultList();

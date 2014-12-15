@@ -27,8 +27,8 @@ import static uk.co.xenonique.digital.product.utils.AppConsts.*;
 @FlowScoped("campaign")
 public class CampaignController implements Serializable {
 
-    private int id;
-    private int promotionId;
+    private long id;
+    private long promotionId;
     private Campaign  campaign;
     private Promotion promotion;
 
@@ -61,10 +61,11 @@ public class CampaignController implements Serializable {
     }
 
     public String createCampaign() {
-        updateCreationUser();
         campaignService.add(campaign);
+        updateCreationUser();
+        campaignService.update(campaign);
         campaign = new Campaign();
-        return "campaign.xthml?faces-redirect=true";
+        return "campaign.xhtml?faces-redirect=true";
     }
 
     public void retrieveByCampaignId() {
@@ -82,17 +83,16 @@ public class CampaignController implements Serializable {
         updateCreationUser();
         campaignService.update(campaign);
         campaign = new Campaign();
-        return "campaign.xthml?faces-redirect=true";
+        return "campaign.xhtml?faces-redirect=true";
     }
 
     public String removeCampaign() {
-        updateCreationUser();
         campaignService.delete(campaign);
         campaign = new Campaign();
-        return "campaign.xthml?faces-redirect=true";
+        return "campaign.xhtml?faces-redirect=true";
     }
 
-    public Promotion retrievePromotionById( int promotionId) {
+    public Promotion retrievePromotionById( long promotionId) {
         promotion = promotionService.findById(promotionId).get(0);
         campaign = promotion.getCampaign();
         return promotion;
@@ -108,10 +108,10 @@ public class CampaignController implements Serializable {
         promotionService.add(promotion);
         promotion = new Promotion();
         promotion.setCampaign(campaign);
-        return "promotion-list.xthml?faces-redirect=true";
+        return "promotion-list.xhtml?faces-redirect=true";
     }
 
-    public Set<Promotion> retrievePromotionsByCampaignById( int campaignId) {
+    public Set<Promotion> retrievePromotionsByCampaignById( long campaignId) {
         campaign = campaignService.findById(campaignId).get(0);
         return campaign.getPromotions();
     }
@@ -135,7 +135,7 @@ public class CampaignController implements Serializable {
         promotionService.update(promotion);
         promotion = new Promotion();
         promotion.setCampaign(campaign);
-        return "promotion.xthml?faces-redirect=true";
+        return "promotion.xhtml?faces-redirect=true";
     }
 
     public String removePromotion() {
@@ -145,7 +145,7 @@ public class CampaignController implements Serializable {
         promotionService.delete(promotion);
         promotion = new Promotion();
         promotion.setCampaign(campaign);
-        return "promotion.xthml?faces-redirect=true";
+        return "promotion.xhtml?faces-redirect=true";
     }
 
     public String cancel() {
@@ -163,19 +163,19 @@ public class CampaignController implements Serializable {
 
     // Getter and setters
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getPromotionId() {
+    public long getPromotionId() {
         return promotionId;
     }
 
-    public void setPromotionId(int promotionId) {
+    public void setPromotionId(long promotionId) {
         this.promotionId = promotionId;
     }
 

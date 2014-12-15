@@ -42,7 +42,7 @@ public class CampaignService {
         return query.getResultList();
     }
 
-    public List<Campaign> findById(Integer id) {
+    public List<Campaign> findById(Long id) {
         Query query = entityManager.createNamedQuery(
                 "Campaign.findById").setParameter("id", id);
         return query.getResultList();
