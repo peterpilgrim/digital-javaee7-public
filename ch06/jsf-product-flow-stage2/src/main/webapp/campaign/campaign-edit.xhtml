@@ -79,6 +79,7 @@
 
             <h:dataTable id="promotionTable"
                          value="#{campaignController.retrievePromotionsByCampaignById(campaignController.campaign.id)}"
+                         columnClasses="promotion-table-title, promotion-table-description, promotion-table-approved, promotion-table-action"
                          styleClass="table-striped table-bordered user-table"
                          var="promotion">
                 <h:column>

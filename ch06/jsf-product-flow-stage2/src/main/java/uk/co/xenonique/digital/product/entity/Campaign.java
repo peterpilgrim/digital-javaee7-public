@@ -38,15 +38,16 @@ public class Campaign implements Serializable {
         joinColumns={ @JoinColumn(name="FK_CAMPAIGN_ID") },
         inverseJoinColumns={ @JoinColumn(name="FK_PROMOTION_ID") }
     )
-    private Set<Promotion> promotions = new HashSet<>();
+    private Set<Promotion> promotions;
 
     public Campaign() {
-        this(null,null,null);
+        this(null,null);
     }
 
     public Campaign(String title, String description) {
-        this(title, description, null);
+        this(title, description, new HashSet<Promotion>());
     }
+
     public Campaign(String title, String description, Set<Promotion> promotions) {
         this.title = title;
         this.description = description;

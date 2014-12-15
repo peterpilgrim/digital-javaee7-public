@@ -215,3 +215,40 @@ body {
     border-radius: 5px;
     background-color: #E0E0FF;
 }
+
+.campaign-table-title {
+    width: 20%;
+}
+
+.campaign-table-description {
+    /*width: 25%;*/
+}
+
+.campaign-table-created {
+    width: 15%;
+}
+
+.campaign-table-promotions {
+    width: 10%;
+}
+
+.campaign-table-action {
+    width: 15%;
+}
+
+
+.promotion-table-title {
+    width: 25%;
+}
+
+.promotion-table-description {
+    /*width: 25%;*/
+}
+
+.promotion-table-approved {
+    width: 10%;
+}
+
+.promotion-table-action {
+    width: 15%;
+}

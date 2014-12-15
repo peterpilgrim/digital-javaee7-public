@@ -5,6 +5,7 @@ import uk.co.xenonique.digital.product.boundary.PromotionService;
 import uk.co.xenonique.digital.product.boundary.UserProfileService;
 import uk.co.xenonique.digital.product.boundary.UserRoleService;
 import uk.co.xenonique.digital.product.entity.Campaign;
+import uk.co.xenonique.digital.product.entity.Promotion;
 import uk.co.xenonique.digital.product.entity.UserProfile;
 import uk.co.xenonique.digital.product.entity.UserRole;
 
@@ -73,17 +74,18 @@ public class ExtendedPersistenceSetupBean {
         }
 
 //        List<Campaign> campaigns2 = campaignService.findAll();
-//        for (Campaign campaign: campaigns) {
-//            for (int k=0; k<3; ++k) {
-//                final int promoIndex = k + base;
-//                Promotion promotion = new Promotion("headline "+promoIndex, "description "+promoIndex);
-//                campaign.getPromotions().add(promotion);
-//                promotion.setCampaign(campaign);
-//            }
-//            base += 1000;
-//            campaignService.update(campaign);
-//            System.out.printf("+++++ campaign=%s\n", campaign );
-//        }
+        for (Campaign campaign: campaigns) {
+            for (int k=0; k<3; ++k) {
+                final int promoIndex = k + base;
+                Promotion promotion = new Promotion("headline "+promoIndex, "description "+promoIndex);
+                promotionService.add(promotion);
+                campaign.getPromotions().add(promotion);
+                promotion.setCampaign(campaign);
+            }
+            base += 1000;
+            campaignService.update(campaign);
+            System.out.printf("+++++ campaign=%s\n", campaign );
+        }
     }
 
 }

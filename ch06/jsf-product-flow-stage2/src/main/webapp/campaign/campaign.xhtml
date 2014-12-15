@@ -73,6 +73,7 @@
 
                 <h:dataTable id="campaignTable"
                              value="#{campaignController.retrieveAllCampaigns()}"
+                             columnClasses="campaign-table-title, campaign-table-description, campaign-table-created, campaign-table-promotions, campaign-table-action"
                              styleClass="table-striped table-bordered user-table"
                              var="campaign">
                     <h:column>
@@ -92,6 +93,12 @@
                             <h:outputText value="Created By" />
                         </f:facet>
                         <h:outputText value="#{campaign.creationUser.username}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Promotions" />
+                        </f:facet>
+                        <h:outputText value="#{campaign.promotions.size()}"/>
                     </h:column>
 
                     <h:column>
