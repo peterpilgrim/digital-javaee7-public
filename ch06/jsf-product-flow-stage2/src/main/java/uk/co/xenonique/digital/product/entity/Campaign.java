@@ -1,7 +1,10 @@
 package uk.co.xenonique.digital.product.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type Campaign
@@ -16,21 +19,26 @@ import java.util.List;
     @NamedQuery(name="Campaign.findById",
             query = "select o from Campaign o where o.id = :id"),
     @NamedQuery(name="Campaign.findByUsername",
-            query = "select o from Campaign o where o.creationUser.username = :username"),
+            query = "select o from Campaign o where o.creationUser = :username"),
 })
-public class Campaign {
+public class Campaign implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String title;
     private String description;
 
-    @OneToOne()
-    @JoinColumn(name="CREATED_USER_ID")
+    @ManyToOne()
+    @JoinColumn(name="FK_CREATED_USER_ID")
     private UserProfile creationUser;
 
-    @OneToMany(mappedBy="campaign", cascade = CascadeType.ALL)
-    private List<Promotion> promotions;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name="CAMPAIGN_PROMOTION",
+        joinColumns={ @JoinColumn(name="FK_CAMPAIGN_ID") },
+        inverseJoinColumns={ @JoinColumn(name="FK_PROMOTION_ID") }
+    )
+    private Set<Promotion> promotions = new HashSet<>();
 
     public Campaign() {
         this(null,null,null);
@@ -39,7 +47,7 @@ public class Campaign {
     public Campaign(String title, String description) {
         this(title, description, null);
     }
-    public Campaign(String title, String description, List<Promotion> promotions) {
+    public Campaign(String title, String description, Set<Promotion> promotions) {
         this.title = title;
         this.description = description;
         this.promotions = promotions;
@@ -69,11 +77,11 @@ public class Campaign {
         this.description = description;
     }
 
-    public List<Promotion> getPromotions() {
+    public Set<Promotion> getPromotions() {
         return promotions;
     }
 
-    public void setPromotions(List<Promotion> promtions) {
+    public void setPromotions(Set<Promotion> promtions) {
         this.promotions = promtions;
     }
 

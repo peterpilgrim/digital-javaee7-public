@@ -16,11 +16,13 @@ import java.util.List;
  */
 @Stateful
 public class UserProfileService {
-    @PersistenceContext(unitName = "productFlowDB", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "mysqlProductFlowDB", type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
     public void add(UserProfile user) {
+        System.out.printf("+++++ BEFORE +++++ UserProfileService.add() user=%s, entityManager=%s\n", user, entityManager);
         entityManager.persist(user);
+        System.out.printf("+++++ AFTER  +++++ UserProfileService.add() user=%s, entityManager=%s\n", user, entityManager);
     }
 
     public void update(UserProfile user) {

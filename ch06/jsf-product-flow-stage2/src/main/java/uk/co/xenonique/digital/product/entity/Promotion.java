@@ -1,7 +1,10 @@
 package uk.co.xenonique.digital.product.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type Promotion
@@ -16,7 +19,7 @@ import java.util.List;
     @NamedQuery(name="Promotion.findById",
             query = "select p from Promotion p where p.id = :id"),
 })
-public class Promotion {
+public class Promotion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -26,7 +29,12 @@ public class Promotion {
     private boolean approved;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<UserProfile> approvers;
+    @JoinTable(
+        name="PROMOTION_USER_PROFILE",
+        joinColumns={ @JoinColumn(name="FK_PROMOTION_ID") },
+        inverseJoinColumns={ @JoinColumn(name="FK_APPROVER_ID") }
+    )
+    private Set<Approver> approvers = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "CAMPAIGN_ID")
@@ -73,11 +81,11 @@ public class Promotion {
         this.approved = approved;
     }
 
-    public List<UserProfile> getApprovers() {
+    public Set<Approver> getApprovers() {
         return approvers;
     }
 
-    public void setApprovers(List<UserProfile> approvers) {
+    public void setApprovers(Set<Approver> approvers) {
         this.approvers = approvers;
     }
 

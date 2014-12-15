@@ -1,6 +1,7 @@
 package uk.co.xenonique.digital.product.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The type UserProfile.
@@ -17,17 +18,16 @@ import javax.persistence.*;
         @NamedQuery(name="UserProfile.findByUsername",
                 query = "select u from UserProfile u where u.username = :username"),
 })
-public class UserProfile {
+public class UserProfile implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="USER_ID", nullable = false,
-            insertable = true, updatable = true,
-            table = "USER_PROFILE")
     private long id;
+
     private String username;
     private String password;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "FK_USER_ROLE_ID", insertable=false, updatable=false )
     private UserRole role;
 
     public UserProfile() {
@@ -75,11 +75,11 @@ public class UserProfile {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserProfile)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        UserProfile user = (UserProfile) o;
+        UserProfile that = (UserProfile) o;
 
-        if (id != user.id) return false;
+        if (id != that.id) return false;
 
         return true;
     }
@@ -91,7 +91,9 @@ public class UserProfile {
 
     @Override
     public String toString() {
-        return "UserProfile{" +
+        return "UserProfile" +
+                "@"+Integer.toHexString(System.identityHashCode(this))+
+                "{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

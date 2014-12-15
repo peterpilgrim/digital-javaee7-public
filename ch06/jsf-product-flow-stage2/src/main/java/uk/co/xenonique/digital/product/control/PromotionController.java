@@ -16,18 +16,18 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-import static uk.co.xenonique.digital.product.utils.AppConsts.*;
+import static uk.co.xenonique.digital.product.utils.AppConsts.LOGIN_KEY;
 
 /**
  * The type CampaignController
  *
  * @author Peter Pilgrim
  */
-@Named("campaignController")
-@FlowScoped("campaign")
-public class CampaignController implements Serializable {
+@Named("promotionController")
+@FlowScoped("promotion")
+public class PromotionController implements Serializable {
 
-    private int id;
+    private int campaignId;
     private int promotionId;
     private Campaign  campaign;
     private Promotion promotion;
@@ -36,11 +36,12 @@ public class CampaignController implements Serializable {
     private CampaignService campaignService;
     @Inject
     private PromotionService promotionService;
+
     @Inject
     private UserProfileService userService;
 
-    public CampaignController() {
-        campaign = new Campaign();
+    public PromotionController() {
+        promotion = new Promotion();
     }
 
     public String getFlowScopeIdentifier() {
@@ -48,48 +49,9 @@ public class CampaignController implements Serializable {
     }
 
 
-    public List<Campaign> retrieveAllCampaigns() {
-        return campaignService.findAll();
-    }
-
-    // Actions
-
-    private void updateCreationUser() {
-        String userKey =  (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LOGIN_KEY);
-        List<UserProfile> users = userService.findByUsername(userKey);
-        campaign.setCreationUser(users.get(0));
-    }
-
-    public String createCampaign() {
-        updateCreationUser();
-        campaignService.add(campaign);
-        campaign = new Campaign();
-        return "campaign.xthml?faces-redirect=true";
-    }
-
-    public void retrieveByCampaignId() {
-        if (id <= 0) {
-            String message = "Bad request. Please use a link from within the system.";
-            FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
-            return;
-        }
-        List<Campaign> campaigns = campaignService.findById(id);
-        this.campaign = campaigns.get(0);
-    }
-
-    public String editCampaign() {
-        updateCreationUser();
-        campaignService.update(campaign);
-        campaign = new Campaign();
-        return "campaign.xthml?faces-redirect=true";
-    }
-
-    public String removeCampaign() {
-        updateCreationUser();
-        campaignService.delete(campaign);
-        campaign = new Campaign();
-        return "campaign.xthml?faces-redirect=true";
+    public Set<Promotion> retrievePromotionsByCampaignById( int campaignId) {
+        campaign = campaignService.findById(campaignId).get(0);
+        return campaign.getPromotions();
     }
 
     public Promotion retrievePromotionById( int promotionId) {
@@ -99,7 +61,13 @@ public class CampaignController implements Serializable {
     }
 
 
-    // Promotions
+    // Actions
+
+    private void updateCreationUser() {
+        String userKey =  (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LOGIN_KEY);
+        List<UserProfile> users = userService.findByUsername(userKey);
+        campaign.setCreationUser(users.get(0));
+    }
 
     public String createPromotion() {
         updateCreationUser();
@@ -111,19 +79,14 @@ public class CampaignController implements Serializable {
         return "promotion-list.xthml?faces-redirect=true";
     }
 
-    public Set<Promotion> retrievePromotionsByCampaignById( int campaignId) {
-        campaign = campaignService.findById(campaignId).get(0);
-        return campaign.getPromotions();
-    }
-
-    public void retrieveByPromotionId() {
-        if (promotionId <= 0 || id < 0 ) {
+    public void retrieveById() {
+        if (promotionId <= 0 || campaignId < 0 ) {
             String message = "Bad request. Please use a link from within the system.";
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
             return;
         }
-        List<Campaign> campaigns = campaignService.findById(id);
+        List<Campaign> campaigns = campaignService.findById(campaignId);
         this.campaign = campaigns.get(0);
         List<Promotion> promotions = promotionService.findById(promotionId);
         this.promotion = promotions.get(0);
@@ -138,7 +101,7 @@ public class CampaignController implements Serializable {
         return "promotion.xthml?faces-redirect=true";
     }
 
-    public String removePromotion() {
+    public String removeCampaign() {
         updateCreationUser();
         campaign.getPromotions().remove(promotion);
         promotion.setCampaign(null);
@@ -149,7 +112,7 @@ public class CampaignController implements Serializable {
     }
 
     public String cancel() {
-        return "campaign.xhtml?faces-redirect=true";
+        return "promotion.xhtml?faces-redirect=true";
     }
 
     public String finish() {
@@ -161,14 +124,24 @@ public class CampaignController implements Serializable {
     }
 
 
+
     // Getter and setters
 
-    public int getId() {
-        return id;
+
+    public Campaign getCampaign() {
+        return campaign;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
+    }
+
+    public int getCampaignId() {
+        return campaignId;
+    }
+
+    public void setCampaignId(int campaignId) {
+        this.campaignId = campaignId;
     }
 
     public int getPromotionId() {
@@ -179,14 +152,6 @@ public class CampaignController implements Serializable {
         this.promotionId = promotionId;
     }
 
-    public Campaign getCampaign() {
-        return campaign;
-    }
-
-    public void setCampaign(Campaign campaign) {
-        this.campaign = campaign;
-    }
-
     public Promotion getPromotion() {
         return promotion;
     }
@@ -194,5 +159,4 @@ public class CampaignController implements Serializable {
     public void setPromotion(Promotion promotion) {
         this.promotion = promotion;
     }
-
 }

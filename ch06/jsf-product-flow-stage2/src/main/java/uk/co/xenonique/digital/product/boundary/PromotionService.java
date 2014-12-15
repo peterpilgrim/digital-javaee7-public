@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Stateful
 public class PromotionService {
-    @PersistenceContext(unitName = "productFlowDB", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "mysqlProductFlowDB", type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
     public void add(Promotion obj) {

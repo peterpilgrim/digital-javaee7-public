@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+<ui:composition template="/basic_layout.xhtml">
+
+    <ui:define name="mainContent">
+
+        <h1> JSF Product Flow - Create Campaign </h1>
+
+        <div class="login-username-box  pull-right">
+            <b>#{sessionScope['LOGIN_USERNAME']}</b>
+        </div>
+
+        <div class="content-wrapper   center-block">
+            You are now inside the <b>Campaign</b> ( <code>campaign.xhtml</code> ).
+            This is an implicit flow scope.
+
+        </div><!-- content-wrapper  -->
+
+
+        <div class="content-wrapper   center-block">
+            <h:form id="promotionForm"
+                    styleClass="form-horizontal  campaign-form"
+                    p:role="form">
+
+                <div class="form-group">
+                    <h:outputLabel for="headline" class="col-sm-3 control-label">
+                        Headline</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                         label="Headline" id="headline"
+                                         value="#{promotionController.promotion.headline}">
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="headliineError"/>
+                        </h:inputText>
+                        <h:message id="headlineError"
+                                   for="headline" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="description" class="col-sm-3 control-label">
+                        Description</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     label="Description" id="description"
+                                     value="#{campaignController.promotion.description}">
+                            <f:validateRequired/>
+                            <f:ajax event="blur" render="descriptionError"/>
+                        </h:inputText>
+                        <h:message id="descriptionError"
+                                   for="description" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="description" class="col-sm-3 control-label">
+                        Approved</h:outputLabel>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control"
+                                     label="Approved" id="approved"
+                                     value="#{campaignController.promotion.approved}">
+                            <f:ajax event="blur" render="approvedError"/>
+                        </h:inputText>
+                        <h:message id="approvedError"
+                                   for="approved" styleClass="alert validation-error"/>
+                    </div>
+                </div>
+
+                <h:commandButton styleClass="btn btn-primary"
+                                 action="#{campaignController.createCampaign()}"
+                                 value="Add" />
+                &#160;
+                &#160;
+                <h:commandButton styleClass="btn btn-default"
+                                 action="#{campaignController.finish()}"
+                                 immediate="true" value="Finish"/>
+
+
+
+
+                <h2> Campaigns</h2>
+
+
+                <table class="table-striped table-bordered  user-table">
+                    <tr>
+                        <th> Name </th>
+                        <th> Value</th>
+                    </tr>
+                    <tr>
+                        <td>Title</td>
+                        <td>#{campaignController.campaign.title}</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>#{campaignController.campaign.description}</td>
+                    </tr>
+                    <tr>
+                        <td>Created by User</td>
+                        <td>#{campaignController.campaign.creationUser.username}</td>
+                    </tr>
+                    <tr>
+                        <td>Promotions</td>
+                        <td>#{campaignController.campaign.promotions}</td>
+                    </tr>
+                </table>
+
+
+                <h2> Promotions </h2>
+
+                <h:dataTable id="promotionTable"
+                             value="#{promotionController.retrievePromotionsByCampaignById(campaignController.campaign.id)}"
+                             styleClass="table-striped table-bordered user-table"
+                             var="promotion">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Headline" />
+                        </f:facet>
+                        <h:outputText value="#{promotion.headline}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Description" />
+                        </f:facet>
+                        <h:outputText value="#{promotion.description}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Approved" />
+                        </f:facet>
+                        <h:outputText value="#{promotion.approved}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Action" />
+                        </f:facet>
+                        <h:link styleClass="btn" outcome="promotion-edit.xhtml?campaignId=#{campaign.id}&amp;promotioinId=#{promotion.id}">
+                            <f:param name="id" value="#{campaign.id}" />
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </h:link>
+                        <h:link styleClass="btn" outcome="promotion-remove.xhtml?campaignId=#{campaign.id}&amp;promotioinId=#{promotion.id}">
+                            <f:param name="id" value="#{promotion.id}" />
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </h:link>
+                    </h:column>
+
+                </h:dataTable>
+
+            </h:form>
+        </div>
+
+
+        <hr class="subfeaturette-divider" />
+
+    </ui:define> <!--name="mainContent" -->
+
+</ui:composition>
+</html>

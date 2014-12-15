@@ -7,7 +7,7 @@
 
 <f:metadata>
     <f:viewParam name="id" value="#{campaignController.id}" />
-    <f:event type="preRenderView" listener="#{campaignController.retrieveById()}"/>
+    <f:event type="preRenderView" listener="#{campaignController.retrieveByCampaignId()}"/>
 </f:metadata>
 
 <ui:composition template="/basic_layout.xhtml">
@@ -63,15 +63,58 @@
                 </div>
 
                 <h:commandButton styleClass="btn btn-primary"
-                                 action="#{campaignController.editCampaign()}"
+                                 action="#{promotionController.editCampaign()}"
                                  value="Edit" />
                 &#160;
                 &#160;
                 <h:commandButton styleClass="btn btn-default"
-                                 action="#{campaignController.cancel()}"
+                                 action="#{promotionController.cancel()}"
                                  immediate="true" value="Cancel"/>
 
             </h:form>
+
+
+
+            <h2> Promotions </h2>
+
+            <h:dataTable id="promotionTable"
+                         value="#{campaignController.retrievePromotionsByCampaignById(campaignController.campaign.id)}"
+                         styleClass="table-striped table-bordered user-table"
+                         var="promotion">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Headline" />
+                    </f:facet>
+                    <h:outputText value="#{promotion.headline}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Description" />
+                    </f:facet>
+                    <h:outputText value="#{promotion.description}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Approved" />
+                    </f:facet>
+                    <h:outputText value="#{promotion.approved}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Action" />
+                    </f:facet>
+                    <h:link styleClass="btn" outcome="promotion-edit.xhtml?campaignId=#{promotion.campaign.id}&amp;promotioinId=#{promotion.id}">
+                        <f:param name="id" value="#{campaign.id}" />
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </h:link>
+                    <h:link styleClass="btn" outcome="promotion-remove.xhtml?campaignId=#{promotion.campaign.id}&amp;promotioinId=#{promotion.id}">
+                        <f:param name="id" value="#{promotion.id}" />
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </h:link>
+                </h:column>
+
+            </h:dataTable>
         </div>
 
 

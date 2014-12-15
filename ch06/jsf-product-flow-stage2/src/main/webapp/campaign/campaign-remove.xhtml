@@ -7,7 +7,7 @@
 
 <f:metadata>
     <f:viewParam name="id" value="#{campaignController.id}" />
-    <f:event type="preRenderView" listener="#{campaignController.retrieveById()}"/>
+    <f:event type="preRenderView" listener="#{campaignController.retrieveByCampaignId()}"/>
 </f:metadata>
 
 <ui:composition template="/basic_layout.xhtml">
@@ -32,7 +32,7 @@
                     styleClass="form-horizontal  campaign-form"
                     p:role="form">
 
-                <table>
+                <table class="table-striped table-bordered  user-table">
                     <tr>
                         <th> Name </th>
                         <th> Value</th>
@@ -58,7 +58,7 @@
 
                 <h:commandButton styleClass="btn btn-primary"
                                  action="#{campaignController.removeCampaign()}"
-                                 value="Edit" />
+                                 value="Remove" />
                 &#160;
                 &#160;
                 <h:commandButton styleClass="btn btn-default"
