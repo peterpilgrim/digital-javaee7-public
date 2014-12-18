@@ -2,6 +2,7 @@ package uk.co.xenonique.digital.product.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
     @NamedQuery(name="Campaign.findAll",
             query = "select o from Campaign o "),
     @NamedQuery(name="Campaign.findById",
-            query = "select o from Campaign o where o.id = :id"),
+            query = "select o from Campaign o where o.id = :id order by o.creationDate"),
     @NamedQuery(name="Campaign.findByUsername",
             query = "select o from Campaign o where o.creationUser = :username"),
 })
@@ -32,7 +33,10 @@ public class Campaign implements Serializable {
     @JoinColumn(name="FK_CREATED_USER_ID")
     private UserProfile creationUser;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate = new Date();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
         name="CAMPAIGN_PROMOTION",
         joinColumns={ @JoinColumn(name="FK_CAMPAIGN_ID") },
@@ -94,7 +98,14 @@ public class Campaign implements Serializable {
         this.creationUser = user;
     }
 
-// equals(), hashCode(), toString() omitted
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+    // equals(), hashCode(), toString() omitted
 
     @Override
     public boolean equals(Object o) {
@@ -119,8 +130,9 @@ public class Campaign implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", promotions=" + promotions +
                 ", creationUser=" + creationUser +
+                ", creationDate=" + creationDate +
+                ", promotions=" + promotions +
                 '}';
     }
 }

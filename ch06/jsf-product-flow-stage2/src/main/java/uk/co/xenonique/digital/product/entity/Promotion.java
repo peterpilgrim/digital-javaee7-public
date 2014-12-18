@@ -1,7 +1,10 @@
 package uk.co.xenonique.digital.product.entity;
 
+import uk.co.xenonique.digital.product.utils.AppUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +20,7 @@ import java.util.Set;
     @NamedQuery(name="Promotion.findAll",
             query = "select p from Promotion p "),
     @NamedQuery(name="Promotion.findById",
-            query = "select p from Promotion p where p.id = :id"),
+            query = "select p from Promotion p where p.id = :id order by p.creationDate"),
 })
 public class Promotion implements Serializable {
     @Id
@@ -28,7 +31,7 @@ public class Promotion implements Serializable {
     private String description;
     private boolean approved;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
         name="PROMOTION_USER_PROFILE",
         joinColumns={ @JoinColumn(name="FK_PROMOTION_ID") },
@@ -39,6 +42,9 @@ public class Promotion implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "CAMPAIGN_ID")
     private Campaign campaign;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate = new Date();
 
     public Promotion() {
         this(null,null);
@@ -97,6 +103,14 @@ public class Promotion implements Serializable {
         this.campaign = campaign;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
 // equals(), hashCode(), toString() omitted
 
     @Override
@@ -124,6 +138,8 @@ public class Promotion implements Serializable {
                 ", description='" + description + '\'' +
                 ", approved=" + approved +
                 ", approvers=" + approvers +
+                ", campaign=" + AppUtils.systemHashIdentity(campaign) +
+                ", creationDate=" + creationDate +
                 '}';
     }
 }

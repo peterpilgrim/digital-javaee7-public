@@ -15,15 +15,12 @@ public class Approver implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String comment;
-    private String username;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FK_USER_ID")
+    private UserProfile user;
 
     public Approver() {
-        this(null,null);
-    }
-
-    public Approver(String comment, String username) {
-        this.comment = comment;
-        this.username = username;
     }
 
     public long getId() {
@@ -42,14 +39,13 @@ public class Approver implements Serializable {
         this.comment = comment;
     }
 
-    public String getUsername() {
-        return username;
+    public UserProfile getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(UserProfile user) {
+        this.user = user;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -70,12 +66,10 @@ public class Approver implements Serializable {
 
     @Override
     public String toString() {
-        return "Approver" +
-                "@"+Integer.toHexString(System.identityHashCode(this))+
-                "{" +
+        return "Approver{" +
                 "id=" + id +
                 ", comment='" + comment + '\'' +
-                ", username='" + username + '\'' +
+                ", user=" + user +
                 '}';
     }
 }
