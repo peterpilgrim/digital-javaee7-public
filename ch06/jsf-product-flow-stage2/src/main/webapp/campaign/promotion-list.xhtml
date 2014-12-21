@@ -104,6 +104,10 @@
                         <td>#{campaignController.campaign.creationUser.username}</td>
                     </tr>
                     <tr>
+                        <td>Creation Date</td>
+                        <td>#{campaignController.campaign.creationDate}</td>
+                    </tr>
+                    <tr>
                         <td>Promotions</td>
                         <td>#{campaignController.campaign.promotions}</td>
                     </tr>
@@ -133,6 +137,18 @@
                             <h:outputText value="Approved" />
                         </f:facet>
                         <h:outputText value="#{promotion.approved}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Approvers" />
+                        </f:facet>
+                        <h:outputText value="#{promotion.delimitedApprovers()}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Created Date" />
+                        </f:facet>
+                        <h:outputText value="#{promotion.createdDate}"/>
                     </h:column>
 
                     <h:column>

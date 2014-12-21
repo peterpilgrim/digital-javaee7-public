@@ -1,12 +1,11 @@
 package uk.co.xenonique.digital.product.entity;
 
-import uk.co.xenonique.digital.product.utils.AppUtils;
+import static uk.co.xenonique.digital.product.utils.AppUtils.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -111,6 +110,21 @@ public class Promotion implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public String delimitedApprovers() {
+        StringBuilder buf = new StringBuilder();
+        boolean  first=true;
+        for ( Approver approver: approvers) {
+            if (first) {
+                buf.append(" ,");
+            }
+            else {
+                first =false;
+            }
+            buf.append(approver.getUser().getUsername());
+        }
+        return buf.toString();
+    }
+
 // equals(), hashCode(), toString() omitted
 
     @Override
@@ -138,7 +152,7 @@ public class Promotion implements Serializable {
                 ", description='" + description + '\'' +
                 ", approved=" + approved +
                 ", approvers=" + approvers +
-                ", campaign=" + AppUtils.systemHashIdentity(campaign) +
+                ", campaign=" + systemHashIdentity(campaign) +
                 ", creationDate=" + creationDate +
                 '}';
     }

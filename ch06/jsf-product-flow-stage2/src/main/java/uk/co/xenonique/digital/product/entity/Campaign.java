@@ -105,6 +105,8 @@ public class Campaign implements Serializable {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
+
     // equals(), hashCode(), toString() omitted
 
     @Override

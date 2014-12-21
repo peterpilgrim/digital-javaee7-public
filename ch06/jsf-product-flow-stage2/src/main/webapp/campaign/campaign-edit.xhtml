@@ -123,7 +123,7 @@
 
             <h:dataTable id="promotionTable"
                          value="#{campaignController.retrievePromotionsByCampaignById(campaignController.campaign.id)}"
-                         columnClasses="promotion-table-title, promotion-table-description, promotion-table-approved, promotion-table-action"
+                         columnClasses="promotion-table-title, promotion-table-description, promotion-table-approved, promotion-table-approvers, promotion-table-action"
                          styleClass="table-striped table-bordered user-table"
                          var="promotion">
                 <h:column>
@@ -144,6 +144,14 @@
                     </f:facet>
                     <h:outputText value="#{promotion.approved}"/>
                 </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Approvers" />
+                    </f:facet>
+                    <h:outputText value="#{promotion.delimitedApprovers()}"/>
+                </h:column>
+
 
                 <h:column>
                     <f:facet name="header">

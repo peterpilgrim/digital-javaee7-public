@@ -246,7 +246,11 @@ body {
 }
 
 .promotion-table-approved {
-    width: 10%;
+    width: 8.5%;
+}
+
+.promotion-table-approvers {
+    width: 17.5%;
 }
 
 .promotion-table-action {

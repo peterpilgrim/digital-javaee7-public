@@ -73,6 +73,10 @@
                     </div>
                 </div>
 
+                <p>
+                    Approvers: #{campaignController.promotion.delimitedApprovers()}
+                </p>
+
                 <h:commandButton styleClass="btn btn-primary"
                                  action="#{campaignController.editPromotion()}"
                                  value="Save Edit Promotion" />
