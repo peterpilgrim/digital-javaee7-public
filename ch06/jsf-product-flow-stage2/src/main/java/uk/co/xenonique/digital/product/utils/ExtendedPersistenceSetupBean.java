@@ -4,10 +4,7 @@ import uk.co.xenonique.digital.product.boundary.CampaignService;
 import uk.co.xenonique.digital.product.boundary.PromotionService;
 import uk.co.xenonique.digital.product.boundary.UserProfileService;
 import uk.co.xenonique.digital.product.boundary.UserRoleService;
-import uk.co.xenonique.digital.product.entity.Campaign;
-import uk.co.xenonique.digital.product.entity.Promotion;
-import uk.co.xenonique.digital.product.entity.UserProfile;
-import uk.co.xenonique.digital.product.entity.UserRole;
+import uk.co.xenonique.digital.product.entity.*;
 
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
@@ -74,17 +71,27 @@ public class ExtendedPersistenceSetupBean {
         }
 
 //        List<Campaign> campaigns2 = campaignService.findAll();
+        int index=0;
         for (Campaign campaign: campaigns) {
-            for (int k=0; k<3; ++k) {
+            for (int k=0; k<3+index; ++k) {
                 final int promoIndex = k + base;
                 Promotion promotion = new Promotion("promo headline "+promoIndex, "promo description "+promoIndex);
                 promotionService.add(promotion);
                 campaign.getPromotions().add(promotion);
                 promotion.setCampaign(campaign);
+
+                if ( index==0)  {
+                    Approver approver = new Approver();
+                    approver.setUser( users.get(3));
+                    approver.setComment("This promotion has been pre-approved.");
+                    promotion.getApprovers().add(approver);
+                    promotionService.update(promotion);
+                }
             }
             base += 1000;
             campaignService.update(campaign);
             System.out.printf("+++++ campaign=%s\n", campaign );
+            ++index;
         }
     }
 

@@ -115,10 +115,10 @@ public class Promotion implements Serializable {
         boolean  first=true;
         for ( Approver approver: approvers) {
             if (first) {
-                buf.append(" ,");
+                first =false;
             }
             else {
-                first =false;
+                buf.append(", ");
             }
             buf.append(approver.getUser().getUsername());
         }
