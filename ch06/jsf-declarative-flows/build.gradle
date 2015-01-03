@@ -1,0 +1,26 @@
+// Template based on Java EE 7 Developer Handbook by Peter A. Pilgrim
+// http://www.xenonique.co.uk/blog/ (CC) 2014
+
+apply plugin: 'war'
+
+// Define equivalent Maven GAV coordinates.
+archivesBaseName = 'jsf-declarative-flows'
+
+dependencies {
+//    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    providedCompile 'javax:javaee-api:7.0'
+    // WARNING: Joda time is broken with Glassfish 4
+//    compile     'joda-time:joda-time:2.2'
+}
+
+
+war {
+    // classpath  configurations.extralibs
+    // webXml = file("src/main/webapp/WEB-INF/web.xml")
+    // baseXml = "servlet-webapp"
+
+    // Exclude GlassFish embedded libraries and avoid java.io.IOException: com.sun.enterprise.admin.remote.RemoteFailureException: Error occurred during deployment: Exception while deploying the app [jsf-compositions-1.0-SNAPSHOT] : Servlet [ParticipantPortImpl] and Servlet [CoordinatorPortImpl] have the same url pattern: [/WSAT11Service].
+    rootSpec.exclude("**/glassfish-embedded-all-*.jar")
+    rootSpec.exclude("**/glassfish-embedded-runner-*.jar")
+}
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="
+              http://xmlns.jcp.org/xml/ns/javaee
+              http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <flow-definition id="sector-flow">
+        <flow-return id="goHome">
+            <from-outcome>/index</from-outcome>
+        </flow-return>
+        <flow-return id="endFlow">
+            <from-outcome>#{sectorFlow.gotoEndFlow()}</from-outcome>
+        </flow-return>
+
+        <inbound-parameter>
+            <name>param1FromFlow2</name>
+            <value>#{flowScope.param1Value}</value>
+        </inbound-parameter>
+        <inbound-parameter>
+            <name>param2FromFlow2</name>
+            <value>#{flowScope.param1Value}</value>
+        </inbound-parameter>
+
+        <flow-call id="callFootprintFlow">
+            <flow-reference>
+                <flow-id>footprint-flow</flow-id>
+            </flow-reference>
+            <outbound-parameter>
+                <name>param1FromSectorFlow</name>
+                <value>param1 sectorFlow value</value>
+            </outbound-parameter>
+            <outbound-parameter>
+                <name>param2FromSectorFlow</name>
+                <value>param2 sectorFlow value</value>
+            </outbound-parameter>
+        </flow-call>
+    </flow-definition>
+</faces-config>

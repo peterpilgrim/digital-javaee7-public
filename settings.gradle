@@ -6,4 +6,5 @@ include 'ch02/jsf-compositions',
 	'ch05/jsf-instant-secure',
 	'ch05/jsf-instant-secure-smart',
 	'ch06/jsf-product-flow',
+	'ch06/jsf-declarative-flows',
 	'ch06/jsf-product-flow-stage2'

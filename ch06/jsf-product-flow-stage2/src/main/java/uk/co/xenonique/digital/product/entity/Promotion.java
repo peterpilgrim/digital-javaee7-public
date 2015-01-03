@@ -32,7 +32,7 @@ public class Promotion implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
-        name="PROMOTION_USER_PROFILE",
+        name="PROMOTION_APPROVER",
         joinColumns={ @JoinColumn(name="FK_PROMOTION_ID") },
         inverseJoinColumns={ @JoinColumn(name="FK_APPROVER_ID") }
     )
