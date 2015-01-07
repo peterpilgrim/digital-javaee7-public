@@ -9,16 +9,19 @@
         <flow-return id="goHome">
             <from-outcome>/index</from-outcome>
         </flow-return>
-        <flow-return id="endFlowPage">
-            <from-outcome>/endflow</from-outcome>
+        <flow-return id="exitFromFootprintFlow">
+            <from-outcome>#{footprintFlow.exitFromFootprintFlow}</from-outcome>
+        </flow-return>
+        <flow-return id="exitToSectionFlow">
+            <from-outcome>/section-flow</from-outcome>
         </flow-return>
 
         <inbound-parameter>
-            <name>param1FromFlow2</name>
+            <name>param1FromSectorFlow</name>
             <value>#{flowScope.param1Value}</value>
         </inbound-parameter>
         <inbound-parameter>
-            <name>param2FromFlow2</name>
+            <name>param2FromSectorFlow</name>
             <value>#{flowScope.param2Value}</value>
         </inbound-parameter>
 

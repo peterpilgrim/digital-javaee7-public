@@ -36,6 +36,14 @@ public class CarbonFootprint implements Serializable {
     public CarbonFootprint() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getIndustryOrSector() {
         return industryOrSector;
     }

@@ -13,14 +13,6 @@
             <from-outcome>#{sectorFlow.gotoEndFlow()}</from-outcome>
         </flow-return>
 
-        <inbound-parameter>
-            <name>param1FromFlow2</name>
-            <value>#{flowScope.param1Value}</value>
-        </inbound-parameter>
-        <inbound-parameter>
-            <name>param2FromFlow2</name>
-            <value>#{flowScope.param1Value}</value>
-        </inbound-parameter>
 
         <flow-call id="callFootprintFlow">
             <flow-reference>

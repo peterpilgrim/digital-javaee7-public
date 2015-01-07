@@ -15,16 +15,23 @@
         </div><!-- content-wrapper  -->
 
         <div class="content-wrapper">
-            <h1>Page sector-flow-1a.xhtml</h1>
-            <p>Flow bean name: #{sectorFlow.debugClassName()}</p>
-
-            <p>value: #{flowScope.value}</p>
+            <h1>Page <code>sector-flow-1a.xhtml</code></h1>
+            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+            <p>Flow bean name: <code>#{sectorFlow.debugClassName()}</code></p>
+            <p>Expression sectorFlow.carbonFootprint.id = <code>#{sectorFlow.carbonFootprint.id}</code></p>
+            <p>Expression flowScope.value: <code>#{flowScope.value}</code></p>
+            <p>Expression flowScope.email: <code>#{flowScope.email}</code></p>
+            <p>Industry or sector: <code>#{sectorFlow.carbonFootprint.industryOrSector}</code></p>
 
             <h:form prependId="false">
-                <p><h:commandButton id="back" styleClass="btn btn-primary btn-lg" value="back" action="sector-flow" /></p>
-                <p><h:commandButton id="next" styleClass="btn btn-primary btn-lg" value="next" action="sector-flow-1b" /></p>
-                <p><h:commandButton id="return" styleClass="btn btn-primary btn-lg" value="return" action="endFlow" /></p>
-                <p><h:commandButton id="index" styleClass="btn btn-primary btn-lg" value="home" action="goHome" /></p>
+                <h:commandButton id="previousBtn" styleClass="btn btn-primary btn-lg" value="Previous" action="sector-flow" />
+                &#160;
+                <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="sector-flow-1b" />
+                &#160;
+                <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="endFlow" />
+                &#160;
+                <h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="goHome" />
+                &#160;
             </h:form>
         </div>
 

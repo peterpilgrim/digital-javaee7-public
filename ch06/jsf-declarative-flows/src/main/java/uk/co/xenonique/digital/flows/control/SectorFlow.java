@@ -18,6 +18,10 @@ public class SectorFlow implements Serializable{
 
     private CarbonFootprint carbonFootprint = new CarbonFootprint();
 
+    public SectorFlow() {
+        carbonFootprint.setId((long) (1e6 + Math.random() * 1e6 * 2) );
+    }
+
     public String gotoEndFlow() {
         return "/endflow.xhtml";
     }

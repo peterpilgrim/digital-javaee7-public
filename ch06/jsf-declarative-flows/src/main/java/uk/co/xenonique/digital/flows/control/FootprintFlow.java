@@ -13,9 +13,16 @@ import java.io.Serializable;
  */
 @Named
 @FlowScoped("footprint-flow")
-public class FootprintFlow implements Serializable{
+public class FootprintFlow implements Serializable {
 
     private CarbonFootprint footprint = new CarbonFootprint();
+
+    public FootprintFlow() {
+    }
+
+    public String exitFromFootprintFlow() {
+        return "/endflow.xhtml";
+    }
 
     // Getters and setters
 

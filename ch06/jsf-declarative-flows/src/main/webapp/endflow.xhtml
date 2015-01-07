@@ -15,22 +15,28 @@
         </div><!-- content-wrapper  -->
 
         <div class="content-wrapper">
-            <h1>Page <code>sector-flow-1b.xhtml</code></h1>
-            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
-            <p>Flow bean name: <code>#{sectorFlow.debugClassName()}</code></p>
-            <p>Expression sectorFlow.carbonFootprint.id = <code>#{sectorFlow.carbonFootprint.id}</code></p>
-            <p>Expression flowScope.value: <code>#{flowScope.value}</code></p>
-            <p>Industry or sector: <code>#{sectorFlow.carbonFootprint.industryOrSector}</code></p>
+            <h1>Page <code>endflow.xhtml</code></h1>
+
+            <p>You have exited the JSF Flow Scope </p>
 
             <h:form prependId="false">
-                <h:commandButton id="previousBtn" styleClass="btn btn-primary btn-lg" value="Previous" action="sector-flow-1a" />
-                &#160;
-                <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="endFlow" />
-                &#160;
-                <h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="goHome" />
-                &#160;
+                <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+
+                <p>flowScope value (should be empty): #{flowScope.value}.</p>
+
+                <p><h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="/index" /></p>
 
             </h:form>
+            <!--
+            <h:form prependId="false">
+                <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="sector-flow-1a" />
+                &#190;
+                <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="endFlow" />
+                &#190;
+                <h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="goHome" />
+                &#190;
+            </h:form>
+            -->
         </div>
 
         <hr class="subfeaturette-divider" />
