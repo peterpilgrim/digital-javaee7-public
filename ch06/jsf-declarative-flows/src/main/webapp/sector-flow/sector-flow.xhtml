@@ -18,10 +18,26 @@
         <div class="content-wrapper">
             <h1>Page <code>sector-flow.xhtml</code></h1>
             <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
-            <p>Flow bean name: <code>#{sectorFlow.debugClassName()}</code></p>
-            <p>Expression sectorFlow.carbonFootprint.id = <code>#{sectorFlow.carbonFootprint.id}</code></p>
-            <p>Expression flowScope.value: <code>#{flowScope.value}</code></p>
-            <p>Expression flowScope.email: <code>#{flowScope.email}</code></p>
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Expression</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>sectorFlow.debugClassName()</td>
+                    <td>#{sectorFlow.debugClassName()}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.email</td> <td>#{flowScope.email}</td>
+                </tr>
+                <tr>
+                    <td>sectorFlow.footprint.applicationId</td> <td>#{sectorFlow.footprint.applicationId}</td>
+                </tr>
+                <tr>
+                    <td>sectorFlow.footprint</td> <td>#{sectorFlow.footprint}</td>
+                </tr>
+            </table>
 
             <h:form prependId="false">
                 <div class="form-group">
@@ -32,7 +48,7 @@
                     <h:outputLabel for="industryOrSector">Industry or Sector</h:outputLabel>
                     <h:inputText type="text" class="form-control" id="industryOrSector"
                            placeholder="Your industry sector"
-                           value="#{sectorFlow.carbonFootprint.industryOrSector}"/>
+                           value="#{sectorFlow.footprint.industryOrSector}"/>
                 </div>
 
                 <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="sector-flow-1a" />

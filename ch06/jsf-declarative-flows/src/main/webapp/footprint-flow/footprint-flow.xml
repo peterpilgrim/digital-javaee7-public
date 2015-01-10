@@ -24,6 +24,14 @@
             <name>param2FromSectorFlow</name>
             <value>#{flowScope.param2Value}</value>
         </inbound-parameter>
+        <inbound-parameter>
+            <name>param3FromSectorFlow</name>
+            <value>#{flowScope.param3Value}</value>
+        </inbound-parameter>
+        <inbound-parameter>
+            <name>param4FromSectorFlow</name>
+            <value>#{flowScope.param4Value}</value>
+        </inbound-parameter>
 
     </flow-definition>
 </faces-config>

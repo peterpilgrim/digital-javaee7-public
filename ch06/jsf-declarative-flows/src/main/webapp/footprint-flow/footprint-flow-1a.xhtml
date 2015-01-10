@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+<ui:composition template="/basic_layout.xhtml">
+
+    <ui:define name="mainContent">
+
+        <h1> Footprint Flow </h1>
+
+        <div class="content-wrapper   center-block">
+        </div><!-- content-wrapper  -->
+
+        <div class="content-wrapper">
+            <h1>Page <code>footprint-flow.xhtml</code></h1>
+            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Expression</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>footprintFlow.debugClassName()</td>
+                    <td>#{footprintFlow.debugClassName()}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param1Value</td> <td>#{flowScope.param1Value}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param2Value</td> <td>#{flowScope.param2Value}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param3Value</td> <td>#{flowScope.param3Value}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param4Value</td> <td>#{flowScope.param4Value}</td>
+                </tr>
+                <tr>
+                    <td>footprintFlow.footprint.applicationId</td> <td>#{footprintFlow.footprint.applicationId}</td>
+                </tr>
+                <tr>
+                    <td>footprintFlow.footprint</td> <td>#{footprintFlow.footprint}</td>
+                </tr>
+            </table>
+
+
+
+            <h:form prependId="false">
+
+
+                <div class="form-group">
+                    <h:outputLabel for="electricity">Electricity (KW/h)</h:outputLabel>
+                    <h:inputText class="form-control"
+                                 id="electricity"
+                                 placeholder="0 - 10000 KWh"
+                                 value="#{footprintFlow.footprint.electricity}">
+                        <f:validateRequired/>
+                        <f:validateDoubleRange minimum="0" maximum="10000" />
+                        <f:ajax event="blur" render="electricityError" />
+                    </h:inputText>
+                    <h:message id="electricityError"
+                               for="electricity" styleClass="alert validation-error"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="naturalGas">Natural Gas (KW/h)</h:outputLabel>
+                    <h:inputText type="text" class="form-control"
+                                 id="naturalGas"
+                                 placeholder="0 - 10000 KWh"
+                                 value="#{footprintFlow.footprint.naturalGas}">
+                        <f:validateRequired/>
+                        <f:validateDoubleRange minimum="0" maximum="10000" />
+                        <f:ajax event="blur" render="naturalGasError" />
+                    </h:inputText>
+                    <h:message id="naturalGasError"
+                               for="naturalGas" styleClass="alert validation-error"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="diesel">Diesel (Litres)</h:outputLabel>
+                    <h:inputText type="text" class="form-control"
+                                 id="diesel"
+                                 placeholder="20 - 2000 Litres"
+                                 value="#{footprintFlow.footprint.diesel}">
+                        <f:validateRequired/>
+                        <f:validateDoubleRange minimum="0" maximum="2000" />
+                        <f:ajax event="blur" render="dieselError" />
+                    </h:inputText>
+                    <h:message id="dieselError"
+                               for="diesel" styleClass="alert validation-error"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="petrol">Petrol (Litres)</h:outputLabel>
+                    <h:inputText type="text" class="form-control"
+                                 id="petrol"
+                                 placeholder="0 - 2000 Litres"
+                                 value="#{footprintFlow.footprint.petrol}">
+                        <f:validateRequired/>
+                        <f:validateDoubleRange minimum="0" maximum="2000" />
+                        <f:ajax event="blur" render="petrolError" />
+                    </h:inputText>
+                    <h:message id="petrolError"
+                               for="petrol" styleClass="alert validation-error"/>
+                </div>
+
+                <h:commandButton id="previousBtn" styleClass="btn btn-primary btn-lg" value="Prev" action="#{footprintFlow.gotoPage1()}" />
+                &#160;
+                <h:commandButton id="exitFlowBtn2" styleClass="btn btn-primary btn-lg" value="Exit Flow 2" action="exitToSectionFlow" />
+                &#160;
+                <h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="goHome" />
+                &#160;
+            </h:form>
+        </div>
+
+        <hr class="subfeaturette-divider" />
+
+    </ui:define> <!--name="mainContent" -->
+
+</ui:composition>
+</html>

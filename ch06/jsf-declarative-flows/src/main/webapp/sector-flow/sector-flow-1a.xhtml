@@ -18,10 +18,26 @@
             <h1>Page <code>sector-flow-1a.xhtml</code></h1>
             <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
             <p>Flow bean name: <code>#{sectorFlow.debugClassName()}</code></p>
-            <p>Expression sectorFlow.carbonFootprint.id = <code>#{sectorFlow.carbonFootprint.id}</code></p>
-            <p>Expression flowScope.value: <code>#{flowScope.value}</code></p>
-            <p>Expression flowScope.email: <code>#{flowScope.email}</code></p>
-            <p>Industry or sector: <code>#{sectorFlow.carbonFootprint.industryOrSector}</code></p>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Expression</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>sectorFlow.debugClassName()</td>
+                    <td>#{sectorFlow.debugClassName()}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.email</td> <td>#{flowScope.email}</td>
+                </tr>
+                <tr>
+                    <td>sectorFlow.footprint.applicationId</td> <td>#{sectorFlow.footprint.applicationId}</td>
+                </tr>
+                <tr>
+                    <td>sectorFlow.footprint</td> <td>#{sectorFlow.footprint}</td>
+                </tr>
+            </table>
+
 
             <h:form prependId="false">
                 <h:commandButton id="previousBtn" styleClass="btn btn-primary btn-lg" value="Previous" action="sector-flow" />

@@ -22,6 +22,8 @@ public class CarbonFootprint implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String applicationId;
+
     private String industryOrSector;
     // KWh (main source)
     private double electricity;
@@ -42,6 +44,14 @@ public class CarbonFootprint implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 
     public String getIndustryOrSector() {
@@ -107,6 +117,7 @@ public class CarbonFootprint implements Serializable {
     public String toString() {
         return "CarbonFootprint{" +
                 "id=" + id +
+                ", applicationId='" + applicationId + '\'' +
                 ", industryOrSector='" + industryOrSector + '\'' +
                 ", electricity=" + electricity +
                 ", naturalGas=" + naturalGas +

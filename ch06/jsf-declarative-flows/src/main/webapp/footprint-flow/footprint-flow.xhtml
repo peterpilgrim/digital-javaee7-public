@@ -17,12 +17,38 @@
         <div class="content-wrapper">
             <h1>Page <code>footprint-flow.xhtml</code></h1>
             <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
-            <p>Flow bean name: <code>#{footprintFlow.debugClassName()}</code></p>
-            <p>Expression footprintrFlow.carbonFootprint.id = <code>#{footprintFlow.footprint.id}</code></p>
-            <p>Expression flowScope.value: <code>#{flowScope.value}</code></p>
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Expression</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>footprintFlow.debugClassName()</td>
+                    <td>#{footprintFlow.debugClassName()}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param1Value</td> <td>#{flowScope.param1Value}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param2Value</td> <td>#{flowScope.param2Value}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param3Value</td> <td>#{flowScope.param3Value}</td>
+                </tr>
+                <tr>
+                    <td>flowScope.param4Value</td> <td>#{flowScope.param4Value}</td>
+                </tr>
+                <tr>
+                    <td>footprintFlow.footprint.applicationId</td> <td>#{footprintFlow.footprint.applicationId}</td>
+                </tr>
+                <tr>
+                    <td>footprintFlow.footprint</td> <td>#{footprintFlow.footprint}</td>
+                </tr>
+            </table>
 
             <h:form prependId="false">
-                <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="footprint-flow-1a" />
+                <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="#{footprintFlow.gotoPage2()}" />
                 &#160;
                 <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="exitFromFootprintFlow" />
                 &#160;

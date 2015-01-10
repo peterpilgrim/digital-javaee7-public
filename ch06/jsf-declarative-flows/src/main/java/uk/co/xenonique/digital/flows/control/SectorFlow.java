@@ -1,8 +1,11 @@
 package uk.co.xenonique.digital.flows.control;
 
 import uk.co.xenonique.digital.flows.entity.CarbonFootprint;
+import uk.co.xenonique.digital.flows.utils.UtilityHelper;
 
+import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -12,14 +15,22 @@ import java.io.Serializable;
  * @author Peter Pilgrim
  *
  */
-@Named()
+@Named
 @FlowScoped("sector-flow")
 public class SectorFlow implements Serializable{
 
-    private CarbonFootprint carbonFootprint = new CarbonFootprint();
+    @Inject
+    UtilityHelper utilityHelper;
+
+    private CarbonFootprint footprint = new CarbonFootprint();
 
     public SectorFlow() {
-        carbonFootprint.setId((long) (1e6 + Math.random() * 1e6 * 2) );
+    }
+
+    @PostConstruct
+    public void initialize() {
+        System.out.printf("********* utilityHelper=%s\n", utilityHelper);
+        footprint.setApplicationId(utilityHelper.getNextApplicationId());
     }
 
     public String gotoEndFlow() {
@@ -32,11 +43,11 @@ public class SectorFlow implements Serializable{
 
     // Getters and setters
 
-    public CarbonFootprint getCarbonFootprint() {
-        return carbonFootprint;
+    public CarbonFootprint getFootprint() {
+        return footprint;
     }
 
-    public void setCarbonFootprint(CarbonFootprint carbonFootprint) {
-        this.carbonFootprint = carbonFootprint;
+    public void setFootprint(CarbonFootprint footprint) {
+        this.footprint = footprint;
     }
 }
