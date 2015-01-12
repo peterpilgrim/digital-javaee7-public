@@ -1,5 +1,6 @@
 package uk.co.xenonique.digital.flows.control;
 
+import uk.co.xenonique.digital.flows.boundary.CarbonFootprintService;
 import uk.co.xenonique.digital.flows.entity.CarbonFootprint;
 import uk.co.xenonique.digital.flows.utils.UtilityHelper;
 
@@ -22,6 +23,9 @@ public class SectorFlow implements Serializable{
     @Inject
     UtilityHelper utilityHelper;
 
+    @Inject
+    CarbonFootprintService service;
+
     private CarbonFootprint footprint = new CarbonFootprint();
 
     public SectorFlow() {
@@ -39,6 +43,11 @@ public class SectorFlow implements Serializable{
 
     public String debugClassName() {
         return this.getClass().getSimpleName();
+    }
+
+    public String saveFootprintRecord() {
+        service.add(footprint);
+        return "sector-flow-1c.xhtml";
     }
 
     // Getters and setters

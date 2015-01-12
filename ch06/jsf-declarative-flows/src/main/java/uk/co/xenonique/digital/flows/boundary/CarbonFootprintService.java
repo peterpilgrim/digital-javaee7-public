@@ -16,20 +16,20 @@ import java.util.List;
  */
 @Stateful
 public class CarbonFootprintService {
-    @PersistenceContext(unitName = "productFlowDB", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "declarativeFlowDB", type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
-    public void add(CarbonFootprint user) {
-        entityManager.persist(user);
+    public void add(CarbonFootprint footprint) {
+        entityManager.persist(footprint);
     }
 
-    public void update(CarbonFootprint user) {
-        CarbonFootprint userUpdated = entityManager.merge(user);
-        entityManager.persist(userUpdated);
+    public void update(CarbonFootprint footprint) {
+        CarbonFootprint footprintUpdated = entityManager.merge(footprint);
+        entityManager.persist(footprintUpdated);
     }
 
-    public void delete(CarbonFootprint user) {
-        entityManager.remove(user);
+    public void delete(CarbonFootprint footprint) {
+        entityManager.remove(footprint);
     }
 
     public void removeConnection() {

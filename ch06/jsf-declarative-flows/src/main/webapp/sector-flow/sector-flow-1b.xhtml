@@ -33,7 +33,7 @@
                     <td>sectorFlow.footprint.applicationId</td> <td>#{sectorFlow.footprint.applicationId}</td>
                 </tr>
                 <tr>
-                    <td>sectorFlow.footprint.id</td> <td>#{sectorFlow.footprint}</td>
+                    <td>sectorFlow.footprint</td> <td>#{sectorFlow.footprint}</td>
                 </tr>
             </table>
 
@@ -44,6 +44,8 @@
                 <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="endFlow" />
                 &#160;
                 <h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="goHome" />
+                &#160;
+                <h:commandButton id="saveBtn" styleClass="btn btn-primary btn-lg" value="Save Record" action="#{sectorFlow.saveFootprintRecord()}" />
                 &#160;
 
             </h:form>
