@@ -6,13 +6,13 @@
               http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
     <flow-definition id="sector-flow">
+
         <flow-return id="goHome">
             <from-outcome>/index</from-outcome>
         </flow-return>
         <flow-return id="endFlow">
             <from-outcome>#{sectorFlow.gotoEndFlow()}</from-outcome>
         </flow-return>
-
 
         <flow-call id="callFootprintFlow">
             <flow-reference>

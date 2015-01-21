@@ -19,6 +19,7 @@ import java.util.List;
 public class LoginController {
 
     public final static String LOGIN_KEY="LOGIN_USERNAME";
+    public final static String LOGIN_VIEW="/login.xhtml";
 
     private String username;
     private String password;

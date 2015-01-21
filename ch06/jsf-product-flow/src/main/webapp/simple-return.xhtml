@@ -13,8 +13,14 @@
 
         <p>
             You are now outside of the flow
-            ( <code>simple-return.xhtml</code> ).
         </p>
+
+        <h:panelGroup layout="block" rendered="#{loginController.loggedIn}" styleClass="login-username-box  pull-right">
+            You are logged into the web site as user:
+            <b>#{sessionScope['LOGIN_USERNAME']}</b>
+        </h:panelGroup>
+
+        <p>Page view: <code>/simple-return.xhtml</code></p>
 
         <div class="content-wrapper   center-block">
         </div><!-- content-wrapper  -->

@@ -9,10 +9,21 @@
 
     <ui:define name="mainContent">
 
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginViweAuthenticator.check}" />
+        </f:metadata>
+
         <h1> JSF Product Flow - Start </h1>
 
+        <div class="login-username-box  pull-right">
+            <b>#{sessionScope['LOGIN_USERNAME']}</b>
+        </div>
+
         <div class="content-wrapper   center-block">
-            You are now inside the <b>Simple</b> ( <code>simple.xhtml</code> ).
+
+            <p>Page view: <code>/simple.xhtml</code></p>
+            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+
             This is an implicit flow scope.
 
         </div><!-- content-wrapper  -->

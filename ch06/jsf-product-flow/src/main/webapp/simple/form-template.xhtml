@@ -12,7 +12,7 @@
         <p>
             Breadcrumb: #{simpleFlowController.breadcrumb}
         </p>
-        <h:form>
+        <h:form prependId="false">
             <p>
                 <h:commandButton styleClass="btn btn-info" value="Page 1" action="#{simpleFlowController.beginFlow()}" />
             </p>
@@ -27,6 +27,7 @@
             </p>
             <p>
                 <h:commandButton styleClass="btn btn-info" value="Command Button : Home" action="#{simpleFlowController.goHome()}"/>
+                <br/>
                 This button <em>will not</em> work when the user inside a flow.
                 Even if you specify the explicit URI path in a controller method
                 or in <code>faces-config.xml</code>, JSF
@@ -37,6 +38,7 @@
                 <h:outputLink styleClass="btn btn-info" value="#{request.contextPath}" >
                     Output Link : Home
                 </h:outputLink>
+                <br/>
                 This button will work inside or outside of the flow, which worth remembering when
                 you implement a navigation menu bar in your own applications.
                 A standard JSF RenderKit HTML anchor element works as expected.

@@ -9,33 +9,38 @@
 
         <ui:define name="mainContent">
 
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{loginViweAuthenticator.check}" />
+            </f:metadata>
+
             <div class="login-username-box  pull-right">
                 <b>#{sessionScope['LOGIN_USERNAME']}</b>
             </div>
 
             <h1> JSF Product Approval Flow </h1>
 
-            <p>
-                Secret directory
-            </p>
+            <p>Page view: <code>/protected/index.xhtml</code></p>
+            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
 
-            <div class="content-wrapper   center-block">
-                <p>
-                    Do something special here!
-                </p>
-            </div><!-- content-wrapper  -->
+            <p class="bg-primary">
+                You are in a <em>protected</em> view, which secured by a ServletFilter and LoginViewAuthenticator.
+            </p>
 
 
             <div class="content-wrapper">
                 <p>
                     Do something special here!
-
-                    <h:form>
-                        <h:commandButton styleClass="btn btn-primary btn-lg" value="Logout" action="#{loginController.logout()}" />
-                    </h:form>
                 </p>
-            </div>
 
+                <h:form prependId="false">
+                    <h:commandButton styleClass="btn btn-primary btn-lg" value="Logout" action="#{loginController.logout()}" />
+                    &#160;
+                    &#160;
+                    <h:commandButton  styleClass="btn btn-primary btn-lg" action="simple" value="Simple (Flow)" />
+                    &#160;
+                    &#160;
+                </h:form>
+            </div>
 
             <hr class="subfeaturette-divider" />
 
