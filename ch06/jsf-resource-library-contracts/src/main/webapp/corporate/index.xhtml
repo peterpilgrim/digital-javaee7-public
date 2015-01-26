@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+<f:view >
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="mainContent">
+
+            <h1> JSF Resource Library Contracts</h1>
+
+            <p>
+                Welcome to a simple Faces Flow.
+                This example demonstrates resources library contracts.
+                The contract applied to this page is determined by the URL pattern in the Faces Config XML file.
+            </p>
+
+            <p>
+                This is the page <code>/corporate/index.xhtml</code>
+            </p>
+
+            <p class="fashion-headline">
+                This is a fashion statement!
+            </p>
+
+            <a class="btn btn-info" href="#{request.contextPath}/index.xhtml">Go Home</a>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</f:view>
+</html>

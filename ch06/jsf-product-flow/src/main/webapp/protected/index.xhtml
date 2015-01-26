@@ -4,20 +4,19 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" >
-
     <ui:composition template="/basic_layout.xhtml">
 
         <ui:define name="mainContent">
 
             <f:metadata>
-                <f:event type="preRenderView" listener="#{loginViweAuthenticator.check}" />
+                <f:event type="preRenderView" listener="#{loginViewAuthenticator.check}" />
             </f:metadata>
 
             <div class="login-username-box  pull-right">
                 <b>#{sessionScope['LOGIN_USERNAME']}</b>
             </div>
 
-            <h1> JSF Product Approval Flow </h1>
+            <h1> JSF Protected View </h1>
 
             <p>Page view: <code>/protected/index.xhtml</code></p>
             <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>

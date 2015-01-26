@@ -14,14 +14,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * The type SetUpBean
+ * The type LoaderBean
  *
  * @author Peter Pilgrim
  */
-
 @Stateful
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class ExtendedPersistenceSetupBean {
+public class ExtendedPersistenceLoaderBean {
 
 
     public static final String DEFAULT_PASSWORD = "digital";

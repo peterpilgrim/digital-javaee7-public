@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+<ui:composition template="/basic_layout.xhtml">
+
+    <ui:define name="mainContent">
+
+        <h1> Digital Flow </h1>
+
+        <div class="content-wrapper   center-block">
+        </div><!-- content-wrapper  -->
+
+        <div class="content-wrapper">
+            <h1>Page <code>endflow.xhtml</code></h1>
+
+            <p>You have exited the JSF Flow Scope </p>
+
+            <h:form prependId="false">
+                <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+
+                <p>flowScope value (should be empty): #{flowScope.value}.</p>
+
+                <p><h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="/index" /></p>
+
+            </h:form>
+            <!--
+            <h:form prependId="false">
+                <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="sector-flow-1a" />
+                &#190;
+                <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="endFlow" />
+                &#190;
+                <h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="goHome" />
+                &#190;
+            </h:form>
+            -->
+        </div>
+
+        <hr class="subfeaturette-divider" />
+
+    </ui:define> <!--name="mainContent" -->
+
+</ui:composition>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+<ui:composition template="/basic_layout.xhtml">
+
+    <ui:define name="mainContent">
+
+        <h1> Digital Faces Flow</h1>
+
+        <div class="content-wrapper   center-block">
+        </div><!-- content-wrapper  -->
+
+        <div class="content-wrapper">
+            <h1>Page <code>digitalFlow-p3.xhtml</code></h1>
+            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Expression</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>digitalFlow.debugClassName()</td>
+                    <td>#{digitalFlow.debugClassName()}</td>
+                </tr>
+            </table>
+
+            <h:form prependId="false">
+                <h:commandButton id="prevBtn1" styleClass="btn btn-primary btn-lg" value="Prev Direct" action="digitalFlow-p2" />
+                &#160;
+                <h:commandButton id="prevBtn2" styleClass="btn btn-primary btn-lg" value="Prev Via Bean" action="#{digitalFlow.gotoPage2()}" />
+                &#160;
+                <h:commandButton id="nextBtn1" styleClass="btn btn-primary btn-lg" value="Next Direct" action="digitalFlow-p4" />
+                &#160;
+                <h:commandButton id="nextBtn2" styleClass="btn btn-primary btn-lg" value="Next Via Bean" action="#{digitalFlow.gotoPage4()}" />
+                &#160;
+                <h:commandButton id="exitFlowBtn1" styleClass="btn btn-primary btn-lg" value="Exit Direct" action="/digitalFlow-return" />
+                &#160;
+                <h:commandButton id="exitFlowBtn2" styleClass="btn btn-primary btn-lg" value="Exit Via Bean" action="#{digitalFlow.gotoEndFlow()}" />
+                &#160;
+            </h:form>
+        </div>
+
+        <hr class="subfeaturette-divider" />
+
+    </ui:define> <!--name="mainContent" -->
+
+</ui:composition>
+</html>

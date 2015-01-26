@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Peter Pilgrim
  */
-@Named("loginViweAuthenticator")
+@Named("loginViewAuthenticator")
 @ApplicationScoped()
 public class LoginViewAuthenticator {
 

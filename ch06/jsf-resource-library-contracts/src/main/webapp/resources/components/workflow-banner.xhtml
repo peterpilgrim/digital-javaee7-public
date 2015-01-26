@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite" >
+
+    <cc:interface componentType="workerBannerComponent">
+        <cc:attribute name="sectionName" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <div class="workflow-wrapper">
+
+            <div class="workflow-column">
+                <div class="workflow-title  #{cc.gettingStartedActive}  pull-left" >
+                    Getting Started
+                </div>
+                <div class="workflow-arrow-right   #{cc.gettingStartedActive}  pull-left"></div>
+            </div>
+
+            <div class="workflow-column">
+                <div class="workflow-title  #{cc.yourDetailsActive}  pull-left" >
+                    Your Details
+                </div>
+                <div class="workflow-arrow-right  #{cc.yourDetailsActive}  pull-left"></div>
+            </div>
+
+            <div class="workflow-column">
+                <div class="workflow-title  #{cc.yourRateActive}  pull-left" >
+                    Your Rate
+                </div>
+                <div class="workflow-arrow-right  #{cc.yourRateActive}  pull-left"></div>
+            </div>
+
+            <div class="workflow-column">
+                <div class="workflow-title  #{cc.yourAddressActive}  pull-left" >
+                    Your Address
+                </div>
+                <div class="workflow-arrow-right  #{cc.yourAddressActive}  pull-left"></div>
+            </div>
+
+            <div class="workflow-column">
+                <div class="workflow-title  #{cc.confirmActive}  pull-left" >
+                    Confirm
+                </div>
+                <div class="workflow-arrow-right  #{cc.confirmActive}  pull-left"></div>
+            </div>
+
+            <div class="workflow-column">
+                <div class="workflow-title  #{cc.completedActive}  pull-left" >
+                    Completion
+                </div>
+                <div class="workflow-arrow-right  #{cc.completedActive}  pull-left"></div>
+            </div>
+        </div>
+    </cc:implementation>
+</html>

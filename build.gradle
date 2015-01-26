@@ -63,7 +63,19 @@ allprojects {
     task wrapper(type: Wrapper) {
         gradleVersion = '2.0'
     }
+
+    idea {
+
+        module {
+            //if you love browsing Javadoc
+            downloadJavadoc = false
+
+            //and hate reading sources :)
+            downloadSources = true
+        }
+    }
 }
+
 
 
 

@@ -8,7 +8,7 @@ import javax.inject.Inject;
 /**
  * The type DataPopulator
  *
- * @author Peter Pilgrim
+ * @author Peter Pilgrim                                                                                                                                             n
  */
 @Singleton
 @Startup
@@ -19,6 +19,7 @@ public class DataPopulator {
 
     @PostConstruct
     public void populate() {
+        System.out.printf("***** %s.populate() loaderBean=%s\n", this.getClass().getName(), loaderBean);
         loaderBean.loadData();
     }
 }

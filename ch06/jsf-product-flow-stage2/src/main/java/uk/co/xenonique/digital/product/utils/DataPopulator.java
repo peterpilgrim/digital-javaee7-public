@@ -1,21 +1,9 @@
 package uk.co.xenonique.digital.product.utils;
 
-import uk.co.xenonique.digital.product.boundary.CampaignService;
-import uk.co.xenonique.digital.product.boundary.PromotionService;
-import uk.co.xenonique.digital.product.boundary.UserProfileService;
-import uk.co.xenonique.digital.product.boundary.UserRoleService;
-import uk.co.xenonique.digital.product.entity.Campaign;
-import uk.co.xenonique.digital.product.entity.Promotion;
-import uk.co.xenonique.digital.product.entity.UserProfile;
-import uk.co.xenonique.digital.product.entity.UserRole;
-
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.ejb.*;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
-import javax.transaction.UserTransaction;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * The type DataPopulator
@@ -27,13 +15,11 @@ import java.util.List;
 public class DataPopulator {
 
     @Inject
-    private ExtendedPersistenceSetupBean setupBean;
+    private ExtendedPersistenceLoaderBean setupBean;
 
     @PostConstruct
     public void populate()
     {
         setupBean.createData();
     }
-
-
 }

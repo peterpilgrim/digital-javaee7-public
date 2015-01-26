@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <ui:composition template="/basic_layout.xhtml">
+
+        <ui:define name="mainContent">
+
+            <h1> JSF Faces Flow </h1>
+
+
+            <div class="alert alert-danger" role="alert">
+                <h2>Expired View</h2>
+                <p>Unfortunately your previous view has expired</p>
+                <h:outputLink styleClass="btn btn-primary btn-lg" value="#{request.contextPath}" >
+                    Home
+                </h:outputLink>
+            </div>
+
+            <hr class="subfeaturette-divider" />
+
+        </ui:define> <!--name="mainContent" -->
+
+    </ui:composition>
+</html>
