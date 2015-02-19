@@ -6,53 +6,53 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core" >
 
-<f:view contracts="#{fashionSelector.theme}">
+    <f:view contracts="#{fashionSelector.theme}">
 
-<ui:composition template="/template.xhtml">
+        <ui:composition template="/template.xhtml">
 
-    <ui:define name="mainContent">
+            <ui:define name="mainContent">
 
-        <h1> Digital Faces Flow</h1>
+                <h1> Digital Faces Flow (Resource Library Contracts)</h1>
 
-        <div class="content-wrapper   center-block">
-        </div><!-- content-wrapper  -->
+                <div class="content-wrapper   center-block">
+                </div><!-- content-wrapper  -->
 
-        <div class="content-wrapper">
-            <h1>Page <code>digitalFlow.xhtml</code></h1>
-            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+                <div class="content-wrapper">
+                    <h1>Page <code>digitalFlow.xhtml</code></h1>
+                    <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
 
-            <p class="fashion-headline">
-                A fashion statement inside a Faces Flow!
-            </p>
+                    <p class="fashion-headline">
+                        A fashion statement inside a Faces Flow!
+                    </p>
 
-            <table class="table table-bordered table-striped">
-                <tr>
-                    <th>Expression</th>
-                    <th>Value</th>
-                </tr>
-                <tr>
-                    <td>digitalFlow.debugClassName()</td>
-                    <td>#{digitalFlow.debugClassName()}</td>
-                </tr>
-            </table>
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th>Expression</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>digitalFlow.debugClassName()</td>
+                            <td>#{digitalFlow.debugClassName()}</td>
+                        </tr>
+                    </table>
 
-            <h:form prependId="false">
+                    <h:form prependId="false">
 
-                <h:commandButton id="nextBtn1" styleClass="btn btn-primary btn-lg" value="Next Direct" action="digitalFlow-p2" />
-                &#160;
-                <h:commandButton id="nextBtn2" styleClass="btn btn-primary btn-lg" value="Next Via Bean" action="#{digitalFlow.gotoPage2()}" />
-                &#160;
-                <h:commandButton id="exitFlowBtn1" styleClass="btn btn-primary btn-lg" value="Exit Direct" action="/digitalFlow-return" />
-                &#160;
-                <h:commandButton id="exitFlowBtn2" styleClass="btn btn-primary btn-lg" value="Exit Via Bean" action="#{digitalFlow.gotoEndFlow()}" />
-                &#160;
-            </h:form>
-        </div>
+                        <h:commandButton id="nextBtn1" styleClass="btn btn-primary btn-lg" value="Next Direct" action="digitalFlow-p2" />
+                        &#160;
+                        <h:commandButton id="nextBtn2" styleClass="btn btn-primary btn-lg" value="Next Via Bean" action="#{digitalFlow.gotoPage2()}" />
+                        &#160;
+                        <h:commandButton id="exitFlowBtn1" styleClass="btn btn-primary btn-lg" value="Exit Direct" action="/digitalFlow-return" />
+                        &#160;
+                        <h:commandButton id="exitFlowBtn2" styleClass="btn btn-primary btn-lg" value="Exit Via Bean" action="#{digitalFlow.gotoEndFlow()}" />
+                        &#160;
+                    </h:form>
+                </div>
 
-        <hr class="subfeaturette-divider" />
+                <hr class="subfeaturette-divider" />
 
-    </ui:define> <!--name="mainContent" -->
+            </ui:define> <!--name="mainContent" -->
 
-</ui:composition>
-</f:view>
+        </ui:composition>
+    </f:view>
 </html>

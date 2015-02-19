@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class DigitalFlow implements Serializable {
 
     public String debugClassName() {
-        return this.getClass().getSimpleName();
+        return this.getClass().getSimpleName() + "@" + Integer.toHexString( System.identityHashCode(this));
     }
 
     public String gotoPage1() {

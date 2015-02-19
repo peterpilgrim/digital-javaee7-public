@@ -15,7 +15,6 @@ public class FashionSelector implements Serializable {
     private String theme = "default";
 
     public String changeTheme() {
-        System.out.printf("**** %s.changeTheme() theme=%s\n", this.getClass().getName(), theme);
         return "/index?faces-redirect=true";
     }
 
