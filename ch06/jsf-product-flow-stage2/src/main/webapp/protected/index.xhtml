@@ -9,6 +9,10 @@
 
         <ui:define name="mainContent">
 
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{loginViewAuthenticator.check}" />
+            </f:metadata>
+
             <div class="login-username-box  pull-right">
                 <b>#{sessionScope['LOGIN_USERNAME']}</b>
             </div>
@@ -34,6 +38,12 @@
                         <h:commandButton styleClass="btn btn-primary btn-lg" value="Logout" action="#{loginController.logout()}" />
                     </h:form>
                 </p>
+            </div>
+
+            <div class="content-wrapper">
+                <h:form>
+                    <h:commandButton styleClass="btn btn-primary btn-lg" action="/index" value="Go Home"/>
+                </h:form>
             </div>
 
 

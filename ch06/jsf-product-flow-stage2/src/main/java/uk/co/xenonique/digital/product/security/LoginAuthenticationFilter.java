@@ -5,10 +5,11 @@ import uk.co.xenonique.digital.product.entity.UserProfile;
 
 import javax.inject.Inject;
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.util.*;
+import javax.servlet.annotation.WebInitParam;
 
 
 import static uk.co.xenonique.digital.product.utils.AppConsts.*;
@@ -18,7 +19,14 @@ import static uk.co.xenonique.digital.product.utils.AppConsts.*;
  *
  * @author Peter Pilgrim
  */
-@WebFilter(filterName="loginAuthenticationFilter", urlPatterns="/protected")
+@WebFilter(
+        filterName="loginAuthenticationFilter",
+        urlPatterns={"/protected/*", "/simple/*", "/approvers/*" },
+        initParams={
+                @WebInitParam(name = "manager", value="/campaign,/approver"),
+                @WebInitParam(name = "user", value="/campaign,/protected"),
+        }
+)
 public class LoginAuthenticationFilter implements Filter {
 
     @Inject
@@ -62,7 +70,9 @@ public class LoginAuthenticationFilter implements Filter {
         }
     }
 
+    @Override
     public void init(FilterConfig config) throws ServletException {
+        System.out.printf("**** %s.init(config=%s)\n", this.getClass().getName(), config);
         this.config = config;
         for (String roleName: Collections.list(config.getInitParameterNames())) {
             String paths = config.getInitParameter(roleName);

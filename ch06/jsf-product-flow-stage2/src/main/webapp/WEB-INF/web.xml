@@ -29,6 +29,19 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <!--
+    <filter>
+        <filter-name>LoginAuthenticationFilter</filter-name>
+        <filter-class>uk.co.xenonique.digital.product.security.LoginAuthenticationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>LoginAuthenticationFilter</filter-name>
+        <url-pattern>/protected/*</url-pattern>
+    </filter-mapping>
+    -->
+
+    <!--
     <filter>
         <filter-name>loginAuthenticationFilter</filter-name>
         <filter-class>uk.co.xenonique.digital.product.security.LoginAuthenticationFilter</filter-class>
@@ -48,6 +61,7 @@
         <url-pattern>/campaign/*</url-pattern>
         <url-pattern>/approver/*</url-pattern>
     </filter-mapping>
+    -->
 
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
