@@ -6,11 +6,14 @@
 
     <persistence-unit name="productFlow" transaction-type="JTA">
         <!-- GlassFish persistence provider -->
-        <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <!-- GlassFish -->
-        <!--<jta-data-source>jdbc/mysqlProductFlowDB</jta-data-source>-->
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:/app/jdbc/productFlowDB</jta-data-source>
+        <!--<jta-data-source>java:app/jdbc/productFlowDB2</jta-data-source>-->
+        <!--<jta-data-source>java:app/jdbc/mysqlProductFlowDB</jta-data-source>-->
+        <jta-data-source>jdbc/mysqlProductFlowDB</jta-data-source>
+
+        <!-- Set the persistence privider to Mysql -->
+        <!--<jta-data-source>java:app:/jdbc/mysqlProductFlow</jta-data-source>-->
 
         <properties>
             <!--

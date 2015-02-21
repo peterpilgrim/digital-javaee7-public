@@ -6,6 +6,8 @@ import uk.co.xenonique.digital.product.boundary.UserProfileService;
 import uk.co.xenonique.digital.product.boundary.UserRoleService;
 import uk.co.xenonique.digital.product.entity.*;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -14,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * The type LoaderBean
+ * The type ExtendedPersistenceLoaderBean
  *
  * @author Peter Pilgrim
  */
@@ -22,9 +24,7 @@ import java.util.List;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class ExtendedPersistenceLoaderBean {
 
-
     public static final String DEFAULT_PASSWORD = "digital";
-
 
     @Inject
     UserRoleService userRoleService;
@@ -34,6 +34,18 @@ public class ExtendedPersistenceLoaderBean {
     CampaignService campaignService;
     @Inject
     PromotionService promotionService;
+
+
+    @PostConstruct
+    public void init() {
+        System.out.printf("***** %s.init()\n", this.getClass().getName());
+    }
+
+    @PreDestroy
+    public void destroy() {
+        System.out.printf("***** %s.destroy()\n", this.getClass().getName());
+    }
+
 
     public void createData() {
         UserRole userRole = new UserRole("user");

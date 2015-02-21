@@ -15,11 +15,12 @@ import javax.inject.Inject;
 public class DataPopulator {
 
     @Inject
-    private ExtendedPersistenceLoaderBean setupBean;
+    private ExtendedPersistenceLoaderBean loaderBean;
 
     @PostConstruct
     public void populate()
     {
-        setupBean.createData();
+        System.out.printf("***** %s.populate() loaderBean=%s\n", this.getClass().getName(), loaderBean);
+        loaderBean.createData();
     }
 }
