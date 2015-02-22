@@ -9,10 +9,18 @@
 
     <ui:define name="mainContent">
 
-        <h1> JSF Product Flow - Page 1</h1>
+        <h1> JSF Product Flow (Stage 02) - Page 1</h1>
+
+        <div class="login-username-box  pull-right">
+            <b>#{sessionScope['LOGIN_USERNAME']}</b>
+        </div>
 
         <div class="content-wrapper   center-block">
-            You are still inside in the <b>Simple</b> flow ( <code>page1.xhtml</code> ).
+            You are still inside in the <b>Simple</b> flow.
+
+            <p>Page view: <code>page1.xhtml</code></p>
+            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
+
         </div><!-- content-wrapper  -->
 
         <ui:include src="form-template.xhtml"/>

@@ -60,6 +60,7 @@ public class ExtendedPersistenceLoaderBean {
                 new UserProfile("user@products.com", DEFAULT_PASSWORD, userRole),
                 new UserProfile("test@products.com", DEFAULT_PASSWORD, userRole),
                 new UserProfile("developer@products.com", DEFAULT_PASSWORD, userRole),
+                new UserProfile("admin@products.com", DEFAULT_PASSWORD, managerRole),
                 new UserProfile("manager@products.com", DEFAULT_PASSWORD, managerRole)
         );
 

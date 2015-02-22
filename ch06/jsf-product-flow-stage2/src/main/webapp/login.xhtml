@@ -13,13 +13,16 @@
             <div class="content-wrapper  center-block">
 
                 <div class="page-header">
-                    <h1>JSF Product Flow <small>example 01</small></h1>
+                    <h1>JSF Product Flow <small>example 02</small></h1>
                 </div>
 
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="login-frame">
                             <h2> Login</h2>
+
+                            <p>Page view: <code>/login.xhtml</code></p>
+                            <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
 
                             <p>
                                 HINT: for normal user <em>test@products.com</em> with the password <em>digital</em> and

@@ -21,10 +21,10 @@ import static uk.co.xenonique.digital.product.utils.AppConsts.*;
  */
 @WebFilter(
         filterName="loginAuthenticationFilter",
-        urlPatterns={"/protected/*", "/simple/*", "/approvers/*" },
+        urlPatterns={"/protected/*", "/simple/*", "/compaign/*", "/approvers/*" },
         initParams={
-                @WebInitParam(name = "manager", value="/campaign,/approver"),
-                @WebInitParam(name = "user", value="/campaign,/protected"),
+                @WebInitParam(name = "manager", value="/simple,/campaign,/protected,/approver"),
+                @WebInitParam(name = "user", value="/simple,/campaign,/protected"),
         }
 )
 public class LoginAuthenticationFilter implements Filter {
@@ -43,7 +43,11 @@ public class LoginAuthenticationFilter implements Filter {
         final String loginKey = (String) request.getSession().getAttribute(LOGIN_KEY);
         System.out.printf("**** LoginAuthenticationFilter **** loginKey=[%s]\n", loginKey);
         if (loginKey == null) {
-            response.sendRedirect(request.getContextPath()+"/login.xhtml");
+            String path = request.getRequestURI().replace(request.getContextPath(),"");
+            if ( !path.equals(request.getContextPath()+LOGIN_VIEW)) {
+                request.getSession().setAttribute(LAST_INPUT_PATH, path);
+            }
+            response.sendRedirect(request.getContextPath()+LOGIN_VIEW);
         } else {
             boolean authenticated = false;
             List<UserProfile> users = userService.findByUsername(loginKey);

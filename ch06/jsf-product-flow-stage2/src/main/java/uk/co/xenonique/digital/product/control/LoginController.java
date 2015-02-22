@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static uk.co.xenonique.digital.product.utils.AppConsts.*;
@@ -40,7 +41,14 @@ public class LoginController {
         }
 
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(LOGIN_KEY, username);
-        return "/protected/index?faces-redirect=true";
+        String lastInputPath = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LAST_INPUT_PATH);
+        if ( lastInputPath != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(LAST_INPUT_PATH);
+            return lastInputPath;
+        }
+        else {
+            return "/protected/index?faces-redirect=true";
+        }
     }
 
     public String logout() {

@@ -9,7 +9,11 @@
 
     <ui:define name="mainContent">
 
-        <h1> JSF Product Flow - Start </h1>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginViewAuthenticator.check}" />
+        </f:metadata>
+
+        <h1> JSF Product Flow [Stage 2] - Start </h1>
 
         <div class="content-wrapper   center-block">
             You are now inside the <b>Simple</b> ( <code>simple.xhtml</code> ).

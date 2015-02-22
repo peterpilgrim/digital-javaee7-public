@@ -9,6 +9,10 @@
 
     <ui:define name="mainContent">
 
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginViewAuthenticator.check('campaign')}" />
+        </f:metadata>
+
         <h1> JSF Product Flow - Create Campaign </h1>
 
         <div class="login-username-box  pull-right">

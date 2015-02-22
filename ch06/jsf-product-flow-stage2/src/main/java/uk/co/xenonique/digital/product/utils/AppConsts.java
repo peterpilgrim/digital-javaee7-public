@@ -8,6 +8,7 @@ package uk.co.xenonique.digital.product.utils;
 public final class AppConsts {
 
     public final static String LOGIN_KEY="LOGIN_USERNAME";
+    public final static String LAST_INPUT_PATH="LAST_INPUT_PATH";
     public final static String LOGIN_VIEW="/login.xhtml";
 
     private AppConsts() { }
