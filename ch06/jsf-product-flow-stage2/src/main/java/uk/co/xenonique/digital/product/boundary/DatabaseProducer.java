@@ -3,6 +3,7 @@ package uk.co.xenonique.digital.product.boundary;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 
 /**
@@ -13,7 +14,7 @@ import javax.persistence.PersistenceContext;
 public class DatabaseProducer {
 
     @Produces
-    @PersistenceContext(unitName = "productFlow")
+    @PersistenceContext(unitName = "productFlow", type = PersistenceContextType.EXTENDED)
     @ProductFlowDatabase
     private EntityManager em;
 }

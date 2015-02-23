@@ -3,6 +3,7 @@ package uk.co.xenonique.digital.product.boundary;
 import uk.co.xenonique.digital.product.entity.Campaign;
 
 import javax.ejb.Stateful;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
