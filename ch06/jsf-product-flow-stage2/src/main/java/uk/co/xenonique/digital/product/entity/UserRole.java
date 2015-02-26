@@ -26,15 +26,9 @@ public class UserRole implements Serializable {
     private String name;
 
     public UserRole() {
-        this(null);
     }
 
     public UserRole(String name) {
-        this.name = name;
-    }
-
-    public UserRole(long id, String name) {
-        this.id = id;
         this.name = name;
     }
 

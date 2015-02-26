@@ -27,15 +27,15 @@ public class LoginValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        UIInput input1 = (UIInput) component.getAttributes().get("username");
-        UIInput input2 = (UIInput) component.getAttributes().get("password");
+        final UIInput input1 = (UIInput) component.getAttributes().get("username");
+        final UIInput input2 = (UIInput) component.getAttributes().get("password");
 
-        String username = (String) input1.getSubmittedValue();
-        String password = (String) input2.getSubmittedValue();
+        final String username = (String) input1.getSubmittedValue();
+        final String password = (String) input2.getSubmittedValue();
 
-        List<FacesMessage> errors = new ArrayList<>();
+        final List<FacesMessage> errors = new ArrayList<>();
 
-        List<UserProfile> users = userProfileService.findByUsername(username);
+        final List<UserProfile> users = userProfileService.findByUsername(username);
         if ( users.isEmpty()) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR, "username is unrecognised", null));

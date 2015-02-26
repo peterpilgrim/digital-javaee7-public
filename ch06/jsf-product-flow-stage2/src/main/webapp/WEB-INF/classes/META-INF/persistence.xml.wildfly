@@ -3,6 +3,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
+
     <persistence-unit name="productFlow" transaction-type="JTA">
         <!-- GlassFish persistence provider -->
         <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
@@ -22,6 +23,4 @@
 
         </properties>
     </persistence-unit>
-
-
 </persistence>

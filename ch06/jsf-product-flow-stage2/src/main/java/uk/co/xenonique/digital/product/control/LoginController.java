@@ -41,7 +41,7 @@ public class LoginController {
         }
 
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(LOGIN_KEY, username);
-        String lastInputPath = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LAST_INPUT_PATH);
+        final String lastInputPath = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LAST_INPUT_PATH);
         if ( lastInputPath != null) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(LAST_INPUT_PATH);
             return lastInputPath;

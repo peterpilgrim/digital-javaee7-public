@@ -56,8 +56,8 @@ public class CampaignController implements Serializable {
     // Actions
 
     private void updateCreationUser() {
-        String userKey =  (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LOGIN_KEY);
-        List<UserProfile> users = userService.findByUsername(userKey);
+        final String userKey =  (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(LOGIN_KEY);
+        final List<UserProfile> users = userService.findByUsername(userKey);
         campaign.setCreationUser(users.get(0));
     }
 
@@ -76,7 +76,7 @@ public class CampaignController implements Serializable {
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
             return;
         }
-        List<Campaign> campaigns = campaignService.findById(id);
+        final List<Campaign> campaigns = campaignService.findById(id);
         this.campaign = campaigns.get(0);
     }
 
@@ -123,7 +123,7 @@ public class CampaignController implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
             return;
         }
-        List<Campaign> campaigns = campaignService.findById(id);
+        final List<Campaign> campaigns = campaignService.findById(id);
         this.campaign = campaigns.get(0);
         for ( Promotion promo: campaign.getPromotions()) {
             if ( promo.getId() == promotionId) {

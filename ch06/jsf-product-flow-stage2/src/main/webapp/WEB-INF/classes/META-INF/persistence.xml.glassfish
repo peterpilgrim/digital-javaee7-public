@@ -12,15 +12,7 @@
         <!--<jta-data-source>java:app/jdbc/mysqlProductFlowDB</jta-data-source>-->
         <jta-data-source>jdbc/mysqlProductFlowDB</jta-data-source>
 
-        <!-- Set the persistence privider to Mysql -->
-        <!--<jta-data-source>java:app:/jdbc/mysqlProductFlow</jta-data-source>-->
-
         <properties>
-            <!--
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.hbm2ddl.auto" value="create" />
-            -->
 
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>

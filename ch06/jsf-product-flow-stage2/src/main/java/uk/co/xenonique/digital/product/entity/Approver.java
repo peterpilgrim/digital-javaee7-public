@@ -16,7 +16,7 @@ public class Approver implements Serializable {
     private long id;
     private String comment;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
     @JoinColumn(name = "FK_USER_ID")
     private UserProfile user;
 

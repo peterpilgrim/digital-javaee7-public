@@ -31,8 +31,8 @@ public class LoginViewAuthenticator {
 
     public void check(String lastInputPath) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String currentUser = (String) session.getAttribute(LOGIN_KEY);
+        final HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        final String currentUser = (String) session.getAttribute(LOGIN_KEY);
         if (currentUser == null || currentUser.length() == 0) {
             if ( lastInputPath != null ) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(LAST_INPUT_PATH, lastInputPath);

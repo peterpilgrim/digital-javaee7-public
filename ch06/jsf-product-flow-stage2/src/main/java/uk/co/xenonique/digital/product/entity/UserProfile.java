@@ -26,7 +26,7 @@ public class UserProfile implements Serializable{
     private String username;
     private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_USER_ROLE_ID" )
     private UserRole role;
 

@@ -2,6 +2,7 @@ package uk.co.xenonique.digital.product.boundary;
 
 import uk.co.xenonique.digital.product.entity.Promotion;
 
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +25,7 @@ public class PromotionService {
     }
 
     public void update(Promotion obj) {
-        Promotion objUpdated = entityManager.merge(obj);
+        final Promotion objUpdated = entityManager.merge(obj);
         entityManager.persist(objUpdated);
     }
 
@@ -32,18 +33,19 @@ public class PromotionService {
         entityManager.remove(obj);
     }
 
+    @Remove
     public void removeConnection() {
         // TODO: Remove the implicit connection to the stateful EJB
     }
 
     public List<Promotion> findAll() {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "Promotion.findAll");
         return query.getResultList();
     }
 
     public List<Promotion> findById(Long id) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "Promotion.findById").setParameter("id", id);
         return query.getResultList();
     }

@@ -2,6 +2,7 @@ package uk.co.xenonique.digital.product.boundary;
 
 import uk.co.xenonique.digital.product.entity.UserProfile;
 
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,7 +27,7 @@ public class UserProfileService {
     }
 
     public void update(UserProfile user) {
-        UserProfile userUpdated = entityManager.merge(user);
+        final UserProfile userUpdated = entityManager.merge(user);
         entityManager.persist(userUpdated);
     }
 
@@ -34,24 +35,25 @@ public class UserProfileService {
         entityManager.remove(user);
     }
 
+    @Remove
     public void removeConnection() {
         // TODO: Remove the implicit connection to the stateful EJB
     }
 
     public List<UserProfile> findAll() {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
             "UserProfile.findAll");
         return query.getResultList();
     }
 
     public List<UserProfile> findById(Long id) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
             "UserProfile.findById").setParameter("id", id);
         return query.getResultList();
     }
 
     public List<UserProfile> findByUsername(String username) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "UserProfile.findByUsername").setParameter("username", username);
         return query.getResultList();
     }

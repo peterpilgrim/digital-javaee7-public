@@ -23,9 +23,9 @@ public class FacesEmailAddressValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value)
         throws ValidatorException
     {
-        String text = value.toString();
-        Pattern pattern = Pattern.compile(EMAIL_REGEX);
-        Matcher matcher = pattern.matcher(text);
+        final String text = value.toString();
+        final Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        final Matcher matcher = pattern.matcher(text);
         if ( !matcher.matches() ) {
             throw new ValidatorException(
                     new FacesMessage(

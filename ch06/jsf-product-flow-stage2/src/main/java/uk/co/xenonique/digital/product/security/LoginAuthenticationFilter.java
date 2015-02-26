@@ -50,12 +50,12 @@ public class LoginAuthenticationFilter implements Filter {
             response.sendRedirect(request.getContextPath()+LOGIN_VIEW);
         } else {
             boolean authenticated = false;
-            List<UserProfile> users = userService.findByUsername(loginKey);
+            final List<UserProfile> users = userService.findByUsername(loginKey);
             System.out.printf("**** user=%s\n", users);
             if (!users.isEmpty()) {
-                String role = users.get(0).getRole().getName();
+                final String role = users.get(0).getRole().getName();
                 if ( rolesToDirectories.containsKey(role)) {
-                    List<String> pathElements = rolesToDirectories.get(role);
+                    final List<String> pathElements = rolesToDirectories.get(role);
                     String inputPath = request.getRequestURI();
                     System.out.printf("**** PROCESSING **** inputPath=%s, pathElements=%s\n", inputPath, pathElements );
                     for ( String element : pathElements) {

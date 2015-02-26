@@ -2,6 +2,7 @@ package uk.co.xenonique.digital.product.boundary;
 
 import uk.co.xenonique.digital.product.entity.Campaign;
 
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -25,7 +26,7 @@ public class CampaignService {
     }
 
     public void update(Campaign obj) {
-        Campaign objUpdated = entityManager.merge(obj);
+        final Campaign objUpdated = entityManager.merge(obj);
         entityManager.persist(objUpdated);
     }
 
@@ -33,24 +34,25 @@ public class CampaignService {
         entityManager.remove(obj);
     }
 
+    @Remove
     public void removeConnection() {
         // TODO: Remove the implicit connection to the stateful EJB
     }
 
     public List<Campaign> findAll() {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "Campaign.findAll");
         return query.getResultList();
     }
 
     public List<Campaign> findById(Long id) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "Campaign.findById").setParameter("id", id);
         return query.getResultList();
     }
 
     public List<Campaign> findByUsername(String username) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "Campaign.findByUsername").setParameter("username", username);
         return query.getResultList();
     }

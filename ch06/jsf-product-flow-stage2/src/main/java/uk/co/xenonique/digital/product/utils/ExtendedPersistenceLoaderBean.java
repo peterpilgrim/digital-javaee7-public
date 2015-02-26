@@ -12,6 +12,7 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,10 +27,13 @@ public class ExtendedPersistenceLoaderBean {
 
     public static final String DEFAULT_PASSWORD = "digital";
 
+    public final static String ADMIN_USERNAME = "admin@products.com";
+    public static final String NORMAL_USERNAME = "user@products.com";
+
     @Inject
     UserRoleService userRoleService;
     @Inject
-    UserProfileService userService;
+    UserProfileService userProfileService;
     @Inject
     CampaignService campaignService;
     @Inject
@@ -51,24 +55,25 @@ public class ExtendedPersistenceLoaderBean {
         UserRole userRole = new UserRole("user");
         UserRole managerRole = new UserRole("manager");
 
-        List<UserRole> roles = Arrays.asList(userRole, managerRole);
+        final List<UserRole> roles = Arrays.asList(userRole, managerRole);
         for (UserRole role: roles) {
             userRoleService.add(role);
         }
 
-        List<UserProfile> users = Arrays.asList(
-                new UserProfile("user@products.com", DEFAULT_PASSWORD, userRole),
+        final List<UserProfile> users = Arrays.asList(
+                new UserProfile(NORMAL_USERNAME, DEFAULT_PASSWORD, userRole),
                 new UserProfile("test@products.com", DEFAULT_PASSWORD, userRole),
                 new UserProfile("developer@products.com", DEFAULT_PASSWORD, userRole),
-                new UserProfile("admin@products.com", DEFAULT_PASSWORD, managerRole),
+                new UserProfile(ADMIN_USERNAME, DEFAULT_PASSWORD, managerRole),
                 new UserProfile("manager@products.com", DEFAULT_PASSWORD, managerRole)
         );
 
+
         for (UserProfile user: users) {
-            userService.add(user);
+            userProfileService.add(user);
         }
 
-        List<Campaign> campaigns = Arrays.asList(
+        final List<Campaign> campaigns = Arrays.asList(
                 new Campaign("Campaign 100", "simple marketing"),
                 new Campaign("Advertising 200", "another sales campaign"),
                 new Campaign("Marketing 300", "yet another direct marketing event")
@@ -76,7 +81,7 @@ public class ExtendedPersistenceLoaderBean {
 
         int base = 1001;
         for (Campaign campaign: campaigns) {
-            campaign.setCreationUser(users.get(0));
+            campaign.setCreationUser(userProfileService.findByUsername(NORMAL_USERNAME).get(0));
             campaignService.add(campaign);
             System.out.printf("***** campaign=%s\n", campaign );
         }
@@ -86,14 +91,14 @@ public class ExtendedPersistenceLoaderBean {
         for (Campaign campaign: campaigns) {
             for (int k=0; k<3+index; ++k) {
                 final int promoIndex = k + base;
-                Promotion promotion = new Promotion("promo headline "+promoIndex, "promo description "+promoIndex);
+                final Promotion promotion = new Promotion("promo headline "+promoIndex, "promo description "+promoIndex);
                 promotionService.add(promotion);
                 campaign.getPromotions().add(promotion);
                 promotion.setCampaign(campaign);
 
                 if ( index==0)  {
-                    Approver approver = new Approver();
-                    approver.setUser( users.get(3));
+                    final Approver approver = new Approver();
+                    approver.setUser( userProfileService.findByUsername(ADMIN_USERNAME).get(0));
                     approver.setComment("This promotion has been pre-approved.");
                     promotion.getApprovers().add(approver);
                     promotionService.update(promotion);

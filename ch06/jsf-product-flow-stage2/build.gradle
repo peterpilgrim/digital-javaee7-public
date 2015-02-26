@@ -11,6 +11,9 @@ dependencies {
     providedCompile 'javax:javaee-api:7.0'
     // WARNING: Joda time is broken with Glassfish 4
 //    compile     'joda-time:joda-time:2.2'
+
+//    compile 'org.hibernate:hibernate-entitymanager:4.3.8.Final'
+
 }
 
 
