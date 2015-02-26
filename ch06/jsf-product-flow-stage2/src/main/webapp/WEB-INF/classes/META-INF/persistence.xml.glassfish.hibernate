@@ -4,13 +4,20 @@
              version="2.1">
 
     <persistence-unit name="productFlow" transaction-type="JTA">
-        <!-- WildFly 8 persistence provider is Hibernate -->
+        <!-- GlassFish persistence provider -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <!-- WildFly 8 create your a JDBC Rsource that connects to a real database like MySQL  -->
-        <jta-data-source>java:/app/jdbc/productFlowDB</jta-data-source>
+        <!-- GlassFish -->
+        <jta-data-source>jdbc/mysqlProductFlowDB</jta-data-source>
 
         <properties>
             <!--
+                See here:
+                https://coderwall.com/p/e5fxrw/use-hibernate-4-3-x-with-jta-on-glassfish-4
+            -->
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+
+            <!--
+                See also:
                 https://docs.jboss.org/hibernate/orm/4.1/manual/en-US/html/ch03.html
             -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
@@ -20,5 +27,6 @@
 
         </properties>
     </persistence-unit>
+
 
 </persistence>
