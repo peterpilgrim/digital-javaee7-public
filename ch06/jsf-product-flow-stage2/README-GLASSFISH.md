@@ -2,6 +2,15 @@ README GLASSFISH
 ==================
 
 
+*NOTE*
+
+Sadly, this project fails to run against GlassFish 4.1 or Payara server, because of a flaw in the JPA implementation: *EclipseLink*
+I strongly recommend that you run against WildFly 8 or better, because that application server uses Hibernate underneath.
+
+Peter Pilgrim (27-March-2015)
+
+
+
 This application runs best against a real database such as *MySQL*. So this reason, you need to set your application server *GlassFish*, *WildFly*, *Payara* with a JDBC Resource connector.
 
 These following instructions are for GlassFish, but the other web application server will similar configuration:
