@@ -6,7 +6,7 @@
     <persistence-unit name="productFlow" transaction-type="JTA">
         <!-- WildFly 8 persistence provider is Hibernate -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <!-- WildFly 8 create your a JDBC Rsource that connects to a real database like MySQL  -->
+        <!-- WildFly 8 create your a JDBC Resource that connects to a real database like MySQL  -->
         <jta-data-source>java:/app/jdbc/productFlowDB</jta-data-source>
 
         <properties>

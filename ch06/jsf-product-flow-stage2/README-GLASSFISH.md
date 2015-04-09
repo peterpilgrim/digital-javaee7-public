@@ -2,7 +2,7 @@ README GLASSFISH
 ==================
 
 
-*NOTE*
+*VERY IMPORTANT NOTE*
 
 Sadly, this project fails to run against GlassFish 4.1 or Payara server, because of a flaw in the JPA implementation: *EclipseLink*
 I strongly recommend that you run against WildFly 8 or better, because that application server uses Hibernate underneath.

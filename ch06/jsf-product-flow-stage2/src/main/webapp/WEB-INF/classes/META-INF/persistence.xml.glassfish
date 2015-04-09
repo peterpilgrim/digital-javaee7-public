@@ -47,4 +47,5 @@
             <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL.jdbc"/>
         </properties>
     </persistence-unit>
+
 </persistence>
