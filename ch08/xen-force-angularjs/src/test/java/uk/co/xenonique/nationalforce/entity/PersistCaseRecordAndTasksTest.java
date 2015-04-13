@@ -19,6 +19,7 @@
 
 package uk.co.xenonique.nationalforce.entity;
 
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import uk.co.xenonique.nationalforce.DateUtils;
 import uk.co.xenonique.nationalforce.StringHelper;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -29,13 +30,15 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import uk.co.xenonique.nationalforce.init.DemoDataConfigurator;
+import uk.co.xenonique.nationalforce.boundary.CaseRecordTaskService;
+import uk.co.xenonique.nationalforce.control.BasicStateMachine;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -44,27 +47,51 @@ import static org.junit.Assert.*;
 import static uk.co.xenonique.nationalforce.control.BasicStateMachine.FSM_START;
 
 /**
- * A unit test PersistProjectAndTasksTest to verify the operation of PersistProjectAndTasksTest
+ * A unit test PersistCaseRecordAndTasksTest to verify the operation of PersistCaseRecordAndTasksTest
  *
  * @author Peter Pilgrim
  */
 @RunWith(Arquillian.class)
 public class PersistCaseRecordAndTasksTest {
 
+//    @Deployment
+//    public static JavaArchive createDeployment() {
+//        JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
+//            .addPackage(StringHelper.class.getPackage())
+//            .addClasses(CaseRecord.class, Task.class)
+//            .addClass(BasicStateMachine.class)
+//            .addAsResource(
+//                    "test-persistence.xml",
+//                    "META-INF/persistence.xml")
+//            .addAsManifestResource(
+//                    EmptyAsset.INSTANCE,
+//                    ArchivePaths.create("beans.xml"));
+//        System.out.println(jar.toString(true));
+//        return jar;
+//    }
+
+
     @Deployment
-    public static JavaArchive createDeployment() {
-        JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
-            .addClasses(CaseRecord.class, Task.class, StringHelper.class)
-            .addAsResource(
-                    "test-persistence.xml",
-                    "META-INF/persistence.xml")
-            .addAsManifestResource(
-                    EmptyAsset.INSTANCE,
-                    ArchivePaths.create("beans.xml"));
-        return jar;
+    public static WebArchive createDeployment() {
+
+//        File[] lib = ShrinkWrapMaven.resolver()
+//                .resolve("org.jboss.weld.servlet:weld-servlet:1.1.9.Final")
+//                .withTransitivity().as(File.class);
+        final WebArchive war = ShrinkWrap.create(WebArchive.class)
+                .addClasses(CaseRecord.class, Task.class, BasicStateMachine.class)
+                .addClasses(StringHelper.class, DateUtils.class)
+                .addAsWebInfResource(
+                        "test-persistence.xml",
+                        "classes/META-INF/persistence.xml")
+                .addAsWebInfResource(
+                        EmptyAsset.INSTANCE,
+                        ArchivePaths.create("beans.xml"));
+        System.out.println(war.toString(true));
+        return war;
     }
 
-    @PersistenceContext
+
+    @PersistenceContext(unitName = "XenNationalForce")
     EntityManager em;
 
     @Resource
@@ -72,6 +99,9 @@ public class PersistCaseRecordAndTasksTest {
 
     @Test
     public void persist_CaseRecord_without_Task_elements() throws Exception {
+        assertThat( em, is(notNullValue()));
+        assertThat( utx, is(notNullValue()));
+
         final CaseRecord caseRecord1 = new CaseRecord();
         caseRecord1.setFirstName("Anne Marie");
         caseRecord1.setLastName("Dubois");
@@ -83,7 +113,12 @@ public class PersistCaseRecordAndTasksTest {
         caseRecord1.setCurrentState(FSM_START.toString());
 
         utx.begin();
-        em.persist(caseRecord1);
+        try {
+            em.persist(caseRecord1);
+        }
+        catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
         utx.commit();
         System.out.printf("****** caseRecord1=%s\n", caseRecord1);
         assertThat(caseRecord1.getId(), is(notNullValue()));
@@ -92,6 +127,9 @@ public class PersistCaseRecordAndTasksTest {
 
     @Test
     public void persist_CaseRecord_with_Task_elements() throws Exception {
+        assertThat( em, is(notNullValue()));
+        assertThat( utx, is(notNullValue()));
+
         final CaseRecord caseRecord1 = new CaseRecord();
         caseRecord1.setFirstName("Anne Marie");
         caseRecord1.setLastName("Dubois");

@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The type ProjectHelper
+ * The type CaseRecordHelper
  *
  * @author Peter Pilgrim
  */

@@ -65,10 +65,10 @@ public class CaseRecord {
 
     @NotEmpty private String currentState;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caseRecord",
-        fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caseRecord", fetch = FetchType.EAGER)
     private List<Task> tasks = new ArrayList<>();
 
+    // Required by JPA
     public CaseRecord() {
     }
 

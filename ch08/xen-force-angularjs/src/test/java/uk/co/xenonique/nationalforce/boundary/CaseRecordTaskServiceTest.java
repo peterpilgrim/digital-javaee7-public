@@ -19,7 +19,6 @@
 
 package uk.co.xenonique.nationalforce.boundary;
 
-import uk.co.xenonique.nationalforce.DateUtils;
 import uk.co.xenonique.nationalforce.FixtureUtils;
 import uk.co.xenonique.nationalforce.StringHelper;
 import uk.co.xenonique.nationalforce.control.BasicStateMachine;
