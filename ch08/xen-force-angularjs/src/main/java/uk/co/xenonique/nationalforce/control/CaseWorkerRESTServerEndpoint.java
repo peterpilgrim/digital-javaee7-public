@@ -19,7 +19,7 @@
 
 package uk.co.xenonique.nationalforce.control;
 
-import uk.co.xenonique.nationalforce.boundary.ProjectTaskService;
+import uk.co.xenonique.nationalforce.boundary.CaseRecordTaskService;
 import uk.co.xenonique.nationalforce.entity.CaseRecord;
 import uk.co.xenonique.nationalforce.entity.Task;
 
@@ -48,9 +48,9 @@ import static javax.ws.rs.core.MediaType.*;
  *
  * @author Peter Pilgrim (peter)
  */
-@Path("/projects/")
+@Path("/caseworker/")
 @Stateless
-public class ProjectRESTServerEndpoint {
+public class CaseWorkerRESTServerEndpoint {
 
     static JsonGeneratorFactory jsonGeneratorFactory
         = Json.createGeneratorFactory(
@@ -58,27 +58,28 @@ public class ProjectRESTServerEndpoint {
                 put(JsonGenerator.PRETTY_PRINTING, true);
             }});
 
-    @Inject ProjectTaskService service;
+    @Inject
+    CaseRecordTaskService service;
 
     @GET
     @Path("/item/{id}")
     @Produces(APPLICATION_JSON)
-    public String retrieveProject(
-        @PathParam("id") int projectId ) {
-        if (projectId < 1)
+    public String retrieveCase(
+        @PathParam("id") int caseId ) {
+        if (caseId < 1)
             throw new RuntimeException(
-                    "Invalid projectId:["+projectId+"] supplied");
+                    "Invalid caseId:["+caseId+"] supplied");
 
-        List<CaseRecord> caseRecords = service.findProjectById( projectId );
+        List<CaseRecord> caseRecords = service.findCaseById( caseId );
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No project was found with projectId:["+projectId+"]");
+                    "No project was found with caseId:["+caseId+"]");
         }
 
         StringWriter swriter = new StringWriter();
         JsonGenerator generator
             = jsonGeneratorFactory.createGenerator(swriter);
-        ProjectHelper.writeProjectAsJson(generator, caseRecords.get(0)).close();
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecords.get(0)).close();
         return swriter.toString();
     }
 
@@ -86,20 +87,26 @@ public class ProjectRESTServerEndpoint {
     @Path("/item")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public String createProject( JsonObject projectObject )
+    public String createCase( JsonObject json )
             throws Exception {
-        CaseRecord caseRecord = new CaseRecord( projectObject.getString("name"),
-            projectObject.getString("headline"),
-            projectObject.getString("description"));
+        CaseRecord caseRecord = new CaseRecord();
+        caseRecord.setSex(json.getString("sex"));
+        caseRecord.setFirstName(json.getString("firstName"));
+        caseRecord.setLastName(json.getString("lastName"));
+        caseRecord.setCountry(json.getString("country"));
+        caseRecord.setPassportNo(json.getString("passportNo"));
+        caseRecord.setDateOfBirth(CaseRecordHelper.FMT2.parse(json.getString("dateOfBirth")));
+        caseRecord.setExpirationDate(CaseRecordHelper.FMT2.parse(json.getString("expirationDate")));
+        caseRecord.setCurrentState(BasicStateMachine.FSM_START.toString());
 
-        JsonArray tasksArray = projectObject.getJsonArray("tasks");
+        JsonArray tasksArray = json.getJsonArray("tasks");
         if ( tasksArray != null ) {
             for ( int j=0; j<tasksArray.size(); ++j ) {
                 JsonObject taskObject = tasksArray.getJsonObject(j);
                 Task task = new Task(
                     taskObject.getString("name"),
                     ( taskObject.containsKey("targetDate") ?
-                       ProjectHelper.FMT.parse(taskObject.getString("targetDate")) :
+                       CaseRecordHelper.FMT.parse(taskObject.getString("targetDate")) :
                        null ),
                     taskObject.getBoolean("completed"));
                 caseRecord.addTask(task);
@@ -111,66 +118,72 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
             jsonGeneratorFactory.createGenerator(swriter);
-        ProjectHelper.writeProjectAsJson(generator, caseRecord).close();
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
         return swriter.toString();
     }
 
     @PUT
-    @Path("/item/{projectId}")
+    @Path("/item/{caseId}")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public String updateProject(
-            @PathParam("projectId") int projectId,
-            JsonObject projectObject )
+    public String updateCase(
+            @PathParam("caseId") int caseId,
+            JsonObject json )
             throws Exception {
-        if (projectId < 1)
+        if (caseId < 1)
             throw new RuntimeException(
-                    "Invalid projectId:["+projectId+"] supplied");
+                    "Invalid caseId:["+caseId+"] supplied");
 
-        final List<CaseRecord> caseRecords = service.findProjectById( projectId );
+        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No project was found with projectId:["+projectId+"]");
+                    "No case record was found with caseId:["+caseId+"]");
         }
 
         CaseRecord caseRecord = caseRecords.get(0);
-        caseRecord.setName(projectObject.getString("name"));
-        caseRecord.setHeadline(projectObject.getString("headline"));
-        caseRecord.setDescription(projectObject.getString("description"));
+        caseRecord.setSex(json.getString("sex"));
+        caseRecord.setFirstName(json.getString("firstName"));
+        caseRecord.setLastName(json.getString("lastName"));
+        caseRecord.setCountry(json.getString("country"));
+        caseRecord.setPassportNo(json.getString("passportNo"));
+        caseRecord.setDateOfBirth(CaseRecordHelper.FMT2.parse(json.getString("dateOfBirth")));
+        caseRecord.setExpirationDate(CaseRecordHelper.FMT2.parse(json.getString("expirationDate")));
+        if ( json.containsKey("currentState"))
+            caseRecord.setCurrentState(BasicStateMachine.retrieveCurrentState(json.getString("currentState")).toString());
 
         service.saveProject(caseRecord);
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        ProjectHelper.writeProjectAsJson(generator, caseRecord).close();
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
         return swriter.toString();
     }
 
     @POST
-    @Path("/item/{projectId}/task")
+    @Path("/item/{caseId}/task")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public String createNewTaskOnProject(
-            @PathParam("projectId") int projectId,
+    public String createNewTaskOnCase(
+            @PathParam("caseId") int caseId,
             JsonObject taskObject )
             throws Exception
     {
-        System.out.printf("createNewTaskOnProject( %d, %s )\n", projectId, taskObject);
-        if (projectId < 1)
+        System.out.printf("createNewTaskOnCase( %d, %s )\n", caseId, taskObject);
+        if (caseId < 1)
             throw new RuntimeException(
-                    "Invalid projectId:["+projectId+"] supplied");
+                    "Invalid caseId:["+caseId+"] supplied");
 
-        List<CaseRecord> caseRecords = service.findProjectById( projectId );
+        List<CaseRecord> caseRecords = service.findCaseById(caseId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No project was found with projectId:["+projectId+"]");
+                    "No case record was found with caseId:["+caseId+"]");
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
         final Task task = new Task(
                 taskObject.getString("name"),
                 ( taskObject.containsKey("targetDate") ?
-                        ProjectHelper.convertToDate(taskObject.getString("targetDate")) :
+                        CaseRecordHelper.convertToDate(taskObject.getString("targetDate")) :
                         null ),
                 ( taskObject.containsKey("completed")) ?
                     taskObject.getBoolean("completed") : false );
@@ -179,29 +192,29 @@ public class ProjectRESTServerEndpoint {
         final StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        ProjectHelper.writeProjectAsJson(generator, caseRecord).close();
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
         return swriter.toString();
     }
 
     @PUT
-    @Path("/item/{projectId}/task/{taskId}")
+    @Path("/item/{caseId}/task/{taskId}")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public String updateTaskOnProject(
-            @PathParam("projectId") int projectId,
+    public String updateTaskOnCase(
+            @PathParam("caseId") int caseId,
             @PathParam("taskId") int taskId,
             JsonObject taskObject )
             throws Exception
     {
-        System.out.printf("updateTaskOnProject( %d, %d, %s )\n", projectId, taskId, taskObject);
-        if (projectId < 1)
+        System.out.printf("updateTaskOnCase( %d, %d, %s )\n", caseId, taskId, taskObject);
+        if (caseId < 1)
             throw new RuntimeException(
-                    "Invalid projectId:["+projectId+"] supplied");
+                    "Invalid caseId:["+caseId+"] supplied");
 
-        final List<CaseRecord> caseRecords = service.findProjectById( projectId );
+        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No project was found with projectId:["+projectId+"]");
+                    "No case record was found with caseId:["+caseId+"]");
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
@@ -209,7 +222,7 @@ public class ProjectRESTServerEndpoint {
             if ( task.getId().equals(taskId )) {
                 task.setName( taskObject.getString("name") );
                 task.setTargetDate( taskObject.containsKey("targetDate") ?
-                        ProjectHelper.convertToDate(taskObject.getString("targetDate")) :
+                        CaseRecordHelper.convertToDate(taskObject.getString("targetDate")) :
                         null );
                 task.setCompleted( taskObject.containsKey("completed") ?
                         taskObject.getBoolean("completed") : false );
@@ -220,31 +233,31 @@ public class ProjectRESTServerEndpoint {
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        ProjectHelper.writeProjectAsJson(generator, caseRecord).close();
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
         return swriter.toString();
     }
 
     @DELETE
-    @Path("/item/{projectId}/task/{taskId}")
+    @Path("/item/{caseId}/task/{taskId}")
     @Consumes( { APPLICATION_JSON, APPLICATION_XML, TEXT_PLAIN })
     @Produces(APPLICATION_JSON)
-    public String removeTaskFromProject(
-            @PathParam("projectId") int projectId,
+    public String removeTaskFromCase(
+            @PathParam("caseId") int caseId,
             @PathParam("taskId") int taskId,
             JsonObject taskObject )
             throws Exception
     {
         // AngularJS requires additional consumption of XML in order to avoid 415 Unsupported Media Type
         // See this http://stackoverflow.com/questions/17379447/angularjs-and-jersey-rest-delete-operation-fails-with-415-status-code
-        System.out.printf("removeTaskFromProject( %d, %d, %s )\n", projectId, taskId, taskObject);
-        if (projectId < 1)
+        System.out.printf("removeTaskFromCase( %d, %d, %s )\n", caseId, taskId, taskObject);
+        if (caseId < 1)
             throw new RuntimeException(
-                    "Invalid projectId:["+projectId+"] supplied");
+                    "Invalid caseId:["+caseId+"] supplied");
 
-        final List<CaseRecord> caseRecords = service.findProjectById( projectId );
+        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No project was found with projectId:["+projectId+"]");
+                    "No case record was found with caseId:["+caseId+"]");
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
@@ -259,31 +272,31 @@ public class ProjectRESTServerEndpoint {
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        ProjectHelper.writeProjectAsJson(generator, caseRecord).close();
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
         return swriter.toString();
     }
 
     @GET
-    @Path("/item/{projectId}/task/{taskId}/delete")
+    @Path("/item/{caseId}/task/{taskId}/delete")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
     public String angularRemoveTaskFromProject(
-            @PathParam("projectId") int projectId,
+            @PathParam("caseId") int caseId,
             @PathParam("taskId") int taskId,
             JsonObject taskObject )
             throws Exception
     {
         // AngularJS requires additional consumption of XML in order to avoid 415 Unsupported Media Type
         // See this http://stackoverflow.com/questions/17379447/angularjs-and-jersey-rest-delete-operation-fails-with-415-status-code
-        System.out.printf("angularRemoveTaskFromProject( %d, %d, %s )\n", projectId, taskId, taskObject);
-        if (projectId < 1)
+        System.out.printf("angularRemoveTaskFromProject( %d, %d, %s )\n", caseId, taskId, taskObject);
+        if (caseId < 1)
             throw new RuntimeException(
-                    "Invalid projectId:["+projectId+"] supplied");
+                    "Invalid caseId:["+caseId+"] supplied");
 
-        final List<CaseRecord> caseRecords = service.findProjectById( projectId );
+        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No project was found with projectId:["+projectId+"]");
+                    "No project was found with caseId:["+caseId+"]");
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
@@ -298,7 +311,7 @@ public class ProjectRESTServerEndpoint {
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        ProjectHelper.writeProjectAsJson(generator, caseRecord).close();
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
         return swriter.toString();
     }
 
@@ -308,27 +321,26 @@ public class ProjectRESTServerEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/list")
-    public void getProjectList(
+    public void getCaseRecordList(
         @Suspended final AsyncResponse asyncResponse) {
-        System.out.printf("=======> %s.getProjectList() %s asyncResponse=%s\n",
+        System.out.printf("=======> %s.getCaseRecordList() %s asyncResponse=%s\n",
                 getClass().getSimpleName(), Thread.currentThread(), asyncResponse );
 
         executor.submit(new Runnable() {
             @Override
             public void run() {
-                System.out.printf("========>> %s.getProjectList() Executable Task %s asyncResponse=%s\n",
+                System.out.printf("========>> %s.getCaseRecordList() Executable Task %s asyncResponse=%s\n",
                         getClass().getSimpleName(), Thread.currentThread(), asyncResponse);
-                final List<CaseRecord> caseRecords = service.findAllProjects();
+                final List<CaseRecord> caseRecords = service.findAllCases();
                 final StringWriter swriter = new StringWriter();
                 final JsonGenerator generator
                         = jsonGeneratorFactory.createGenerator(swriter);
                 try {
-                    ProjectHelper.generateProjectsAsJson(generator, caseRecords).close();
+                    CaseRecordHelper.generateCaseRecordAsJson(generator, caseRecords).close();
                     System.out.printf("========>> Sending swriter=[%s]\n", swriter.toString());
                     final Response response =
                             Response.ok(swriter.toString()).build();
                     asyncResponse.resume(response);
-
                 }
                 catch (Throwable t) {
                     t.printStackTrace();

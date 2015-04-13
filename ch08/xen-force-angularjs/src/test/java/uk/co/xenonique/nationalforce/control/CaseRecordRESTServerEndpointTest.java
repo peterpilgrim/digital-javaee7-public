@@ -20,7 +20,7 @@
 package uk.co.xenonique.nationalforce.control;
 
 import uk.co.xenonique.nationalforce.StringHelper;
-import uk.co.xenonique.nationalforce.boundary.ProjectTaskService;
+import uk.co.xenonique.nationalforce.boundary.CaseRecordTaskService;
 import uk.co.xenonique.nationalforce.entity.CaseRecord;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -49,7 +49,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import static uk.co.xenonique.nationalforce.FixtureUtils.createProjectAndTasks;
+import static uk.co.xenonique.nationalforce.FixtureUtils.createCaseRecordAndTasks;
 import static javax.ws.rs.core.MediaType.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -63,14 +63,14 @@ import static org.junit.Assert.assertTrue;
  * @author Peter Pilgrim
  */
 @RunWith(Arquillian.class)
-public class ProjectRESTServerEndpointTest {
+public class CaseRecordRESTServerEndpointTest {
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class, "xentracker.war")
+        WebArchive war = ShrinkWrap.create(WebArchive.class)
                 .addPackage(CaseRecord.class.getPackage())
-                .addPackage(ProjectRESTServerEndpoint.class.getPackage())
-                .addPackage(ProjectTaskService.class.getPackage())
+                .addPackage(CaseWorkerRESTServerEndpoint.class.getPackage())
+                .addPackage(CaseRecordTaskService.class.getPackage())
                 .addClasses(StringHelper.class)
                 .addAsWebInfResource(
                         "test-persistence.xml",
@@ -84,17 +84,22 @@ public class ProjectRESTServerEndpointTest {
     }
 
     @EJB
-    ProjectTaskService service;
+    CaseRecordTaskService service;
 
     private static final JsonBuilderFactory bf = Json.createBuilderFactory(null);
 
     @Test
-    public void shouldInvokePOSTcreateProjectWithTasks() throws Exception {
+    public void invoke_POST_create_CaseRecord_with_Tasks() throws Exception {
 
         JsonObject input = bf.createObjectBuilder()
-            .add("name", "Java Performance Tuning")
-            .add("headline", "Goldenrule")
-            .add("description", "Measure before, measure after")
+            .add("sex", "F")
+            .add("firstName", "Caroline Isabella")
+            .add("lastName", "Hamerhof")
+            .add("country", "Canada")
+            .add("passportNo", "123456789012")
+            .add("dateOfBirth", "1997-05-16")
+            .add("expirationDate", "2025-01-10")
+            .add("currentSate", "Start")
             .add("tasks",
                 bf.createArrayBuilder()
                     .add(
@@ -114,7 +119,7 @@ public class ProjectRESTServerEndpointTest {
             .build();
 
         WebTarget target = ClientBuilder.newClient()
-            .target("http://localhost:8181/xentracker/rest/projects/item");
+            .target("http://localhost:8181/xen-national-force/rest/caseworker/item");
 
         Response response = target.request().post(
             Entity.entity(
@@ -127,16 +132,16 @@ public class ProjectRESTServerEndpointTest {
     }
 
     @Test
-    public void shouldInvokeGETretrieveProjectWithProjectId() throws Exception {
-        CaseRecord proj1 = createProjectAndTasks(3);
+    public void invoke_GET_retrieve_CaseRecord_by_CaseId() throws Exception {
+        CaseRecord proj1 = createCaseRecordAndTasks(3);
         service.saveProject(proj1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllProjects();
+        List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
         WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xentracker/rest/projects/item/" + proj1.getId());
+                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId());
         Response response = target.request().get();
         assertThat(response.getStatus(), is(200));
         String text = response.readEntity( String.class );
@@ -146,20 +151,20 @@ public class ProjectRESTServerEndpointTest {
 
 
     @Test
-    public void shouldInvokeAsynchronousServerGET() throws Exception {
-        CaseRecord proj1 = createProjectAndTasks(3);
-        CaseRecord proj2 = createProjectAndTasks(2);
-        CaseRecord proj3 = createProjectAndTasks(1);
+    public void invoke_asynchronous_GET_request_demo() throws Exception {
+        CaseRecord proj1 = createCaseRecordAndTasks(3);
+        CaseRecord proj2 = createCaseRecordAndTasks(2);
+        CaseRecord proj3 = createCaseRecordAndTasks(1);
         service.saveProject(proj1);
         service.saveProject(proj2);
         service.saveProject(proj3);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllProjects();
+        List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
         WebTarget target = ClientBuilder.newClient()
-            .target("http://localhost:8181/xentracker/rest/projects/list");
+            .target("http://localhost:8181/xen-national-force/rest/caseworker/list");
         Future<Response> future =
                 target.request().async().get();
         assertNotNull(future);
@@ -171,12 +176,12 @@ public class ProjectRESTServerEndpointTest {
     }
 
     @Test
-    public void shouldInvokePOSTWithAddNewTaskToProject() throws Exception {
-        CaseRecord proj1 = createProjectAndTasks(1);
+    public void invoke_POST_add_new_Task_to_CaseRecord() throws Exception {
+        CaseRecord proj1 = createCaseRecordAndTasks(1);
         service.saveProject(proj1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllProjects();
+        List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
         JsonObject input = bf.createObjectBuilder()
@@ -186,7 +191,7 @@ public class ProjectRESTServerEndpointTest {
             .build();
 
         WebTarget target = ClientBuilder.newClient()
-            .target("http://localhost:8181/xentracker/rest/projects/item/" + proj1.getId() + "/task");
+            .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId() + "/task");
         Response response = target.request().post(
             Entity.entity(
             input, APPLICATION_JSON_TYPE) );
@@ -197,12 +202,12 @@ public class ProjectRESTServerEndpointTest {
     }
 
     @Test
-    public void shouldInvokePUTWithAddUpdateTaskToProject() throws Exception {
-        CaseRecord proj1 = createProjectAndTasks(0);
+    public void invoke_PUT_update_Task_on_CaseRecord() throws Exception {
+        CaseRecord proj1 = createCaseRecordAndTasks(0);
         service.saveProject(proj1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllProjects();
+        List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
         final Calendar cal = Calendar.getInstance();
@@ -221,7 +226,7 @@ public class ProjectRESTServerEndpointTest {
                 .build();
 
         WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xentracker/rest/projects/item/"+proj1.getId()+"/task");
+                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/"+proj1.getId()+"/task");
         Response response = target.request().post(
                 Entity.entity(
                         input1, APPLICATION_JSON_TYPE));
@@ -246,7 +251,7 @@ public class ProjectRESTServerEndpointTest {
                 .build();
 
         target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xentracker/rest/projects/item/" + proj1.getId() + "/task/" + taskId1);
+                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId() + "/task/" + taskId1);
         response = target.request().put(
                 Entity.entity(
                         input2, APPLICATION_JSON_TYPE));
@@ -265,12 +270,12 @@ public class ProjectRESTServerEndpointTest {
     }
 
     @Test
-    public void shouldInvokeDELETEWithAddRemoveTaskFromProject() throws Exception {
-        CaseRecord proj1 = createProjectAndTasks(0);
+    public void invoke_DELETE_remove_Task_from_CaseRecord() throws Exception {
+        CaseRecord proj1 = createCaseRecordAndTasks(0);
         service.saveProject(proj1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllProjects();
+        List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
         JsonObject input1 = bf.createObjectBuilder()
@@ -280,7 +285,7 @@ public class ProjectRESTServerEndpointTest {
                 .build();
 
         WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xentracker/rest/projects/item/"+proj1.getId()+"/task");
+                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/"+proj1.getId()+"/task");
         Response response = target.request().post(
                 Entity.entity(
                         input1, APPLICATION_JSON_TYPE));
@@ -297,7 +302,7 @@ public class ProjectRESTServerEndpointTest {
         assertFalse( json.getBoolean("completed")) ;
 
         target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xentracker/rest/projects/item/" + proj1.getId() + "/task/" + taskId);
+                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId() + "/task/" + taskId);
         response = target.request().delete();
         assertThat( response.getStatus(), is(200));
 
@@ -306,33 +311,38 @@ public class ProjectRESTServerEndpointTest {
     }
 
     @Test
-    public void shouldInvokePUTeditProjectDetails() throws Exception {
-        CaseRecord proj1 = createProjectAndTasks(1);
+    public void invoke_PUT_CaseRecord() throws Exception {
+        CaseRecord proj1 = createCaseRecordAndTasks(1);
         service.saveProject(proj1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllProjects();
+        List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
         JsonObject input1 = bf.createObjectBuilder()
                 .add("id", proj1.getId())
-                .add("name", "Visit Client")
-                .add("headline", "Essential face-to-face meeting")
-                .add("description", "Apple and oranges")
+                .add("sex", "M")
+                .add("firstName", "Christopher Charles")
+                .add("lastName", "Nozi Ngomo")
+                .add("country", "Nigeria")
+                .add("passportNo", "123456123456")
+                .add("dateOfBirth", "1998-05-16")
+                .add("expirationDate", "2026-01-10")
+                .add("currentSate", "Start")
                 /* We don't need the Task JSON object here */
                 .build();
 
         WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xentracker/rest/projects/item/" + proj1.getId());
+                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId());
         Response response = target.request().put(
                 Entity.entity(
                         input1, APPLICATION_JSON_TYPE));
         assertThat(response.getStatus(), is(200));
 
         JsonObject output1 = response.readEntity(JsonObject.class);
-        assertThat( "Visit Client", is(output1.getString("name")));
-        assertThat( "Essential face-to-face meeting", is(output1.getString("headline")));
-        assertThat( "Apple and oranges", is(output1.getString("description")));
+        assertThat( "M", is(output1.getString("sex")));
+        assertThat( "Christopher Charles", is(output1.getString("firstName")));
+        assertThat( "Nozi Ngomo", is(output1.getString("lastName")));
         assertThat(output1.getJsonArray("tasks").size(), is(1));
     }
 

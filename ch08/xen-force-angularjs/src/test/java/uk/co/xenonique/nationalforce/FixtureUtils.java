@@ -21,9 +21,13 @@ package uk.co.xenonique.nationalforce;
 
 import uk.co.xenonique.nationalforce.entity.CaseRecord;
 import uk.co.xenonique.nationalforce.entity.Task;
+import uk.co.xenonique.nationalforce.init.DemoDataConfigurator;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
+
+import static uk.co.xenonique.nationalforce.control.BasicStateMachine.FSM_START;
 
 /**
  * The type FixtureUtils
@@ -33,20 +37,31 @@ import java.util.Random;
 public final class FixtureUtils {
     private static Random rnd = new Random(System.currentTimeMillis());
 
-    public static CaseRecord createProjectAndTasks( int taskCount ) {
-        return createProjectAndTasks(
-                "xenonique"+Integer.toString((int) (1000 + rnd.nextDouble() * 9000.0)), taskCount);
+    public static CaseRecord createCaseRecordAndTasks( int taskCount ) {
+        return createCaseRecordAndTasks(
+                "F", "Unit", "Xenonique" + Integer.toString((int) (1000 + rnd.nextDouble() * 9000.0)), taskCount);
     }
 
-    public static CaseRecord createProjectAndTasks( String name, int taskCount ) {
-        final CaseRecord caseRecord = new CaseRecord(name);
-        caseRecord.setHeadline("headline"+Integer.toString((int) (100 + rnd.nextDouble() * 900.0)));
-        caseRecord.setDescription("description"+Integer.toString((int) (100 + rnd.nextDouble() * 900.0)));
+    public static CaseRecord createCaseRecordAndTasks( String sex, String firstName, String lastName, int taskCount ) {
+        final CaseRecord caseRecord = new CaseRecord();
+
+        caseRecord.setSex(sex);
+        caseRecord.setFirstName(firstName);
+        caseRecord.setLastName(lastName);
+
+        final Date dateOfBirth = DemoDataConfigurator.getRandomDateOfBirth();
+        final Date expirationDate = DemoDataConfigurator.getFutureRandomDate( new Date(), 31, 10 );
+
+        caseRecord.setCountry("Australia");
+        caseRecord.setPassportNo(Long.toString((long)(Math.random() * 9E8 + 1E8)));
+        caseRecord.setDateOfBirth(dateOfBirth);
+        caseRecord.setExpirationDate(expirationDate);
+        caseRecord.setCurrentState( FSM_START.toString() );
+
         for ( int j=0; j<taskCount; ++j) {
             Date targetDate = null;
             if ( j > 0 ) {
-                targetDate = new Date(System.currentTimeMillis() +
-                        (long)((int)(Math.random() * 7 + 1) * 86400 * 1000 ));
+                targetDate = DateUtils.asDate( LocalDate.now().plusDays((long) (3 + Math.random() * 14)) );
             }
             final Task task = new Task("task"+(j+1)*2, targetDate, false );
             caseRecord.addTask(task);

@@ -8,7 +8,7 @@ archivesBaseName = 'jsf-crud-ajax-validation'
 
 
 dependencies {
-    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
     providedCompile 'javax:javaee-api:7.0'
     // WARNING: Joda time is broken with Glassfish 4
 //    compile     'joda-time:joda-time:2.2'

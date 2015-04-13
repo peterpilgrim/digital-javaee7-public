@@ -3,9 +3,9 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="XenTracker" transaction-type="JTA">
+    <persistence-unit name="XenNationalForce" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <jta-data-source>java:app/jdbc/xentracker</jta-data-source>
+        <jta-data-source>java:app/jdbc/nationalforce</jta-data-source>
         <properties>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>

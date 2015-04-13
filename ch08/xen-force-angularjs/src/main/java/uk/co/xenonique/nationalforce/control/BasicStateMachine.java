@@ -1,7 +1,6 @@
 package uk.co.xenonique.nationalforce.control;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 /**
  * The type BasicStateMachine
@@ -77,6 +76,28 @@ public class BasicStateMachine {
         }
     }
 
+    public static CaseState retrieveCurrentState(String stateName) {
+        stateName = stateName.trim();
+        if ( stateName.startsWith("STATE:[") )
+            stateName = stateName.substring(7);
+        if ( stateName.endsWith("]"))
+            stateName = stateName.substring(0, stateName.length() - 1);
+        if ( "Start".equals(stateName))
+            return FSM_START;
+        else if ( "End".equals(stateName))
+            return FSM_END;
+        else if ( "Reviewing".equals(stateName))
+            return FSM_REVIEWING;
+        else if ( "Decision".equals(stateName))
+            return FSM_DECISION;
+        else if ( "Accepted".equals(stateName))
+            return FSM_ACCEPTED;
+        else if ( "Rejected".equals(stateName))
+            return FSM_REJECTED;
+
+        throw new RuntimeException("Could not find matching state for name: "+stateName);
+    }
+
     public abstract static class AbstractState implements CaseState {
         final private String name;
 
@@ -96,7 +117,7 @@ public class BasicStateMachine {
 
         @Override
         public String toString() {
-            return "STATE: "+name;
+            return "STATE:["+name+"]";
         }
 
         @Override

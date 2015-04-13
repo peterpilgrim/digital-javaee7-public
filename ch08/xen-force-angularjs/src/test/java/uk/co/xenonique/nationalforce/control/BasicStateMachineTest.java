@@ -103,4 +103,13 @@ public class BasicStateMachineTest {
         assertThat(machine.getCurrentState().isEndState(), is(true));
         assertThat(machine.getProbableNestStates().isEmpty(), is(true));
     }
+
+    @Test
+    public void retrieve_states_from_state_name() {
+        assertThat( BasicStateMachine.retrieveCurrentState("Start"), is(FSM_START));
+        assertThat( BasicStateMachine.retrieveCurrentState("End"), is(FSM_END));
+        assertThat( BasicStateMachine.retrieveCurrentState("Reviewing"), is(FSM_REVIEWING));
+        assertThat( BasicStateMachine.retrieveCurrentState("Accepted"), is(FSM_ACCEPTED));
+        assertThat( BasicStateMachine.retrieveCurrentState("Rejected"), is(FSM_REJECTED));
+    }
 }

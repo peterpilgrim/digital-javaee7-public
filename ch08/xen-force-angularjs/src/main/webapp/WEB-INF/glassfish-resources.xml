@@ -4,12 +4,12 @@
         "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
 <resources>
     <jdbc-resource pool-name="XenTrackerEmbeddedDerbyPool"
-                   jndi-name="java:app/jdbc/xentracker"/>
+                   jndi-name="java:app/jdbc/nationalforce"/>
     <jdbc-connection-pool name="XenTrackerEmbeddedDerbyPool"
                           res-type="javax.sql.DataSource"
                           datasource-classname="org.apache.derby.jdbc.EmbeddedDataSource"
                           is-isolation-level-guaranteed="false">
-        <property name="databaseName" value="/tmp/xentracker-angularjs/derby"/>
+        <property name="databaseName" value="/tmp/xen-national-force/derby"/>
         <property name="createDatabase" value="create"/>
     </jdbc-connection-pool>
 </resources>

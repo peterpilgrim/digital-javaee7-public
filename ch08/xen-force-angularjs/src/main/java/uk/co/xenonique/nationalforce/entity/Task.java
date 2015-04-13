@@ -43,7 +43,7 @@ public class Task {
     private boolean completed;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="PROJECT_ID")
+    @JoinColumn(name="CASE_RECORD_ID")
     private CaseRecord caseRecord;
 
     public Task() { /* Required by JPA */ }
@@ -70,17 +70,6 @@ public class Task {
     public void setCaseRecord(CaseRecord caseRecord) { this.caseRecord = caseRecord; }
 
     @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", targetDate=" + targetDate +
-                ", completed=" + completed +
-                ", project=" + StringHelper.systemIdentifierCode(caseRecord) +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Task)) return false;
@@ -98,5 +87,17 @@ public class Task {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Task{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", targetDate=").append(targetDate);
+        sb.append(", completed=").append(completed);
+        sb.append(", caseRecord=").append(StringHelper.systemIdentifierCode(caseRecord));
+        sb.append('}');
+        return sb.toString();
     }
 }

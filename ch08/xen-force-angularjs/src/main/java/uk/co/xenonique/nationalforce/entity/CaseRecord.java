@@ -22,65 +22,127 @@ package uk.co.xenonique.nationalforce.entity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
- * The type Project
+ * The type CaseRecord
  *
  * @author Peter Pilgrim (peter)
  */
 @NamedQueries({
-    @NamedQuery(name="Project.findAllProjects",
-        query = "select p from Project p order by p.name"),
-    @NamedQuery(name="Project.findProjectById",
-        query = "select p from Project p where p.id = :id"),
-    @NamedQuery(name="Project.findTaskById",
+    @NamedQuery(name="CaseRecord.findAllCases",
+        query = "select c from CaseRecord c order by c.lastName, c.firstName"),
+    @NamedQuery(name="CaseRecord.findCaseById",
+        query = "select c from CaseRecord c where c.id = :id"),
+    @NamedQuery(name="CaseRecord.findTaskByTaskId",
         query = "select t from Task t where t.id = :id "),
-    @NamedQuery(name="Project.findTasksByProjectId",
-        query = "select t from Project p, Task t " +
-                "where p.id = :id and t.project = p"),
+    @NamedQuery(name="CaseRecord.findTasksByCaseId",
+        query = "select t from CaseRecord c, Task t " +
+                "where c.id = :id and t.caseRecord = c"),
 })
 @Entity
+@Table(name = "CASE_RECORD")
 public class CaseRecord {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="PROJECT_ID") private Integer id;
+    private Integer id;
 
-    @NotEmpty @Size(max=64) private String name;
-    private String headline;
-    private String description;
+    @NotEmpty @Size(max=64) private String lastName;
+    @NotEmpty @Size(max=64) private String firstName;
+    @NotEmpty @Size(max=1) private String sex;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project",
+    /** Reasonable Length of passport number http://www.highprogrammer.com/alan/numbers/mrp.html */
+    @NotEmpty @Size(max=16) private String passportNo;
+    @NotEmpty @Size(max=32) private String country;
+
+    @Past @NotNull @Temporal(TemporalType.DATE) private Date dateOfBirth;
+    @Future @NotNull @Temporal(TemporalType.DATE) private Date expirationDate;
+
+    @NotEmpty private String currentState;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caseRecord",
         fetch = FetchType.EAGER)
     private List<Task> tasks = new ArrayList<>();
 
-    public CaseRecord() { /* Required for JPA */
-        this(null,null);
-    }
-    public CaseRecord(String name) {
-        this(name, null );
-    }
-    public CaseRecord(String name, String headline) {
-        this(name,headline,null);
-    }
-    public CaseRecord(String name, String headline, String description) {
-        this.name = name;
-        this.headline = headline;
-        this.description = description;
+    public CaseRecord() {
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public String getHeadline() { return headline; }
-    public void setHeadline(String headline) { this.headline = headline; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getPassportNo() {
+        return passportNo;
+    }
+
+    public void setPassportNo(String passportNo) {
+        this.passportNo = passportNo;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(String currentState) {
+        this.currentState = currentState;
+    }
 
     public List<Task> getTasks() { return tasks; }
     public void setTasks(List<Task> tasks) { this.tasks = tasks; }
@@ -106,35 +168,45 @@ public class CaseRecord {
     }
 
     @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", headline='" + headline + '\'' +
-                ", description='" + description + '\'' +
-                ", tasks=" + tasks +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CaseRecord)) return false;
 
-        CaseRecord caseRecord = (CaseRecord) o;
+        CaseRecord that = (CaseRecord) o;
 
-        if (description != null ? !description.equals(caseRecord.description) : caseRecord.description != null) return false;
-        if (id != null ? !id.equals(caseRecord.id) : caseRecord.id != null) return false;
-        if (name != null ? !name.equals(caseRecord.name) : caseRecord.name != null) return false;
-
-        return true;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
+        if (passportNo != null ? !passportNo.equals(that.passportNo) : that.passportNo != null) return false;
+        return !(country != null ? !country.equals(that.country) : that.country != null);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (sex != null ? sex.hashCode() : 0);
+        result = 31 * result + (passportNo != null ? passportNo.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("CaseRecord{");
+        sb.append("id=").append(id);
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", sex='").append(sex).append('\'');
+        sb.append(", passportNo='").append(passportNo).append('\'');
+        sb.append(", country='").append(country).append('\'');
+        sb.append(", dateOfBirth=").append(dateOfBirth);
+        sb.append(", expirationDate=").append(expirationDate);
+        sb.append(", currentState=").append(currentState);
+        sb.append(", tasks=").append(tasks);
+        sb.append('}');
+        return sb.toString();
     }
 }

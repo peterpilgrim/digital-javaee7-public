@@ -14,30 +14,33 @@ import java.util.List;
  *
  * @author Peter Pilgrim
  */
-public class ProjectHelper {
+public class CaseRecordHelper {
     static SimpleDateFormat FMT =
         new SimpleDateFormat("dd-MMM-yyyy");
     static SimpleDateFormat FMT2 =
             new SimpleDateFormat("yyyy-MM-dd");
 
-    public static JsonGenerator generateProjectsAsJson( JsonGenerator generator, List<CaseRecord> caseRecords) {
+    public static JsonGenerator generateCaseRecordAsJson(JsonGenerator generator, List<CaseRecord> caseRecords) {
         generator.writeStartArray();
         for ( CaseRecord caseRecord : caseRecords) {
-            writeProjectAsJson(generator, caseRecord);
+            writeCaseRecordAsJson(generator, caseRecord);
         }
         generator.writeEnd().close();
         return generator;
     }
 
-    public static JsonGenerator writeProjectAsJson( JsonGenerator generator, CaseRecord caseRecord) {
+    public static JsonGenerator writeCaseRecordAsJson(JsonGenerator generator, CaseRecord caseRecord) {
         generator.writeStartObject()
             .write("id", caseRecord.getId())
-            .write("name", caseRecord.getName());
-        if ( caseRecord.getHeadline() != null )
-            generator.write("headline", caseRecord.getHeadline());
-        if ( caseRecord.getDescription() != null )
-            generator.write("description", caseRecord.getDescription());
-        generator.writeStartArray("tasks");
+            .write("firstName", caseRecord.getFirstName())
+            .write("lastName", caseRecord.getLastName())
+            .write("sex", caseRecord.getSex())
+            .write("passportNo", caseRecord.getPassportNo())
+            .write("country", caseRecord.getCountry())
+            .write("dateOfBirth", FMT2.format(caseRecord.getDateOfBirth()))
+            .write("expirationDate", FMT2.format(caseRecord.getExpirationDate()))
+            .write("currentState", caseRecord.getCurrentState().toString())
+            .writeStartArray("tasks");
 
         for ( Task task: caseRecord.getTasks()) {
             writeTaskAsJson(generator,task);

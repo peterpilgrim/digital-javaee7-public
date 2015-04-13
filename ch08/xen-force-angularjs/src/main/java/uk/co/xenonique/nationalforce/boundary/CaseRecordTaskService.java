@@ -34,12 +34,17 @@ import java.util.List;
  * @author Peter Pilgrim (peter)
  */
 @Stateless
-public class ProjectTaskService {
-    @PersistenceContext(unitName = "XenTracker")
+public class CaseRecordTaskService {
+    @PersistenceContext(unitName = "XenNationalForce")
     private EntityManager entityManager;
 
     public void saveProject( CaseRecord caseRecord) {
-        entityManager.persist(caseRecord);
+        try {
+            entityManager.persist(caseRecord);
+        }
+        catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
     }
 
     public void updateProject( CaseRecord caseRecord) {
@@ -52,36 +57,35 @@ public class ProjectTaskService {
         entityManager.remove(caseRecordToBeRemoved);
     }
 
-    public List<CaseRecord> findAllProjects() {
+    public List<CaseRecord> findAllCases() {
         final Query query = entityManager.createNamedQuery(
-            "Project.findAllProjects");
+            "CaseRecord.findAllCases");
         return query.getResultList();
     }
 
-    public List<CaseRecord> findProjectById( Integer id ) {
+    public List<CaseRecord> findCaseById( Integer id ) {
         final Query query = entityManager.createNamedQuery(
-            "Project.findProjectById")
+            "CaseRecord.findCaseById")
             .setParameter("id", id );
         return query.getResultList();
     }
 
-    public List<Task> findTaskById( Integer id ) {
+    public List<Task> findTaskByTaskId( Integer id ) {
         final Query query = entityManager.createNamedQuery(
-                "Project.findTaskById")
+                "CaseRecord.findTaskByTaskId")
                 .setParameter("id", id );
         return query.getResultList();
     }
 
-    public List<Task> findTasksByProjectId( Integer id ) {
+    public List<Task> findTasksByCaseId( Integer id ) {
         final Query query = entityManager.createNamedQuery(
-                "Project.findTasksByProjectId")
+                "CaseRecord.findTasksByCaseId")
                 .setParameter("id", id );
         return query.getResultList();
     }
-
 
     public void clearDatabase() {
         entityManager.createQuery("delete from Task").executeUpdate();
-        entityManager.createQuery("delete from Project").executeUpdate();
+        entityManager.createQuery("delete from CaseRecord").executeUpdate();
     }
 }

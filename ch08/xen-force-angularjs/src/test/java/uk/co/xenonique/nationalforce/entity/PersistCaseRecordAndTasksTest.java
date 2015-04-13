@@ -19,6 +19,7 @@
 
 package uk.co.xenonique.nationalforce.entity;
 
+import uk.co.xenonique.nationalforce.DateUtils;
 import uk.co.xenonique.nationalforce.StringHelper;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -28,16 +29,19 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import uk.co.xenonique.nationalforce.init.DemoDataConfigurator;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static uk.co.xenonique.nationalforce.control.BasicStateMachine.FSM_START;
 
 /**
  * A unit test PersistProjectAndTasksTest to verify the operation of PersistProjectAndTasksTest
@@ -45,7 +49,7 @@ import static org.junit.Assert.*;
  * @author Peter Pilgrim
  */
 @RunWith(Arquillian.class)
-public class PersistProjectAndTasksTest {
+public class PersistCaseRecordAndTasksTest {
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -67,23 +71,37 @@ public class PersistProjectAndTasksTest {
     UserTransaction utx;
 
     @Test
-    public void shouldPersistProject() throws Exception {
-        CaseRecord proj1 = new CaseRecord("xenonique1",
-                "Japanese car manufacturer",
-                "digital web re-imagination of a global brand leader");
+    public void persist_CaseRecord_without_Task_elements() throws Exception {
+        final CaseRecord caseRecord1 = new CaseRecord();
+        caseRecord1.setFirstName("Anne Marie");
+        caseRecord1.setLastName("Dubois");
+        caseRecord1.setSex("F");
+        caseRecord1.setCountry("France");
+        caseRecord1.setPassportNo("740370119595784");
+        caseRecord1.setDateOfBirth(DateUtils.asDate(LocalDate.now().minusYears(33)));
+        caseRecord1.setExpirationDate(DateUtils.asDate(LocalDate.now().plusYears(5)));
+        caseRecord1.setCurrentState(FSM_START.toString());
+
         utx.begin();
-        em.persist(proj1);
+        em.persist(caseRecord1);
         utx.commit();
-        System.out.printf("****** proj1=%s\n", proj1);
-        assertNotNull( proj1.getId());
+        System.out.printf("****** caseRecord1=%s\n", caseRecord1);
+        assertThat(caseRecord1.getId(), is(notNullValue()));
     }
 
 
     @Test
-    public void shouldPersistProjectAndTasks() throws Exception {
-        CaseRecord proj1 = new CaseRecord("xenonique2",
-                "Stocks and loans application",
-                "Build a new internal web site for trading brokerage");
+    public void persist_CaseRecord_with_Task_elements() throws Exception {
+        final CaseRecord caseRecord1 = new CaseRecord();
+        caseRecord1.setFirstName("Anne Marie");
+        caseRecord1.setLastName("Dubois");
+        caseRecord1.setSex("F");
+        caseRecord1.setCountry("France");
+        caseRecord1.setPassportNo("740370119595784");
+        caseRecord1.setDateOfBirth(DateUtils.asDate(LocalDate.now().minusYears(33)));
+        caseRecord1.setExpirationDate(DateUtils.asDate(LocalDate.now().plusYears(5)));
+        caseRecord1.setCurrentState(FSM_START.toString());
+
         final int N =3;
         for ( int j=0; j<N; ++j) {
             Date targetDate = null;
@@ -91,21 +109,20 @@ public class PersistProjectAndTasksTest {
                 targetDate = new Date(System.currentTimeMillis() + (long) (Math.random() * 86400 * 5 * 1000 ));
             }
             Task task = new Task("task"+j, targetDate, false );
-            proj1.addTask(task);
-            task.setCaseRecord(proj1);
+            caseRecord1.addTask(task);
+            task.setCaseRecord(caseRecord1);
         }
         utx.begin();
-        em.persist(proj1);
+        em.persist(caseRecord1);
         utx.commit();
-        System.out.printf("*****  proj1=%s\n", proj1);
-        assertNotNull( proj1.getId());
-        assertNotNull( proj1.getHeadline()) ;
-        assertNotNull( proj1.getDescription()) ;
-        assertFalse( proj1.getTasks().isEmpty());
-        assertThat( proj1.getTasks().size(), is(N));
-        for ( Task task: proj1.getTasks()) {
-            assertNotNull( task.getId());
-            assertThat( task.getCaseRecord().getId(), is( proj1.getId()) );
+        System.out.printf("*****  caseRecord1=%s\n", caseRecord1);
+
+        assertThat(caseRecord1.getId(), is(notNullValue()));
+        assertThat(caseRecord1.getTasks().isEmpty(), is(false));
+        assertThat( caseRecord1.getTasks().size(), is(N));
+        for ( Task task: caseRecord1.getTasks()) {
+            assertThat( task.getId(), is(notNullValue()));
+            assertThat( task.getCaseRecord().getId(), is( caseRecord1.getId()) );
         }
     }
 }
