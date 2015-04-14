@@ -87,7 +87,7 @@ public class DemoDataConfigurator {
         caseRecord1.addTask( new Task("List of business fraud index", q, false ));
         caseRecord1.addTask( new Task("Review case", r, false ));
 
-        caseRecordTaskService.saveProject(caseRecord1);
+        caseRecordTaskService.saveCaseRecord(caseRecord1);
 
     }
 }

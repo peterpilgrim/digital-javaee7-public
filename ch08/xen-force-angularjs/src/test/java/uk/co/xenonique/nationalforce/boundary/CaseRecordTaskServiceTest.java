@@ -76,7 +76,7 @@ public class CaseRecordTaskServiceTest {
     @Test
     public void save_CaseRecord() {
         final CaseRecord case1 = createCaseRecordAndTasks(3);
-        service.saveProject(case1);
+        service.saveCaseRecord(case1);
         System.out.printf("*****  case1=%s\n", case1);
         assertNotNull(case1.getId());
         assertFalse(case1.getTasks().isEmpty());
@@ -90,17 +90,17 @@ public class CaseRecordTaskServiceTest {
     @Test
     public void update_CaseRecord() {
         final CaseRecord case1 = createCaseRecordAndTasks(3);
-        service.saveProject(case1);
+        service.saveCaseRecord(case1);
         case1.setFirstName("Firebrand");
         case1.getTasks().get(1).setName("Get skimmed milk");
-        service.updateProject(case1);
+        service.updateCaseRecord(case1);
         System.out.printf("*****  case1=%s\n", case1);
     }
 
     @Test
     public void find_CaseRecord_by_CaseId() {
         final CaseRecord case1 = createCaseRecordAndTasks(3);
-        service.saveProject(case1);
+        service.saveCaseRecord(case1);
 
         List<CaseRecord> caseRecords = service.findCaseById( case1.getId());
         System.out.printf("*****  caseRecords=%s\n", caseRecords);
@@ -116,10 +116,10 @@ public class CaseRecordTaskServiceTest {
         final CaseRecord case2 = createCaseRecordAndTasks("M", "Ben", "Middleton", 2);
         final CaseRecord case3 = createCaseRecordAndTasks("M", "Zachari", "Graceson", 4);
         final CaseRecord case4 = createCaseRecordAndTasks("F", "Caroline", "Graceson", 1);
-        service.saveProject(case1);
-        service.saveProject(case2);
-        service.saveProject(case3);
-        service.saveProject(case4);
+        service.saveCaseRecord(case1);
+        service.saveCaseRecord(case2);
+        service.saveCaseRecord(case3);
+        service.saveCaseRecord(case4);
 
         List<CaseRecord> caseRecords = service.findAllCases();
         System.out.printf("*****  caseRecords=%s\n", caseRecords);
@@ -149,7 +149,7 @@ public class CaseRecordTaskServiceTest {
     @Test
     public void find_Tasks_by_TaskId() {
         final CaseRecord case1 = createCaseRecordAndTasks(3);
-        service.saveProject(case1);
+        service.saveCaseRecord(case1);
 
         final List<Task> tasks = service.findTaskByTaskId(case1.getTasks().get(1).getId());
         System.out.printf("*****  case1=%s\n", case1);
@@ -161,7 +161,7 @@ public class CaseRecordTaskServiceTest {
     @Test
     public void find_Tasks_by_CaseRecordId() {
         final CaseRecord case1 = createCaseRecordAndTasks(5);
-        service.saveProject(case1);
+        service.saveCaseRecord(case1);
 
         final List<Task> tasks = service.findTasksByCaseId(case1.getId());
         System.out.printf("*****  case1=%s\n", case1);
@@ -175,8 +175,8 @@ public class CaseRecordTaskServiceTest {
     @Test
     public void save_then_remove_CaseRecord() {
         final CaseRecord case1 = createCaseRecordAndTasks(3);
-        service.saveProject(case1);
-        service.removeProject(case1);
+        service.saveCaseRecord(case1);
+        service.removeCaseRecord(case1);
         System.out.printf("*****  case1=%s\n", case1);
     }
 
@@ -226,7 +226,7 @@ public class CaseRecordTaskServiceTest {
         caseRecord1.addTask(new Task("Talk to the organizer", DemoDataConfigurator.getFutureRandomDate(), false));
         caseRecord1.addTask(new Task("Prepare demos", DemoDataConfigurator.getFutureRandomDate(), false));
 
-        service.saveProject(caseRecord1);
+        service.saveCaseRecord(caseRecord1);
 
         final CaseRecord caseRecord2 = FixtureUtils.createCaseRecordAndTasks("M", "Steven", "Weinberg", 0);
         caseRecord2.setSex("F");
@@ -237,7 +237,7 @@ public class CaseRecordTaskServiceTest {
         caseRecord2.addTask( new Task("Buy birthday card", DemoDataConfigurator.getFutureRandomDate(), true ));
         caseRecord2.addTask(new Task("Organize the party", DemoDataConfigurator.getFutureRandomDate(), false));
 
-        service.saveProject(caseRecord2);
+        service.saveCaseRecord(caseRecord2);
 
         final Date x = DemoDataConfigurator.getFutureRandomDate(new Date(), 4, 0);
         final Date y = DemoDataConfigurator.getFutureRandomDate(x, 8, 0);
@@ -249,7 +249,7 @@ public class CaseRecordTaskServiceTest {
         caseRecord3.addTask( new Task("Write the report", z, false ));
         caseRecord3.addTask( new Task("Furnish report to the boss", DemoDataConfigurator.getFutureRandomDate(z, 7, 0), false ));
 
-        service.saveProject(caseRecord3);
+        service.saveCaseRecord(caseRecord3);
     }
 
 }

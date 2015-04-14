@@ -114,7 +114,7 @@ public class CaseWorkerRESTServerEndpoint {
             }
         }
 
-        service.saveProject(caseRecord);
+        service.saveCaseRecord(caseRecord);
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
             jsonGeneratorFactory.createGenerator(swriter);
@@ -151,7 +151,7 @@ public class CaseWorkerRESTServerEndpoint {
         if ( json.containsKey("currentState"))
             caseRecord.setCurrentState(BasicStateMachine.retrieveCurrentState(json.getString("currentState")).toString());
 
-        service.saveProject(caseRecord);
+        service.saveCaseRecord(caseRecord);
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
@@ -188,7 +188,7 @@ public class CaseWorkerRESTServerEndpoint {
                 ( taskObject.containsKey("completed")) ?
                     taskObject.getBoolean("completed") : false );
         caseRecord.addTask(task);
-        service.saveProject(caseRecord);
+        service.saveCaseRecord(caseRecord);
         final StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
@@ -228,7 +228,7 @@ public class CaseWorkerRESTServerEndpoint {
                         taskObject.getBoolean("completed") : false );
             }
         }
-        service.saveProject(caseRecord);
+        service.saveCaseRecord(caseRecord);
 
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
@@ -267,7 +267,7 @@ public class CaseWorkerRESTServerEndpoint {
                 break;
             }
         }
-        service.saveProject(caseRecord);
+        service.saveCaseRecord(caseRecord);
 
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
@@ -306,7 +306,7 @@ public class CaseWorkerRESTServerEndpoint {
                 break;
             }
         }
-        service.saveProject(caseRecord);
+        service.saveCaseRecord(caseRecord);
 
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =

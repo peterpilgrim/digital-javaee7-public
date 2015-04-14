@@ -65,9 +65,11 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Arquillian.class)
 public class CaseRecordRESTServerEndpointTest {
 
+    public final static String REST_APPLICATION_URL = "http://localhost:8181/xen-national-force/rest";
+
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class)
+        WebArchive war = ShrinkWrap.create(WebArchive.class,"xen-national-force.war")
                 .addPackage(CaseRecord.class.getPackage())
                 .addPackage(CaseWorkerRESTServerEndpoint.class.getPackage())
                 .addPackage(CaseRecordTaskService.class.getPackage())
@@ -91,7 +93,7 @@ public class CaseRecordRESTServerEndpointTest {
     @Test
     public void invoke_POST_create_CaseRecord_with_Tasks() throws Exception {
 
-        JsonObject input = bf.createObjectBuilder()
+        final JsonObject input = bf.createObjectBuilder()
             .add("sex", "F")
             .add("firstName", "Caroline Isabella")
             .add("lastName", "Hamerhof")
@@ -118,81 +120,77 @@ public class CaseRecordRESTServerEndpointTest {
             )
             .build();
 
-        WebTarget target = ClientBuilder.newClient()
-            .target("http://localhost:8181/xen-national-force/rest/caseworker/item");
+        final WebTarget target = ClientBuilder.newClient()
+            .target(REST_APPLICATION_URL+"/caseworker/item");
 
-        Response response = target.request().post(
-            Entity.entity(
-                input, APPLICATION_JSON_TYPE) );
+        final Response response = target.request().post(Entity.entity(input, APPLICATION_JSON_TYPE) );
         assertThat(response.getStatus(), is(200));
 
-        String text = response.readEntity( String.class );
+        final String text = response.readEntity( String.class );
         System.out.printf(">>------ text = %s\n", text);
         assertNotNull(text);
     }
 
     @Test
     public void invoke_GET_retrieve_CaseRecord_by_CaseId() throws Exception {
-        CaseRecord proj1 = createCaseRecordAndTasks(3);
-        service.saveProject(proj1);
+        CaseRecord case1 = createCaseRecordAndTasks(3);
+        service.saveCaseRecord(case1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllCases();
+        final List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
-        WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId());
-        Response response = target.request().get();
+        final WebTarget target = ClientBuilder.newClient()
+                .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId());
+        final Response response = target.request().get();
         assertThat(response.getStatus(), is(200));
-        String text = response.readEntity( String.class );
+        final String text = response.readEntity( String.class );
         System.out.printf(">>====== text = %s\n", text);
         assertNotNull(text);
     }
 
-
     @Test
     public void invoke_asynchronous_GET_request_demo() throws Exception {
-        CaseRecord proj1 = createCaseRecordAndTasks(3);
-        CaseRecord proj2 = createCaseRecordAndTasks(2);
-        CaseRecord proj3 = createCaseRecordAndTasks(1);
-        service.saveProject(proj1);
-        service.saveProject(proj2);
-        service.saveProject(proj3);
+        final CaseRecord case1 = createCaseRecordAndTasks(3);
+        final CaseRecord case2 = createCaseRecordAndTasks(2);
+        final CaseRecord case3 = createCaseRecordAndTasks(1);
+        service.saveCaseRecord(case1);
+        service.saveCaseRecord(case2);
+        service.saveCaseRecord(case3);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllCases();
-        Thread.sleep(1000);
+        final List<CaseRecord> caseRecords = service.findAllCases();
+        assertThat(caseRecords.isEmpty(), is(false));
+        Thread.sleep(500);
 
-        WebTarget target = ClientBuilder.newClient()
-            .target("http://localhost:8181/xen-national-force/rest/caseworker/list");
-        Future<Response> future =
-                target.request().async().get();
+        final WebTarget target = ClientBuilder.newClient().target(REST_APPLICATION_URL + "/caseworker/list");
+        final Future<Response> future = target.request().async().get();
         assertNotNull(future);
-        Response response = future.get(3, TimeUnit.SECONDS );
+        final Response response = future.get(2, TimeUnit.SECONDS );
         assertThat(response.getStatus(), is(200));
-        String text = response.readEntity( String.class );
+        final String text = response.readEntity( String.class );
         System.out.printf(">>====== text = %s\n", text);
         assertNotNull(text);
     }
 
     @Test
     public void invoke_POST_add_new_Task_to_CaseRecord() throws Exception {
-        CaseRecord proj1 = createCaseRecordAndTasks(1);
-        service.saveProject(proj1);
+        final CaseRecord case1 = createCaseRecordAndTasks(1);
+        service.saveCaseRecord(case1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllCases();
-        Thread.sleep(1000);
+        final List<CaseRecord> caseRecords = service.findAllCases();
+        Thread.sleep(500);
 
-        JsonObject input = bf.createObjectBuilder()
+        final JsonObject input = bf.createObjectBuilder()
             .add("name", "Digital Holographic-SLR Camera")
             .add("targetDate", "16-January-2018")
             .add("completed", JsonValue.FALSE)
             .build();
 
-        WebTarget target = ClientBuilder.newClient()
-            .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId() + "/task");
-        Response response = target.request().post(
+        final WebTarget target = ClientBuilder.newClient()
+            .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId() + "/task");
+        final Response response = target.request().post(
             Entity.entity(
             input, APPLICATION_JSON_TYPE) );
         assertThat(response.getStatus(), is(200));
@@ -203,11 +201,11 @@ public class CaseRecordRESTServerEndpointTest {
 
     @Test
     public void invoke_PUT_update_Task_on_CaseRecord() throws Exception {
-        CaseRecord proj1 = createCaseRecordAndTasks(0);
-        service.saveProject(proj1);
+        final CaseRecord case1 = createCaseRecordAndTasks(0);
+        service.saveCaseRecord(case1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllCases();
+        final List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
         final Calendar cal = Calendar.getInstance();
@@ -226,7 +224,7 @@ public class CaseRecordRESTServerEndpointTest {
                 .build();
 
         WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/"+proj1.getId()+"/task");
+                .target(REST_APPLICATION_URL+"/caseworker/item/"+case1.getId()+"/task");
         Response response = target.request().post(
                 Entity.entity(
                         input1, APPLICATION_JSON_TYPE));
@@ -251,7 +249,7 @@ public class CaseRecordRESTServerEndpointTest {
                 .build();
 
         target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId() + "/task/" + taskId1);
+                .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId() + "/task/" + taskId1);
         response = target.request().put(
                 Entity.entity(
                         input2, APPLICATION_JSON_TYPE));
@@ -271,56 +269,56 @@ public class CaseRecordRESTServerEndpointTest {
 
     @Test
     public void invoke_DELETE_remove_Task_from_CaseRecord() throws Exception {
-        CaseRecord proj1 = createCaseRecordAndTasks(0);
-        service.saveProject(proj1);
+        final CaseRecord case1 = createCaseRecordAndTasks(0);
+        service.saveCaseRecord(case1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllCases();
+        final List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
-        JsonObject input1 = bf.createObjectBuilder()
+        final JsonObject input1 = bf.createObjectBuilder()
                 .add("name", "Make money now")
                 .add("targetDate", "14-Jul-2015")
                 .add("completed", JsonValue.FALSE)
                 .build();
 
         WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/"+proj1.getId()+"/task");
+                .target(REST_APPLICATION_URL+"/caseworker/item/"+case1.getId()+"/task");
         Response response = target.request().post(
                 Entity.entity(
                         input1, APPLICATION_JSON_TYPE));
         assertNotNull(response);
-        JsonObject output1 = response.readEntity( JsonObject.class );
+        final JsonObject output1 = response.readEntity( JsonObject.class );
         System.out.printf(">>====== output1 = %s\n", output1);
         assertNotNull(output1);
 
-        JsonObject json = output1.getJsonArray("tasks").getJsonObject(0);
-        int taskId = json.getInt("id");
+        final JsonObject json = output1.getJsonArray("tasks").getJsonObject(0);
+        final int taskId = json.getInt("id");
         assertTrue( taskId > 0 );
         assertThat( "Make money now", is(json.getString("name")));
         assertThat( "2015-07-14", is(json.getString("targetDate")));
         assertFalse( json.getBoolean("completed")) ;
 
         target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId() + "/task/" + taskId);
+                .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId() + "/task/" + taskId);
         response = target.request().delete();
         assertThat( response.getStatus(), is(200));
 
-        JsonObject output2 = response.readEntity( JsonObject.class );
+        final JsonObject output2 = response.readEntity( JsonObject.class );
         assertThat( output2.getJsonArray("tasks").size(), is(0));
     }
 
     @Test
     public void invoke_PUT_CaseRecord() throws Exception {
-        CaseRecord proj1 = createCaseRecordAndTasks(1);
-        service.saveProject(proj1);
+        final CaseRecord case1 = createCaseRecordAndTasks(1);
+        service.saveCaseRecord(case1);
 
         // Force a flush to the database?!
-        List<CaseRecord> caseRecords = service.findAllCases();
-        Thread.sleep(1000);
+        final List<CaseRecord> caseRecords = service.findAllCases();
+        Thread.sleep(500);
 
-        JsonObject input1 = bf.createObjectBuilder()
-                .add("id", proj1.getId())
+        final JsonObject input1 = bf.createObjectBuilder()
+                .add("id", case1.getId())
                 .add("sex", "M")
                 .add("firstName", "Christopher Charles")
                 .add("lastName", "Nozi Ngomo")
@@ -332,14 +330,14 @@ public class CaseRecordRESTServerEndpointTest {
                 /* We don't need the Task JSON object here */
                 .build();
 
-        WebTarget target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xen-national-force/rest/caseworker/item/" + proj1.getId());
-        Response response = target.request().put(
+        final WebTarget target = ClientBuilder.newClient()
+                .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId());
+        final Response response = target.request().put(
                 Entity.entity(
                         input1, APPLICATION_JSON_TYPE));
         assertThat(response.getStatus(), is(200));
 
-        JsonObject output1 = response.readEntity(JsonObject.class);
+        final JsonObject output1 = response.readEntity(JsonObject.class);
         assertThat( "M", is(output1.getString("sex")));
         assertThat( "Christopher Charles", is(output1.getString("firstName")));
         assertThat( "Nozi Ngomo", is(output1.getString("lastName")));

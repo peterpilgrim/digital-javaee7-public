@@ -38,7 +38,7 @@ public class CaseRecordTaskService {
     @PersistenceContext(unitName = "XenNationalForce")
     private EntityManager entityManager;
 
-    public void saveProject( CaseRecord caseRecord) {
+    public void saveCaseRecord(CaseRecord caseRecord) {
         try {
             entityManager.persist(caseRecord);
         }
@@ -47,12 +47,12 @@ public class CaseRecordTaskService {
         }
     }
 
-    public void updateProject( CaseRecord caseRecord) {
+    public void updateCaseRecord(CaseRecord caseRecord) {
         final CaseRecord caseRecordToBeUpdated = entityManager.merge(caseRecord);
         entityManager.persist(caseRecordToBeUpdated);
     }
 
-    public void removeProject( CaseRecord caseRecord) {
+    public void removeCaseRecord(CaseRecord caseRecord) {
         final CaseRecord caseRecordToBeRemoved = entityManager.merge(caseRecord);
         entityManager.remove(caseRecordToBeRemoved);
     }
