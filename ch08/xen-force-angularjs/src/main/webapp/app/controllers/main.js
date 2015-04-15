@@ -1,4 +1,4 @@
-var myApp = angular.module('app', ['ui.bootstrap', 'masterview','newproject','newtask']);
+var myApp = angular.module('app', ['ui.bootstrap', 'masterview','newcaserecord','newtask']);
 
 myApp.factory('UpdateTaskStatusFactory', function( $log ) {
     var service = {};
@@ -6,7 +6,7 @@ myApp.factory('UpdateTaskStatusFactory', function( $log ) {
     service.connect = function() {
         if (service.ws) { return; }
 
-        var ws = new WebSocket("ws://localhost:8080/xentracker/update-task-status");
+        var ws = new WebSocket("ws://localhost:8080/xen-national-force/update-task-status");
 
         ws.onopen = function() {
             console.log("WebSocket connect was opened");
@@ -41,27 +41,25 @@ myApp.factory('UpdateTaskStatusFactory', function( $log ) {
 
 
 
-myApp.controller('ProjectController', function ($scope, $http, $log, UpdateTaskStatusFactory ) {
+myApp.controller('CaseRecordController', function ($scope, $http, $log, UpdateTaskStatusFactory ) {
     var self = this;
-    $scope.projects = [
-        {name: "Digital Moves"},
-        {name: "Counsellor"},
-        {name: "Offspring"}
+    $scope.caseRecords = [
+        {sex: "F", firstName: "Angela", lastName: "Devonshire", dateOfBirth: "1982-04-15", expirationDate: "2018-11-21", country: "Australia", passportNo: "123456789012", currentState: "Start"},
     ];
 
-    $scope.getProjects = function () {
-        $http.get('rest/projects/list').success(function(data) {
+    $scope.getCaseRecords = function () {
+        $http.get('rest/caseworker/list').success(function(data) {
             console.log("data="+data);
-            $scope.projects = data;
+            $scope.caseRecords = data;
         });
     }
 
     $scope.$on('handleBroadcastMessage', function() {
-        $scope.getProjects();
+        $scope.getCaseRecords();
     })
 
     // Retrieve the initial list of projects
-    $scope.getProjects();
+    $scope.getCaseRecords();
 
 //    UpdateTaskStatusFactory.subscribe(function(message) {
 //        $scope.messages.push(message);
@@ -77,7 +75,7 @@ myApp.controller('ProjectController', function ($scope, $http, $log, UpdateTaskS
     }
 
     $scope.updateProjectTaskCompleted = function( task ) {
-        var message = { 'projectId': task.projectId, 'taskId': task.id, 'completed': task.completed }
+        var message = { 'caseRecordId': task.caseRecordId, 'taskId': task.id, 'completed': task.completed }
         $scope.connect()
         var jsonMessage = JSON.stringify(message)
         console.log("jsonMessage = "+jsonMessage)

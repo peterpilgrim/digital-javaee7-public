@@ -12,11 +12,11 @@ newtask.controller('NewTaskModalController', function($scope, $modal, $http, $lo
 
     $scope.selected = false;
     $scope.task = {
-        id: 0, name: '', targetDate: null, completed: false, projectId: 0
+        id: 0, name: '', targetDate: null, completed: false, caseRecordId: 0
     };
     $scope.returnedData = null;
 
-    $scope.openNewTaskDialog = function(projectId) {
+    $scope.openNewTaskDialog = function(caseRecordId) {
 
         var modalInstance = $modal.open({
             templateUrl: 'newTaskContent.html',
@@ -28,11 +28,11 @@ newtask.controller('NewTaskModalController', function($scope, $modal, $http, $lo
             }
         });
 
-        $log.info('>>>> projectId='+projectId);
+        $log.info('>>>> caseRecordId='+caseRecordId);
 
         modalInstance.result.then(function (data) {
             $scope.selected = data;
-            $http.post('rest/projects/item/'+projectId+'/task', $scope.task).success(function(data) {
+            $http.post('rest/caseworker/item/'+caseRecordId+'/task', $scope.task).success(function(data) {
                 $log.info("data="+data);
                 $scope.returnedData = data;
                 sharedService.setBroadcastMessage("newTask");
@@ -52,7 +52,7 @@ newtask.controller('NewTaskModalController', function($scope, $modal, $http, $lo
         $scope.task = {
             id: taskItem.id, name: taskItem.name,
             targetDate: taskItem.targetDate, completed: taskItem.completed,
-            projectId: taskItem.projectId
+            caseRecordId: taskItem.caseRecordId
         };
 
         var modalInstance = $modal.open({
@@ -67,7 +67,7 @@ newtask.controller('NewTaskModalController', function($scope, $modal, $http, $lo
 
         modalInstance.result.then(function (data) {
             $scope.selected = data;
-            $http.put('rest/projects/item/'+$scope.task.projectId+'/task/'+$scope.task.id, $scope.task).success(function(data) {
+            $http.put('rest/caseworker/item/'+$scope.task.caseRecordId+'/task/'+$scope.task.id, $scope.task).success(function(data) {
                 $log.info("data="+data);
                 $scope.returnedData = data;
                 sharedService.setBroadcastMessage("editTask");
@@ -95,8 +95,8 @@ newtask.controller('NewTaskModalController', function($scope, $modal, $http, $lo
             $scope.selected = data;
             // generate a 415 Unsupported Media Type
             // Using a SIDE EFFECT GET instead! ;-(
-            $http.delete('rest/projects/item/'+taskItem.projectId+'/task/'+taskItem.id).success(function (data) {
-//            $http.get('rest/projects/item/'+taskItem.projectId+'/task/'+taskItem.id+'/delete', taskItem).success(function(data) {
+            $http.delete('rest/caseworker/item/'+taskItem.caseRecordId+'/task/'+taskItem.id).success(function (data) {
+//            $http.get('rest/caseworker/item/'+taskItem.caseRecordId+'/task/'+taskItem.id+'/delete', taskItem).success(function(data) {
                 $log.info("data="+data);
                 $scope.returnedData = data;
                 sharedService.setBroadcastMessage("deleteTask");

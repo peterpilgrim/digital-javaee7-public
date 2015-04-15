@@ -148,8 +148,8 @@ public class CaseWorkerRESTServerEndpoint {
         caseRecord.setPassportNo(json.getString("passportNo"));
         caseRecord.setDateOfBirth(CaseRecordHelper.FMT2.parse(json.getString("dateOfBirth")));
         caseRecord.setExpirationDate(CaseRecordHelper.FMT2.parse(json.getString("expirationDate")));
-        if ( json.containsKey("currentState"))
-            caseRecord.setCurrentState(BasicStateMachine.retrieveCurrentState(json.getString("currentState")).toString());
+        caseRecord.setCurrentState(BasicStateMachine.retrieveCurrentState(
+                json.getString("currentState", BasicStateMachine.FSM_START.toString())).toString());
 
         service.saveCaseRecord(caseRecord);
         final StringWriter swriter = new StringWriter();
