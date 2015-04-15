@@ -23,6 +23,9 @@ public class DemoDataConfigurator {
     @EJB
     CaseRecordTaskService caseRecordTaskService;
 
+    @EJB
+    PopulationHelper populationHelper;
+
     @Resource
     TimerService timerService;
 
@@ -65,6 +68,8 @@ public class DemoDataConfigurator {
         System.out.printf("***** %s.createInitialProjectData() caseRecordTaskService=%s, initialized=%s, timer=%s\n",
                 getClass().getSimpleName(), caseRecordTaskService, initialized, timer);
 
+        populationHelper.saveCountries();
+
         final Date dateOfBirth = getRandomDateOfBirth();
         final Date expirationDate = getFutureRandomDate( new Date(), 31, 10 );
 
@@ -84,8 +89,8 @@ public class DemoDataConfigurator {
 
         caseRecord1.addTask( new Task("Allocate", getFutureRandomDate(new Date(), 10, 0), true ));
         caseRecord1.addTask( new Task("Criminal index check", p, false ));
-        caseRecord1.addTask( new Task("List of business fraud index", q, false ));
-        caseRecord1.addTask( new Task("Review case", r, false ));
+        caseRecord1.addTask( new Task("List of business fraud index", q, false));
+        caseRecord1.addTask(new Task("Review case", r, false));
 
         caseRecordTaskService.saveCaseRecord(caseRecord1);
 
