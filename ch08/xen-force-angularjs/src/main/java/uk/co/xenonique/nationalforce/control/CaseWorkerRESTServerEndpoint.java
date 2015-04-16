@@ -198,24 +198,24 @@ public class CaseWorkerRESTServerEndpoint {
     }
 
     @PUT
-    @Path("/item/{caseId}/task/{taskId}")
+    @Path("/item/{caseRecordId}/task/{taskId}")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
     public String updateTaskOnCase(
-            @PathParam("caseId") int caseId,
+            @PathParam("caseRecordId") int caseRecordId,
             @PathParam("taskId") int taskId,
             JsonObject taskObject )
             throws Exception
     {
-        System.out.printf("updateTaskOnCase( %d, %d, %s )\n", caseId, taskId, taskObject);
-        if (caseId < 1)
+        System.out.printf("updateTaskOnCase( %d, %d, %s )\n", caseRecordId, taskId, taskObject);
+        if (caseRecordId < 1)
             throw new RuntimeException(
-                    "Invalid caseId:["+caseId+"] supplied");
+                    "Invalid caseRecordId: ["+caseRecordId+"] supplied");
 
-        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
+        final List<CaseRecord> caseRecords = service.findCaseById(caseRecordId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No case record was found with caseId:["+caseId+"]");
+                    "No case record was found with caseRecordId: ["+caseRecordId+"]");
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
@@ -239,26 +239,26 @@ public class CaseWorkerRESTServerEndpoint {
     }
 
     @DELETE
-    @Path("/item/{caseId}/task/{taskId}")
+    @Path("/item/{caseRecordId}/task/{taskId}")
     @Consumes( { APPLICATION_JSON, APPLICATION_XML, TEXT_PLAIN })
     @Produces(APPLICATION_JSON)
     public String removeTaskFromCase(
-            @PathParam("caseId") int caseId,
+            @PathParam("caseRecordId") int caseRecordId,
             @PathParam("taskId") int taskId,
             JsonObject taskObject )
             throws Exception
     {
         // AngularJS requires additional consumption of XML in order to avoid 415 Unsupported Media Type
         // See this http://stackoverflow.com/questions/17379447/angularjs-and-jersey-rest-delete-operation-fails-with-415-status-code
-        System.out.printf("removeTaskFromCase( %d, %d, %s )\n", caseId, taskId, taskObject);
-        if (caseId < 1)
+        System.out.printf("removeTaskFromCase( %d, %d, %s )\n", caseRecordId, taskId, taskObject);
+        if (caseRecordId < 1)
             throw new RuntimeException(
-                    "Invalid caseId:["+caseId+"] supplied");
+                    "Invalid caseRecordId:["+caseRecordId+"] supplied");
 
-        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
+        final List<CaseRecord> caseRecords = service.findCaseById(caseRecordId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
-                    "No case record was found with caseId:["+caseId+"]");
+                    "No case record was found with caseRecordId:["+caseRecordId+"]");
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);

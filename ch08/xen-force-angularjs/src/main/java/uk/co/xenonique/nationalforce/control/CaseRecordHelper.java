@@ -57,7 +57,7 @@ public class CaseRecordHelper {
                     task.getTargetDate() == null ? "" :
                             FMT2.format(task.getTargetDate()))
             .write("completed", task.isCompleted())
-            .write("projectId",
+            .write("caseRecordId",
                     task.getCaseRecord() != null ? task.getCaseRecord().getId() : 0 )
             .writeEnd();
         return generator;
