@@ -178,8 +178,8 @@
 
 	<div id="mainContent">
 
-		<div class="promoSignpost" >
-			<div class="promoMessage" >
+		<div class="promo-signpost" >
+			<div class="promo-message" >
 				<img class="pull-right" src="images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" width="100" />
 				<h2> Xen Nation Force </h2>
 				<p>
@@ -191,7 +191,7 @@
 		</div>
 
 
-		<div class="projectView" >
+		<div class="case-record-view" >
             <p>
                 If you see nothing here, please <em>refresh</em> this page view. Thank you.
             </p>
@@ -201,7 +201,7 @@
                 <div ng-show="selected">Selection from a modal: {{ selected }}</div>
 			</div>
 
-            <h2 class="projectHeadline">Case Records</h2>
+            <h2 class="case-record-headline">Case Records</h2>
 
             <table class="table table-bordered" >
                 <tr>
@@ -228,16 +228,15 @@
                     <td>{{caseRecord.expirationDate}}</td>
                     <td>{{caseRecord.currentState}}</td>
                     <td>
-                        <div class="tasksView"  >
-                            <hr class="project-divider">
+                        <div class="case-record-task-view">
+                            <hr class="caseworker-view-divider">
 
-
-                            <h2 class="projectHeadline" > {{caseRecord.lastName}}, {{caseRecord.firstName}} </h2>
+                            <h2 class="case-record-headline" > {{caseRecord.lastName}}, {{caseRecord.firstName}} </h2>
                             <h3> {{caseRecord.sex}} </h3>
                             <p> {{caseRecord.country}} </p>
                             <div ng-controller="NewCaseRecordModalController">
                                 <button class="btn btn-info"
-                                        ng-click="openEditCaseRecordDialog($parent.caseRecord)">Edit Project Details</button>
+                                        ng-click="openEditCaseRecordDialog($parent.caseRecord)">Edit Case Record Details</button>
                             </div>
                             <br />
 
@@ -248,7 +247,7 @@
                                 </p>
                             </div>
 
-                            <table class="taskTable">
+                            <table class="case-record-task-table">
                                 <tr>
                                     <td>
                                         Item
