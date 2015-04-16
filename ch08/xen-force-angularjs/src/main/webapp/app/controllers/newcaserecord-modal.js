@@ -24,7 +24,7 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
             $http.post('rest/caseworker/item', $scope.caseRecord).success(function(data) {
                 $log.info("data="+data);
                 $scope.returnedData = data;
-                sharedService.setBroadcastMessage("newCaserecord");
+                sharedService.setBroadcastMessage("newCaseRecord");
             });
 
         }, function () {

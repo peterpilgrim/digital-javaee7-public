@@ -1,4 +1,4 @@
-var myApp = angular.module('app', ['ui.bootstrap', 'masterview','newcaserecord','newtask']);
+var myApp = angular.module('app', ['ui.bootstrap', 'newcaserecord','newtask']);
 
 myApp.factory('UpdateTaskStatusFactory', function( $log ) {
     var service = {};
@@ -58,7 +58,7 @@ myApp.controller('CaseRecordController', function ($scope, $http, $log, UpdateTa
         $scope.getCaseRecords();
     })
 
-    // Retrieve the initial list of projects
+    // Retrieve the initial list of case records
     $scope.getCaseRecords();
 
 //    UpdateTaskStatusFactory.subscribe(function(message) {
@@ -82,14 +82,3 @@ myApp.controller('CaseRecordController', function ($scope, $http, $log, UpdateTa
         $scope.send(jsonMessage)
     }
 });
-
-angular.module('masterview', [])
-    .controller('car', function ($log) {
-        return {
-            foo: function() {
-                console.log('Call the foo() method');
-            }
-        };
-
-    });
-

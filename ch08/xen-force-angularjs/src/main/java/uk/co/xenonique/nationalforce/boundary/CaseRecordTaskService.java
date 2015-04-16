@@ -19,6 +19,7 @@
 
 package uk.co.xenonique.nationalforce.boundary;
 
+import uk.co.xenonique.nationalforce.DebugConstraintViolationHelpers;
 import uk.co.xenonique.nationalforce.entity.CaseRecord;
 import uk.co.xenonique.nationalforce.entity.Task;
 
@@ -39,12 +40,7 @@ public class CaseRecordTaskService {
     private EntityManager entityManager;
 
     public void saveCaseRecord(CaseRecord caseRecord) {
-        try {
-            entityManager.persist(caseRecord);
-        }
-        catch (Throwable t) {
-            throw new RuntimeException(t);
-        }
+        DebugConstraintViolationHelpers.execute( ()-> entityManager.persist(caseRecord) );
     }
 
     public void updateCaseRecord(CaseRecord caseRecord) {

@@ -38,7 +38,7 @@ newtask.controller('NewTaskModalController', function($scope, $modal, $http, $lo
                 sharedService.setBroadcastMessage("newTask");
                 // Reset Task in this scope for better UX affordance.
                 $scope.task = {
-                    id: 0, name: '', targetDate: null, completed: false, projectId: 0
+                    id: 0, name: '', targetDate: null, completed: false, caseRecordId: 0
                 };
             });
 

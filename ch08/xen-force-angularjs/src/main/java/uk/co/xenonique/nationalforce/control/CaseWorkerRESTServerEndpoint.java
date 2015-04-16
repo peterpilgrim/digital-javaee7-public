@@ -151,6 +151,7 @@ public class CaseWorkerRESTServerEndpoint {
         caseRecord.setCurrentState(BasicStateMachine.retrieveCurrentState(
                 json.getString("currentState", BasicStateMachine.FSM_START.toString())).toString());
 
+        System.out.printf("caseRecord=%s\n", caseRecord);
         service.saveCaseRecord(caseRecord);
         final StringWriter swriter = new StringWriter();
         final JsonGenerator generator =
@@ -333,13 +334,11 @@ public class CaseWorkerRESTServerEndpoint {
                         getClass().getSimpleName(), Thread.currentThread(), asyncResponse);
                 final List<CaseRecord> caseRecords = service.findAllCases();
                 final StringWriter swriter = new StringWriter();
-                final JsonGenerator generator
-                        = jsonGeneratorFactory.createGenerator(swriter);
+                final JsonGenerator generator = jsonGeneratorFactory.createGenerator(swriter);
                 try {
                     CaseRecordHelper.generateCaseRecordAsJson(generator, caseRecords).close();
-                    System.out.printf("========>> Sending swriter=[%s]\n", swriter.toString());
-                    final Response response =
-                            Response.ok(swriter.toString()).build();
+                    System.out.printf("========>> caseRecords.size=%d Sending swriter=[%s]\n", caseRecords.size(), swriter.toString());
+                    final Response response = Response.ok(swriter.toString()).build();
                     asyncResponse.resume(response);
                 }
                 catch (Throwable t) {
