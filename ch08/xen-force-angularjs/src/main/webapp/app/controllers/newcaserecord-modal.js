@@ -4,7 +4,9 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
     $log.info("CaseRecord Modal Dialog. Yes!  $modal="+$modal+", $log="+$log);
 
     $scope.selected = false;
-    $scope.caseRecord = {sex: "", firstName: "", lastName: "", country: "", passportNo: "", dateOfBirth: "", expirationDate: "", country: "", currentState: ""};
+    $scope.caseRecord = {
+        sex: "", firstName: "", lastName: "", country: "", passportNo: "", dateOfBirth: "",
+        expirationDate: "", country: "", currentState: "", showTasks: false};
     $scope.returnedData = null;
 
     $scope.open = function () {
@@ -60,6 +62,7 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
             $http.put('rest/caseworker/item/'+$scope.caseRecord.id, $scope.caseRecord).success(function(data) {
                 $log.info("data="+data);
                 $scope.returnedData = data;
+                data.showTasks = false;
                 sharedService.setBroadcastMessage("editCaseRecord");
             });
 
@@ -67,9 +70,14 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
+
+    $scope.showOrHideTasks = function(caseRecord) {
+        caseRecord.showTasks = !caseRecord.showTasks;
+    }
 });
 
 var newCaseRecordModalInstanceController = function ($scope, $modalInstance, caseRecord) {
+    caseRecord.showTasks = false;
     $scope.caseRecord = caseRecord;
 
     $scope.ok = function () {

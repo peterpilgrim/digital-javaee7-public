@@ -231,7 +231,15 @@
 
                 <!-- http://stackoverflow.com/questions/17745802/angularjs-repeating-trs-in-a-table-but-dynamically-adding-more-rows-while-lo -->
                 <tr ng-repeat-start="caseRecord in caseRecords">
-                    <td>{{caseRecord.id}}</td>
+                    <td>
+                        {{caseRecord.id}}
+                        &nbsp;
+                        <div ng-controller="NewCaseRecordModalController" style="display: inline;">
+                            <a class="btn" href="#" ng-click="showOrHideTasks($parent.caseRecord)">
+                                <i class="glyphicon" ng-class="{'glyphicon-minus': caseRecord.showTasks == true, 'glyphicon-minus': caseRecord.showTasks == false }" ></i>
+                            </a>
+                        </div>
+                    </td>
                     <td>{{caseRecord.lastName}}</td>
                     <td>{{caseRecord.firstName}}</td>
                     <td>{{caseRecord.sex}}</td>
@@ -241,7 +249,7 @@
                     <td>{{caseRecord.expirationDate}}</td>
                     <td>{{caseRecord.currentState}}</td>
                 </tr>
-                <tr ng-repeat-end >
+                <tr ng-repeat-end  ng-if="caseRecord.showTasks" >
                     <td colspan="9">
                         <div class="case-record-task-view">
                             <div ng-controller="NewCaseRecordModalController">
