@@ -74,6 +74,13 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
     $scope.showOrHideTasks = function(caseRecord) {
         caseRecord.showTasks = !caseRecord.showTasks;
     }
+
+    $scope.getIconClass = function(caseRecord) {
+        if ( caseRecord.showTasks)
+            return "glyphicon-minus"
+        else
+            return "glyphicon-plus"
+    }
 });
 
 var newCaseRecordModalInstanceController = function ($scope, $modalInstance, caseRecord) {

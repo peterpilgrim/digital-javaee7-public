@@ -82,3 +82,19 @@ myApp.controller('CaseRecordController', function ($scope, $http, $log, UpdateTa
         $scope.send(jsonMessage)
     }
 });
+
+
+myApp.directive('iconExpandCollapseStatus', function() {
+    return function(scope, elem, attrs) {
+        scope.$watch(attrs.statusClass, function(value) {
+            if(value == true) {
+                elem.addClass('glyphicon-minus');
+                elem.removeClass('glyphicon-plus');
+            }
+            else {
+                elem.addClass('glyphicon-plus');
+                elem.removeClass('glyphicon-minus');
+            }
+        }, true);
+    };
+});

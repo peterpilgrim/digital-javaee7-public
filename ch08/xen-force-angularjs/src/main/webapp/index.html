@@ -236,7 +236,8 @@
                         &nbsp;
                         <div ng-controller="NewCaseRecordModalController" style="display: inline;">
                             <a class="btn" href="#" ng-click="showOrHideTasks($parent.caseRecord)">
-                                <i class="glyphicon" ng-class="{'glyphicon-minus': caseRecord.showTasks == true, 'glyphicon-minus': caseRecord.showTasks == false }" ></i>
+                                <!--<i class="glyphicon" icon-expand-collapse-status="caseRecord.showStatus"></i>-->
+                                <i class="glyphicon" ng-class="{true: 'glyphicon-minus', false: 'glyphicon-plus'}[caseRecord.showTasks]" ></i>
                             </a>
                         </div>
                     </td>
