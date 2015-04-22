@@ -89,6 +89,8 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
         // NOTE: Append the current state to the list of next possible states in order to avoid an empty select option
         // See Stack overflow http://stackoverflow.com/questions/12654631/why-does-angularjs-include-an-empty-option-in-select
         $scope.caseRecord.nextStates.push( caseRecordItem.currentState );
+        // Save the current state
+        $scope.saveCurrentState = caseRecordItem.currentState;
 
         var modalInstance = $modal.open({
             templateUrl: 'changeStateCaseRecordContent.html',
@@ -102,12 +104,13 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
 
         modalInstance.result.then(function (data) {
             $scope.selected = data;
-            $http.put('rest/caseworker/state/'+$scope.caseRecord.id, $scope.caseRecord).success(function(data) {
-                $log.info("data="+data);
-                $scope.returnedData = data;
-                sharedService.setBroadcastMessage("editCaseRecord");
-            });
-
+            if ( $scope.saveCurrentState !== $scope.caseRecord.currentState ) {
+                $http.put('rest/caseworker/state/'+$scope.caseRecord.id, $scope.caseRecord).success(function(data) {
+                    $log.info("data="+data);
+                    $scope.returnedData = data;
+                    sharedService.setBroadcastMessage("editCaseRecord");
+                });
+            }
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
