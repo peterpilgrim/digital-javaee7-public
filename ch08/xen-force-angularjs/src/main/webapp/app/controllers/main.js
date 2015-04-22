@@ -1,4 +1,4 @@
-var myApp = angular.module('app', ['ui.bootstrap', 'newcaserecord','newtask']);
+var myApp = angular.module('app', ['ui.bootstrap', 'newcaserecord','newtask', 'sharedService']);
 
 myApp.factory('UpdateTaskStatusFactory', function( $log ) {
     var service = {};
@@ -41,7 +41,7 @@ myApp.factory('UpdateTaskStatusFactory', function( $log ) {
 
 
 
-myApp.controller('CaseRecordController', function ($scope, $http, $log, UpdateTaskStatusFactory ) {
+myApp.controller('CaseRecordController',  function ($scope, $http, $log, UpdateTaskStatusFactory, sharedService ) {
     var self = this;
     $scope.caseRecords = [
         {sex: "F", firstName: "Angela", lastName: "Devonshire", dateOfBirth: "1982-04-15", expirationDate: "2018-11-21", country: "Australia", passportNo: "123456789012", currentState: "Start"},
@@ -55,7 +55,10 @@ myApp.controller('CaseRecordController', function ($scope, $http, $log, UpdateTa
     }
 
     $scope.$on('handleBroadcastMessage', function() {
-        $scope.getCaseRecords();
+        var message = sharedService.getBroadcastMessage();
+        if ( message !== "showTasksCaseRecord")  {
+            $scope.getCaseRecords();
+        }
     })
 
     // Retrieve the initial list of case records

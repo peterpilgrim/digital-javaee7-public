@@ -24,5 +24,9 @@ public class DebugConstraintViolationHelpers {
             }
             throw cve;  // RETHROW
         }
+        catch (Throwable t) {
+            t.printStackTrace(System.err);
+            throw t;
+        }
     }
 }

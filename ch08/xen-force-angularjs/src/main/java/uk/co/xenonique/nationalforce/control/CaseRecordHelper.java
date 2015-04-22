@@ -30,6 +30,10 @@ public class CaseRecordHelper {
     }
 
     public static JsonGenerator writeCaseRecordAsJson(JsonGenerator generator, CaseRecord caseRecord) {
+
+        BasicStateMachine stateMachine = new BasicStateMachine();
+        stateMachine.setCurrentState(BasicStateMachine.retrieveCurrentState(caseRecord.getCurrentState()));
+
         generator.writeStartObject()
             .write("id", caseRecord.getId())
             .write("firstName", caseRecord.getFirstName())
@@ -40,6 +44,13 @@ public class CaseRecordHelper {
             .write("dateOfBirth", FMT2.format(caseRecord.getDateOfBirth()))
             .write("expirationDate", FMT2.format(caseRecord.getExpirationDate()))
             .write("currentState", caseRecord.getCurrentState().toString())
+            .write("showTasks", caseRecord.isShowTasks())
+            .writeStartArray("nextStates");
+        for ( CaseState state: stateMachine.getProbableNestStates()) {
+            generator.write( state.toString() );
+        }
+        generator
+            .writeEnd()
             .writeStartArray("tasks");
 
         for ( Task task: caseRecord.getTasks()) {

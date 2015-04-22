@@ -45,7 +45,8 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
             country: caseRecordItem.country,
             passportNo: caseRecordItem.passportNo,
             expirationDate: caseRecordItem.expirationDate,
-            currentState: caseRecordItem.currentState
+            currentState: caseRecordItem.currentState,
+            showTasks: caseRecordItem.showTasks
         };
         var modalInstance = $modal.open({
             templateUrl: 'editCaseRecordContent.html',
@@ -62,7 +63,48 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
             $http.put('rest/caseworker/item/'+$scope.caseRecord.id, $scope.caseRecord).success(function(data) {
                 $log.info("data="+data);
                 $scope.returnedData = data;
-                data.showTasks = false;
+                sharedService.setBroadcastMessage("editCaseRecord");
+            });
+
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+
+    $scope.changeStateCaseRecordDialog = function (caseRecordItem) {
+        // Deep copy of the caseRecord!
+        $scope.caseRecord = {
+            id: caseRecordItem.id,
+            firstName: caseRecordItem.firstName,
+            lastName: caseRecordItem.lastName,
+            dateOfBirth: caseRecordItem.dateOfBirth,
+            country: caseRecordItem.country,
+            passportNo: caseRecordItem.passportNo,
+            currentState: caseRecordItem.currentState,
+            nextStates: caseRecordItem.nextStates,
+            showTask: caseRecordItem.showTasks
+        };
+
+        // NOTE: Append the current state to the list of next possible states in order to avoid an empty select option
+        // See Stack overflow http://stackoverflow.com/questions/12654631/why-does-angularjs-include-an-empty-option-in-select
+        $scope.caseRecord.nextStates.push( caseRecordItem.currentState );
+
+        var modalInstance = $modal.open({
+            templateUrl: 'changeStateCaseRecordContent.html',
+            controller: moveStateRecordModalInstanceController,
+            resolve: {
+                caseRecord: function () {
+                    return $scope.caseRecord;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (data) {
+            $scope.selected = data;
+            $http.put('rest/caseworker/state/'+$scope.caseRecord.id, $scope.caseRecord).success(function(data) {
+                $log.info("data="+data);
+                $scope.returnedData = data;
                 sharedService.setBroadcastMessage("editCaseRecord");
             });
 
@@ -73,6 +115,10 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
 
     $scope.showOrHideTasks = function(caseRecord) {
         caseRecord.showTasks = !caseRecord.showTasks;
+        $http.put('rest/caseworker/showtasks/'+caseRecord.id, caseRecord).success(function(data) {
+            $log.info("data="+data);
+            sharedService.setBroadcastMessage("showTasksCaseRecord");
+        });
     }
 
     $scope.getIconClass = function(caseRecord) {
@@ -109,3 +155,15 @@ var editCaseRecordModalInstanceController = function ($scope, $modalInstance, ca
     };
 };
 
+
+var moveStateRecordModalInstanceController = function ($scope, $modalInstance, caseRecord) {
+    $scope.caseRecord = caseRecord;
+
+    $scope.ok = function () {
+        $modalInstance.close(true);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+};

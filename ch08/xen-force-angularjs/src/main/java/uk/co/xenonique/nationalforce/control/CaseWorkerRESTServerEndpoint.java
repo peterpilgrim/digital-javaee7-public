@@ -98,6 +98,7 @@ public class CaseWorkerRESTServerEndpoint {
         caseRecord.setDateOfBirth(CaseRecordHelper.FMT2.parse(json.getString("dateOfBirth")));
         caseRecord.setExpirationDate(CaseRecordHelper.FMT2.parse(json.getString("expirationDate")));
         caseRecord.setCurrentState(BasicStateMachine.FSM_START.toString());
+        caseRecord.setShowTasks(json.getBoolean("showTasks", false));
 
         JsonArray tasksArray = json.getJsonArray("tasks");
         if ( tasksArray != null ) {
@@ -150,7 +151,71 @@ public class CaseWorkerRESTServerEndpoint {
         caseRecord.setExpirationDate(CaseRecordHelper.FMT2.parse(json.getString("expirationDate")));
         caseRecord.setCurrentState(BasicStateMachine.retrieveCurrentState(
                 json.getString("currentState", BasicStateMachine.FSM_START.toString())).toString());
+        caseRecord.setShowTasks(json.getBoolean("showTasks", false));
 
+        System.out.printf("caseRecord=%s\n", caseRecord);
+        service.saveCaseRecord(caseRecord);
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator =
+                jsonGeneratorFactory.createGenerator(swriter);
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
+        return swriter.toString();
+    }
+
+    @PUT
+    @Path("/showtasks/{caseId}")
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    public String updateCaseShowTasks(
+            @PathParam("caseId") int caseId,
+            JsonObject json )
+            throws Exception {
+        if (caseId < 1)
+            throw new RuntimeException(
+                    "Invalid caseId:["+caseId+"] supplied");
+
+        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
+        if ( caseRecords.isEmpty() ) {
+            throw new RuntimeException(
+                    "No case record was found with caseId:["+caseId+"]");
+        }
+
+        CaseRecord caseRecord = caseRecords.get(0);
+        caseRecord.setShowTasks(json.getBoolean("showTasks", false));
+        System.out.printf("caseRecord=%s\n", caseRecord);
+        service.saveCaseRecord(caseRecord);
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator =
+                jsonGeneratorFactory.createGenerator(swriter);
+        CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
+        return swriter.toString();
+    }
+
+    @PUT
+    @Path("/state/{caseId}")
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    public String moveNextStateCase(
+            @PathParam("caseId") int caseId,
+            JsonObject json )
+            throws Exception {
+        if (caseId < 1)
+            throw new RuntimeException(
+                    "Invalid caseId:["+caseId+"] supplied");
+
+        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
+        if ( caseRecords.isEmpty() ) {
+            throw new RuntimeException(
+                    "No case record was found with caseId:["+caseId+"]");
+        }
+
+        CaseRecord caseRecord = caseRecords.get(0);
+        BasicStateMachine fsm = new BasicStateMachine();
+        fsm.setCurrentState(BasicStateMachine.retrieveCurrentState(caseRecord.getCurrentState()));
+        CaseState nextStateWanted = BasicStateMachine.retrieveCurrentState(json.getString("currentState", BasicStateMachine.FSM_START.toString()));
+        fsm.moveSelectedNextState( (machine,state )-> nextStateWanted );
+        caseRecord.setCurrentState(fsm.getCurrentState().toString());
+        caseRecord.setShowTasks(json.getBoolean("showTasks", false));
         System.out.printf("caseRecord=%s\n", caseRecord);
         service.saveCaseRecord(caseRecord);
         final StringWriter swriter = new StringWriter();

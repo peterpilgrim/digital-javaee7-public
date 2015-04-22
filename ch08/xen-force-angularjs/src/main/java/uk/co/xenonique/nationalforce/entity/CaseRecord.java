@@ -65,6 +65,8 @@ public class CaseRecord {
 
     @NotEmpty private String currentState;
 
+    private boolean showTasks;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caseRecord", fetch = FetchType.EAGER)
     private List<Task> tasks = new ArrayList<>();
 
@@ -144,6 +146,14 @@ public class CaseRecord {
         this.currentState = currentState;
     }
 
+    public boolean isShowTasks() {
+        return showTasks;
+    }
+
+    public void setShowTasks(boolean showTasks) {
+        this.showTasks = showTasks;
+    }
+
     public List<Task> getTasks() { return tasks; }
     public void setTasks(List<Task> tasks) { this.tasks = tasks; }
 
@@ -205,6 +215,7 @@ public class CaseRecord {
         sb.append(", dateOfBirth=").append(dateOfBirth);
         sb.append(", expirationDate=").append(expirationDate);
         sb.append(", currentState=").append(currentState);
+        sb.append(", showTasks=").append(showTasks);
         sb.append(", tasks=").append(tasks);
         sb.append('}');
         return sb.toString();

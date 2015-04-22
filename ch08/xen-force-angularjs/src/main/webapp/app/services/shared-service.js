@@ -8,6 +8,10 @@ angular.module('sharedService', [])
 
         sharedService.message = '';
 
+        sharedService.getBroadcastMessage = function() {
+            return sharedService.message;
+        }
+
         sharedService.setBroadcastMessage = function(message) {
             sharedService.message = message;
             sharedService.broadcastMessage();

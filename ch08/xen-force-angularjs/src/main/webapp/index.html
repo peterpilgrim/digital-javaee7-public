@@ -129,6 +129,31 @@
         </div>
     </script>
 
+    <script type="text/ng-template" id="changeStateCaseRecordContent.html">
+        <div class="modal-header">
+            <h3>Change State of Case Record</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                {{caseRecord.id}}, {{caseRecord.lastName}}, {{caseRecord.firstName}},
+                {{caseRecord.dateOfBirth}}, {{caseRecord.passportNo}}, {{caseRecord.country}}
+            </p>
+            <form name="moveStateCaseRecordForm" class="css-form" novalidate>
+                Next States:<br />
+                <select ng-model="caseRecord.currentState"
+                        ng-options="state for state in caseRecord.nextStates">
+
+                </select>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="moveStateCaseRecordForm.$invalid" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+
+
     <script type="text/ng-template" id="newTaskContent.html">
         <div class="modal-header">
             <h3>New Task</h3>
@@ -257,6 +282,8 @@
                             <div ng-controller="NewCaseRecordModalController">
                                 <button class="btn btn-info"
                                 ng-click="openEditCaseRecordDialog($parent.caseRecord)">Edit Case Record Details</button>
+                                <button class="btn btn-info"
+                                        ng-click="changeStateCaseRecordDialog($parent.caseRecord)">Change State</button>
                             </div>
                             <br />
 
