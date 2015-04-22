@@ -80,7 +80,11 @@
         <div class="modal-body">
             <form name="newCaseRecordForm" class="css-form" novalidate>
                 Sex:<br />
-                <input type="text" ng-model="caseRecord.sex" required /><br />
+                <select ng-model="caseRecord.sex" required>
+                    <option value="F" ng-option="selected caseRecord.sex === 'F'">Female</option>
+                    <option value="M" ng-option="selected caseRecord.sex === 'M'">Male</option>
+                </select>
+                <br/>
                 First Name:<br />
                 <input type="text" ng-model="caseRecord.firstName" required /><br />
                 Last Name:<br />
@@ -108,7 +112,11 @@
         <div class="modal-body">
             <form name="editCaseRecordForm" class="css-form" novalidate>
                 Sex:<br />
-                <input type="text" ng-model="caseRecord.sex" required /><br />
+                <select ng-model="caseRecord.sex" required>
+                    <option value="F" ng-option="selected caseRecord.sex === 'F'">Female</option>
+                    <option value="M" ng-option="selected caseRecord.sex === 'M'">Male</option>
+                </select>
+                <br/>
                 First Name:<br />
                 <input type="text" ng-model="caseRecord.firstName" required /><br />
                 Last Name:<br />

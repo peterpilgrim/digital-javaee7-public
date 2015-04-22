@@ -5,7 +5,7 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
 
     $scope.selected = false;
     $scope.caseRecord = {
-        sex: "", firstName: "", lastName: "", country: "", passportNo: "", dateOfBirth: "",
+        sex: "F", firstName: "", lastName: "", country: "", passportNo: "", dateOfBirth: "",
         expirationDate: "", country: "", currentState: "", showTasks: false};
     $scope.returnedData = null;
 
@@ -133,7 +133,7 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
 });
 
 var newCaseRecordModalInstanceController = function ($scope, $modalInstance, caseRecord) {
-    caseRecord.showTasks = false;
+    caseRecord.showTasks = true; // Convenience for the user
     $scope.caseRecord = caseRecord;
 
     $scope.ok = function () {
