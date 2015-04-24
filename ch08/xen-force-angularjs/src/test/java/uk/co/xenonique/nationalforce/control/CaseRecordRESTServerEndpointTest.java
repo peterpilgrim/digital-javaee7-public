@@ -36,12 +36,14 @@ import javax.json.Json;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
+import javax.json.stream.JsonGenerator;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -141,7 +143,7 @@ public class CaseRecordRESTServerEndpointTest {
         Thread.sleep(1000);
 
         final WebTarget target = ClientBuilder.newClient()
-                .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId());
+                .target(REST_APPLICATION_URL + "/caseworker/item/" + case1.getId());
         final Response response = target.request().get();
         assertThat(response.getStatus(), is(200));
         final String text = response.readEntity( String.class );
@@ -166,7 +168,7 @@ public class CaseRecordRESTServerEndpointTest {
         final WebTarget target = ClientBuilder.newClient().target(REST_APPLICATION_URL + "/caseworker/list");
         final Future<Response> future = target.request().async().get();
         assertNotNull(future);
-        final Response response = future.get(2, TimeUnit.SECONDS );
+        final Response response = future.get(2, TimeUnit.SECONDS);
         assertThat(response.getStatus(), is(200));
         final String text = response.readEntity( String.class );
         System.out.printf(">>====== text = %s\n", text);
@@ -189,10 +191,10 @@ public class CaseRecordRESTServerEndpointTest {
             .build();
 
         final WebTarget target = ClientBuilder.newClient()
-            .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId() + "/task");
+            .target(REST_APPLICATION_URL + "/caseworker/item/" + case1.getId() + "/task");
         final Response response = target.request().post(
-            Entity.entity(
-            input, APPLICATION_JSON_TYPE) );
+                Entity.entity(
+                        input, APPLICATION_JSON_TYPE));
         assertThat(response.getStatus(), is(200));
         String text = response.readEntity( String.class );
         System.out.printf(">>====== text = %s\n", text);
@@ -343,5 +345,28 @@ public class CaseRecordRESTServerEndpointTest {
         assertThat( "Nozi Ngomo", is(output1.getString("lastName")));
         assertThat(output1.getJsonArray("tasks").size(), is(1));
     }
+
+
+    @Test
+    public void invoke_PUT_update_Task_show_tasks_on_CaseRecord() throws Exception {
+        final CaseRecord case1 = createCaseRecordAndTasks(2);
+        service.saveCaseRecord(case1);
+
+        // Force a flush to the database?!
+        Thread.sleep(500);
+
+        case1.setShowTasks(true);
+
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator   = Json.createGenerator(swriter);
+        CaseRecordHelper.writeCaseRecordAsJson(generator, case1).close();
+        final String json = swriter.toString();
+        WebTarget target = ClientBuilder.newClient()
+                .target(REST_APPLICATION_URL + "/caseworker/showtasks/" + case1.getId());
+        swriter.flush();
+        System.out.printf("***** ===>>>>>   json=[%s]\n", json);
+        Response response = target.request().put(Entity.entity(json, APPLICATION_JSON_TYPE));
+        assertThat(response.getStatus(), is(200));
+   }
 
 }

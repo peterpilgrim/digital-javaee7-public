@@ -6,7 +6,7 @@ myApp.factory('UpdateTaskStatusFactory', function( $log ) {
     service.connect = function() {
         if (service.ws) { return; }
 
-        var ws = new WebSocket("ws://localhost:8080/xen-national-force/update-task-status");
+        var ws = new WebSocket("ws://localhost:8080/xen-force-angularjs-1.0-SNAPSHOT/update-task-status");
 
         ws.onopen = function() {
             console.log("WebSocket connect was opened");
