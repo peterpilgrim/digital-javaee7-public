@@ -1,8 +1,6 @@
 // A shared service
 
 angular.module('sharedService', [])
-
-//myApp
     .factory( 'sharedService', function ($rootScope) {
         var sharedService = { };
 

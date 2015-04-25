@@ -53,11 +53,9 @@ import java.util.concurrent.TimeUnit;
 
 import static uk.co.xenonique.nationalforce.FixtureUtils.createCaseRecordAndTasks;
 import static javax.ws.rs.core.MediaType.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.Assert.assertFalse;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * A unit test ProjectRESTServerEndpointTest to verify the operation of ProjectRESTServerEndpointTest
@@ -105,32 +103,32 @@ public class CaseRecordRESTServerEndpointTest {
             .add("expirationDate", "2025-01-10")
             .add("currentSate", "Start")
             .add("tasks",
-                bf.createArrayBuilder()
-                    .add(
-                            bf.createObjectBuilder()
-                                    .add("name", "Find the Common Denominator")
-                                    .add("targetDate", "23-July-2018")
-                                    .add("completed", JsonValue.FALSE)
-                                    .build())
-                    .add(
-                            bf.createObjectBuilder()
-                                    .add("name", "Decide on the Metrics")
-                                    .add("targetDate", "24-July-2018")
-                                    .add("completed", JsonValue.FALSE)
-                                    .build())
-                    .build()
+                    bf.createArrayBuilder()
+                            .add(
+                                    bf.createObjectBuilder()
+                                            .add("name", "Find the Common Denominator")
+                                            .add("targetDate", "23-July-2018")
+                                            .add("completed", JsonValue.FALSE)
+                                            .build())
+                            .add(
+                                    bf.createObjectBuilder()
+                                            .add("name", "Decide on the Metrics")
+                                            .add("targetDate", "24-July-2018")
+                                            .add("completed", JsonValue.FALSE)
+                                            .build())
+                            .build()
             )
             .build();
 
         final WebTarget target = ClientBuilder.newClient()
-            .target(REST_APPLICATION_URL+"/caseworker/item");
+            .target(REST_APPLICATION_URL + "/caseworker/item");
 
-        final Response response = target.request().post(Entity.entity(input, APPLICATION_JSON_TYPE) );
+        final Response response = target.request().post(Entity.entity(input, APPLICATION_JSON_TYPE));
         assertThat(response.getStatus(), is(200));
 
         final String text = response.readEntity( String.class );
         System.out.printf(">>------ text = %s\n", text);
-        assertNotNull(text);
+        assertThat(text, is(notNullValue()));
     }
 
     @Test
@@ -148,7 +146,7 @@ public class CaseRecordRESTServerEndpointTest {
         assertThat(response.getStatus(), is(200));
         final String text = response.readEntity( String.class );
         System.out.printf(">>====== text = %s\n", text);
-        assertNotNull(text);
+        assertThat(text, is(notNullValue()));
     }
 
     @Test
@@ -172,7 +170,7 @@ public class CaseRecordRESTServerEndpointTest {
         assertThat(response.getStatus(), is(200));
         final String text = response.readEntity( String.class );
         System.out.printf(">>====== text = %s\n", text);
-        assertNotNull(text);
+        assertThat(text, is(notNullValue()));
     }
 
     @Test
@@ -198,7 +196,7 @@ public class CaseRecordRESTServerEndpointTest {
         assertThat(response.getStatus(), is(200));
         String text = response.readEntity( String.class );
         System.out.printf(">>====== text = %s\n", text);
-        assertNotNull(text);
+        assertThat(text, is(notNullValue()));
     }
 
     @Test
@@ -238,11 +236,11 @@ public class CaseRecordRESTServerEndpointTest {
         assertThat(output1.getJsonArray("tasks").size(), is(1));
         final JsonObject json1 = output1.getJsonArray("tasks").getJsonObject(0);
         final int taskId1 = json1.getInt("id");
-        assertTrue(taskId1 > 0);
+        assertThat(taskId1, is(greaterThan(2)));
         assertThat("Fireside Chat", is(json1.getString("name")));
 
         assertThat(incomingDateFormatter.format(date1), is(json1.getString("targetDate")));
-        assertFalse( json1.getBoolean("completed")) ;
+        assertThat( json1.getBoolean("completed"), is(false)) ;
         final JsonObject input2 = bf.createObjectBuilder()
                 .add("id", taskId1 )
                 .add("name", "JavaOne USA")
@@ -263,10 +261,10 @@ public class CaseRecordRESTServerEndpointTest {
         assertThat(output2.getJsonArray("tasks").size(), is(1));
         final JsonObject json2 = output2.getJsonArray("tasks").getJsonObject(0);
         final int taskId2 = json2.getInt("id");
-        assertTrue(taskId2 > 0);
+        assertThat(taskId2, is(greaterThan(0)));
         assertThat( "JavaOne USA", is(json2.getString("name")));
         assertThat( incomingDateFormatter.format(date2), is(json2.getString("targetDate")));
-        assertTrue( json2.getBoolean("completed"));
+        assertThat( json2.getBoolean("completed"), is(true));
     }
 
     @Test
@@ -296,10 +294,10 @@ public class CaseRecordRESTServerEndpointTest {
 
         final JsonObject json = output1.getJsonArray("tasks").getJsonObject(0);
         final int taskId = json.getInt("id");
-        assertTrue( taskId > 0 );
+        assertThat( taskId, is(greaterThan(2)) );
         assertThat( "Make money now", is(json.getString("name")));
         assertThat( "2015-07-14", is(json.getString("targetDate")));
-        assertFalse( json.getBoolean("completed")) ;
+        assertThat( json.getBoolean("completed"), is(false)) ;
 
         target = ClientBuilder.newClient()
                 .target(REST_APPLICATION_URL+"/caseworker/item/" + case1.getId() + "/task/" + taskId);

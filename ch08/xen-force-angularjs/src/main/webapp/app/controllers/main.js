@@ -1,4 +1,4 @@
-var myApp = angular.module('app', ['ui.bootstrap', 'newcaserecord','newtask', 'sharedService']);
+var myApp = angular.module('app', ['ui.bootstrap', 'newcaserecord','newtask', 'sharedService', 'isoCountries']);
 
 myApp.factory('UpdateTaskStatusFactory', function( $log ) {
     var service = {};
@@ -41,11 +41,13 @@ myApp.factory('UpdateTaskStatusFactory', function( $log ) {
 
 
 
-myApp.controller('CaseRecordController',  function ($scope, $http, $log, UpdateTaskStatusFactory, sharedService ) {
+myApp.controller('CaseRecordController',  function ($scope, $http, $log, UpdateTaskStatusFactory, sharedService, isoCountries ) {
     var self = this;
     $scope.caseRecords = [
         {sex: "F", firstName: "Angela", lastName: "Devonshire", dateOfBirth: "1982-04-15", expirationDate: "2018-11-21", country: "Australia", passportNo: "123456789012", currentState: "Start"},
     ];
+
+    $scope.isoCountries = isoCountries;
 
     $scope.getCaseRecords = function () {
         $http.get('rest/caseworker/list').success(function(data) {

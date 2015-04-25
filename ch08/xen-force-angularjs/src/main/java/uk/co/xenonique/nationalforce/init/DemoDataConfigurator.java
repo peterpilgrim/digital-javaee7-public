@@ -70,6 +70,11 @@ public class DemoDataConfigurator {
 
         populationHelper.saveCountries();
 
+        createPersonFemale();
+        createPersonMale();
+    }
+
+    private void createPersonMale() {
         final Date dateOfBirth = getRandomDateOfBirth();
         final Date expirationDate = getFutureRandomDate( new Date(), 31, 10 );
 
@@ -77,7 +82,7 @@ public class DemoDataConfigurator {
         caseRecord1.setFirstName("Frederick");
         caseRecord1.setLastName("Hervogstein");
         caseRecord1.setSex("M");
-        caseRecord1.setCountry("Australia");
+        caseRecord1.setCountry("AUS");
         caseRecord1.setPassportNo("819360419312");
         caseRecord1.setDateOfBirth(dateOfBirth);
         caseRecord1.setExpirationDate(expirationDate);
@@ -93,6 +98,29 @@ public class DemoDataConfigurator {
         caseRecord1.addTask(new Task("Review case", r, false));
 
         caseRecordTaskService.saveCaseRecord(caseRecord1);
-
     }
-}
+
+    private void createPersonFemale() {
+        final Date dateOfBirth = getRandomDateOfBirth();
+        final Date expirationDate = getFutureRandomDate( new Date(), 31, 10 );
+
+        final CaseRecord caseRecord1 = new CaseRecord();
+        caseRecord1.setFirstName("Sabrina Helena");
+        caseRecord1.setLastName("Weinberg-Hols");
+        caseRecord1.setSex("F");
+        caseRecord1.setCountry("AUS");
+        caseRecord1.setPassportNo("1991738612");
+        caseRecord1.setDateOfBirth(dateOfBirth);
+        caseRecord1.setExpirationDate(expirationDate);
+        caseRecord1.setCurrentState( FSM_START.toString() );
+
+        final Date p = getFutureRandomDate( new Date(), 4, 0 );
+        final Date q = getFutureRandomDate( p, 8, 0 );
+        final Date r = getFutureRandomDate( q, 12, 0 );
+
+        caseRecord1.addTask( new Task("Allocate", getFutureRandomDate(new Date(), 10, 0), true ));
+        caseRecord1.addTask( new Task("Criminal index check", p, false ));
+        caseRecord1.addTask(new Task("Review case", r, false));
+
+        caseRecordTaskService.saveCaseRecord(caseRecord1);
+    }}

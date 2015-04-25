@@ -245,12 +245,12 @@ public class PopulationHelper {
         countries.add( new PassportCountry( "Uganda", "UGA" ) );
         countries.add( new PassportCountry( "Ukraine", "UKR" ) );
         countries.add( new PassportCountry( "United Arab Emirates", "ARE" ) );
-        countries.add( new PassportCountry( "- Citizen", "GBR" ) );
-        countries.add( new PassportCountry( "- Dependent territories citizen", "GBD" ) );
-        countries.add( new PassportCountry( "- National (overseas)", "GBN" ) );
-        countries.add( new PassportCountry( "- Overseas citizen", "GBO" ) );
-        countries.add( new PassportCountry( "- Protected Person", "GBP" ) );
-        countries.add( new PassportCountry( "- Subject", "GBS" ) );
+        countries.add( new PassportCountry( "United Kingdom -- Citizen", "GBR" ) );
+        countries.add( new PassportCountry( "United Kingdom -- Dependent territories citizen", "GBD" ) );
+        countries.add( new PassportCountry( "United Kingdom -- National (overseas)", "GBN" ) );
+        countries.add( new PassportCountry( "United Kingdom -- Overseas citizen", "GBO" ) );
+        countries.add( new PassportCountry( "United Kingdom -- Protected Person", "GBP" ) );
+        countries.add( new PassportCountry( "United Kingdom -- Subject", "GBS" ) );
         countries.add( new PassportCountry( "United Republic of Tanzania", "TZA" ) );
         countries.add( new PassportCountry( "United States of America", "USA" ) );
         countries.add( new PassportCountry( "United States of America Minor Outlying Islands", "UMI" ) );

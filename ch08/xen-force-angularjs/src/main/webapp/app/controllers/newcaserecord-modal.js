@@ -1,6 +1,6 @@
-var newcaserecord = angular.module('newcaserecord', ['ui.bootstrap.modal', 'sharedService'])
+var newcaserecord = angular.module('newcaserecord', ['ui.bootstrap.modal', 'sharedService','isoCountries'])
 
-newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal, $http, $log, sharedService ) {
+newcaserecord.controller('NewCaseRecordModalController', function($rootScope, $scope, $modal, $http, $log, sharedService, isoCountries ) {
     $log.info("CaseRecord Modal Dialog. Yes!  $modal="+$modal+", $log="+$log);
 
     $scope.selected = false;
@@ -8,12 +8,15 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
         sex: "F", firstName: "", lastName: "", country: "", passportNo: "", dateOfBirth: "",
         expirationDate: "", country: "", currentState: "", showTasks: false};
     $scope.returnedData = null;
+    $scope.isoCountries = isoCountries;
+    $rootScope.isoCountries = isoCountries;
 
     $scope.open = function () {
 
         var modalInstance = $modal.open({
             templateUrl: 'newCaseRecordContent.html',
             controller: newCaseRecordModalInstanceController,
+            isoCountries: isoCountries,
             resolve: {
                 caseRecord: function () {
                     return $scope.caseRecord;
@@ -48,6 +51,7 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
             currentState: caseRecordItem.currentState,
             showTasks: caseRecordItem.showTasks
         };
+
         var modalInstance = $modal.open({
             templateUrl: 'editCaseRecordContent.html',
             controller: editCaseRecordModalInstanceController,
@@ -132,9 +136,10 @@ newcaserecord.controller('NewCaseRecordModalController', function($scope, $modal
     }
 });
 
-var newCaseRecordModalInstanceController = function ($scope, $modalInstance, caseRecord) {
+var newCaseRecordModalInstanceController = function ($scope, $modalInstance, caseRecord, isoCountries) {
     caseRecord.showTasks = true; // Convenience for the user
     $scope.caseRecord = caseRecord;
+    $scope.isoCountries = isoCountries;
 
     $scope.ok = function () {
         $modalInstance.close(true);
@@ -146,8 +151,9 @@ var newCaseRecordModalInstanceController = function ($scope, $modalInstance, cas
 };
 
 
-var editCaseRecordModalInstanceController = function ($scope, $modalInstance, caseRecord) {
+var editCaseRecordModalInstanceController = function ($scope, $modalInstance, caseRecord, isoCountries ) {
     $scope.caseRecord = caseRecord;
+    $scope.isoCountries = isoCountries;
 
     $scope.ok = function () {
         $modalInstance.close(true);

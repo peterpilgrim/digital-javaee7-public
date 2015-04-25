@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * The type GeneratorTest
@@ -14,7 +14,52 @@ import java.util.StringTokenizer;
  */
 public class GeneratorTest {
 
-    String data = "Afghanistan\tAFG\n" +
+    private Map<String, String> mapCodeToCountries = new TreeMap<>();
+    private Map<String, String> mapCountriesToCode = new TreeMap<>();
+
+
+    @Test
+    public void blank() {
+    }
+
+    @Test
+    public void createEntity() throws IOException {
+        final StringReader stringReader = new StringReader(data);
+        final LineNumberReader reader = new LineNumberReader(stringReader);
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            StringTokenizer stk = new StringTokenizer(line, "\t");
+            if (stk.hasMoreTokens()) {
+                final String country = stk.nextToken().trim();
+                if (stk.hasMoreTokens()) {
+                    final String code = stk.nextToken().trim();
+                    mapCodeToCountries.put(code, country);
+                    mapCountriesToCode.put(country, code);
+                }
+            }
+        }
+
+        System.out.println("List<PassportCountry> countries = new ArrayList<>();");
+        mapCountriesToCode.entrySet().stream().forEach(e ->
+                System.out.printf("countries.add( new PassportCountry( \"%s\", \"%s\" ) );\n", e.getKey(), e.getValue()));
+
+        System.out.println("\n\n");
+
+        System.out.println("var countryToCodeArrayMap = [");
+        mapCountriesToCode.entrySet().stream().forEach(e ->
+                System.out.printf("    { \"country\": \"%s\", \"code\":  \"%s\" },\n", e.getKey(), e.getValue()));
+        System.out.println("];");
+
+        System.out.println("\n\n");
+
+        System.out.println("var codeToCountryArrayMap = [");
+        mapCodeToCountries.entrySet().stream().forEach(e ->
+                System.out.printf("    { \"code\": \"%s\", \"country\":  \"%s\" },\n", e.getKey(), e.getValue()));
+        System.out.println("];");
+    }
+
+    static final String data = "Afghanistan\tAFG\n" +
             "Albania\tALB\n" +
             "Algeria\tDZA\n" +
             "American Samoa\tASM\n" +
@@ -268,23 +313,5 @@ public class GeneratorTest {
             "(per Article 1 of 1951 convention,\n" +
             "amended by 1967 protocol)\tXXB\n" +
             "Refugee (non-convention)\tXXC\n" +
-            "Unspecified / Unknown\tXXX\n"  ;
-
-    @Test
-    public void createEntity() throws IOException {
-        StringReader stringReader = new StringReader(data);
-        LineNumberReader reader = new LineNumberReader(stringReader);
-
-        String line = null;
-        while( ( line = reader.readLine()) != null ) {
-            StringTokenizer stk = new StringTokenizer(line, "\t") ;
-            if (stk.hasMoreTokens()) {
-                final String country = stk.nextToken().trim();
-                if (stk.hasMoreTokens()) {
-                    final String code = stk.nextToken().trim();
-                    System.out.printf("countries.add( new PassportCountry( \"%s\", \"%s\" ) );\n", country, code);
-                }
-            }
-        }
-    }
+            "Unspecified / Unknown\tXXX\n";
 }

@@ -54,15 +54,19 @@ public class CaseRecordHelper {
             .writeStartArray("tasks");
 
         for ( Task task: caseRecord.getTasks()) {
-            writeTaskAsJson(generator,task);
+            writeTaskAsJson(generator, task);
         }
         generator.writeEnd().writeEnd();
         return generator;
     }
 
     public static JsonGenerator writeTaskAsJson( JsonGenerator generator, Task task ) {
+        return writeTaskAsJson(generator, task, "id");
+    }
+
+    public static JsonGenerator writeTaskAsJson( JsonGenerator generator, Task task, String taskIdKey ) {
         generator.writeStartObject()
-            .write("id", task.getId())
+            .write(taskIdKey, task.getId())
             .write("name", task.getName())
             .write("targetDate",
                     task.getTargetDate() == null ? "" :
