@@ -147,14 +147,38 @@
         </div>
         <div class="modal-body">
             <p>
-                {{caseRecord.id}}, {{caseRecord.lastName}}, {{caseRecord.firstName}},
-                {{caseRecord.dateOfBirth}}, {{caseRecord.passportNo}}, {{caseRecord.country}}
+                <table class="table table-bordered">
+                    <tr>
+                        <th> Field </th>
+                        <th> Value </th>
+                    </tr>
+                    <tr>
+                        <td> Case Record Id</td> <td> {{caseRecord.id }}</td>
+                    </tr>
+                    <tr>
+                        <td> Last Name</td> <td> {{caseRecord.lastName}}</td>
+                    </tr>
+                    <tr>
+                        <td> First Name</td> <td> {{caseRecord.firstName}}</td>
+                    </tr>
+                    <tr>
+                        <td> Date of Birth</td> <td> {{caseRecord.dateOfBirth}}</td>
+                    </tr>
+                    <tr>
+                        <td> Country </td> <td> {{caseRecord.country}}</td>
+                    </tr>
+                    <tr>
+                        <td> Passport No </td> <td> {{caseRecord.passportNo}}</td>
+                    </tr>
+                    <tr>
+                        <td> Expiration Date</td> <td> {{caseRecord.expirationDate}}</td>
+                    </tr>
+                </table>
             </p>
             <form name="moveStateCaseRecordForm" class="css-form" novalidate>
                 Next States:<br />
                 <select ng-model="caseRecord.currentState"
                         ng-options="state for state in caseRecord.nextStates">
-
                 </select>
             </form>
         </div>

@@ -12,7 +12,6 @@ newcaserecord.controller('NewCaseRecordModalController', function($rootScope, $s
     $rootScope.isoCountries = isoCountries;
 
     $scope.open = function () {
-
         var modalInstance = $modal.open({
             templateUrl: 'newCaseRecordContent.html',
             controller: newCaseRecordModalInstanceController,
@@ -85,6 +84,7 @@ newcaserecord.controller('NewCaseRecordModalController', function($rootScope, $s
             dateOfBirth: caseRecordItem.dateOfBirth,
             country: caseRecordItem.country,
             passportNo: caseRecordItem.passportNo,
+            expirationDate: caseRecordItem.expirationDate,
             currentState: caseRecordItem.currentState,
             nextStates: caseRecordItem.nextStates,
             showTask: caseRecordItem.showTasks
