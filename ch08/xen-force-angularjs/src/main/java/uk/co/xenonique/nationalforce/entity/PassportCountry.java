@@ -10,6 +10,14 @@ import javax.validation.constraints.Size;
  *
  * @author Peter Pilgrim
  */
+@NamedQueries({
+        @NamedQuery(name = "PassportCountry.findAll",
+                query = "select p from PassportCountry p order by p.code"),
+        @NamedQuery(name = "PassportCountry.findByCode",
+                query = "select p from PassportCountry p where p.code = :code"),
+        @NamedQuery(name = "PassportCountry.findByName",
+                query = "select p from PassportCountry p where p.name = :name"),
+})
 @Entity
 @Table(name="PASSPORT_COUNTRY")
 public class PassportCountry {
@@ -59,13 +67,18 @@ public class PassportCountry {
 
         PassportCountry that = (PassportCountry) o;
 
-        return !(id != null ? !id.equals(that.id) : that.id != null);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return !(code != null ? !code.equals(that.code) : that.code != null);
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        return result;
     }
 
     @Override

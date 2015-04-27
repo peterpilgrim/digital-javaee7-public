@@ -1,5 +1,6 @@
 package uk.co.xenonique.nationalforce;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class GeneratorTest {
     }
 
     @Test
+    @Ignore
     public void createEntity() throws IOException {
         final StringReader stringReader = new StringReader(data);
         final LineNumberReader reader = new LineNumberReader(stringReader);
@@ -281,12 +283,12 @@ public class GeneratorTest {
             "Ukraine\tUKR\n" +
             "United Arab Emirates\tARE\n" +
             "United Kingdom of Great Britain and Northern Ireland\t\n" +
-            "    - Citizen\tGBR\n" +
-            "    - Dependent territories citizen\tGBD\n" +
-            "    - National (overseas)\tGBN\n" +
-            "    - Overseas citizen\tGBO\n" +
-            "    - Protected Person\tGBP\n" +
-            "    - Subject\tGBS\n" +
+            "United Kingdom - Citizen\tGBR\n" +
+            "United Kingdom - Dependent territories citizen\tGBD\n" +
+            "United Kingdom - National (overseas)\tGBN\n" +
+            "United Kingdom - Overseas citizen\tGBO\n" +
+            "United Kingdom - Protected Person\tGBP\n" +
+            "United Kingdom - Subject\tGBS\n" +
             "United Republic of Tanzania\tTZA\n" +
             "United States of America\tUSA\n" +
             "United States of America Minor Outlying Islands\tUMI\n" +

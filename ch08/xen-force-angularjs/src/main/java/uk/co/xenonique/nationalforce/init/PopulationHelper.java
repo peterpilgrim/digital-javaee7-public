@@ -17,13 +17,194 @@ import java.util.*;
 @Stateless
 public class PopulationHelper {
 
-    @PostConstruct
-    public void initialise() {
-        System.out.printf("%s.initialise()\n", this.getClass().getSimpleName());
-    }
+    private static String[] girls = new String[]{
+            "Sophia",
+            "Emma",
+            "Olivia",
+            "Ava",
+            "Isabella",
+            "Mia",
+            "Zoe",
+            "Lily",
+            "Emily",
+            "Madelyn",
+            "Madison",
+            "Chloe",
+            "Charlotte",
+            "Aubrey",
+            "Avery",
+            "Abigail",
+            "Kaylee",
+            "Layla",
+            "Harper",
+            "Ella",
+            "Amelia",
+            "Arianna",
+            "Riley",
+            "Aria",
+            "Hailey",
+            "Hannah",
+            "Aaliyah",
+            "Evelyn",
+            "Addison",
+            "Mackenzie",
+            "Adalyn",
+            "Ellie",
+            "Brooklyn",
+            "Nora",
+            "Scarlett",
+            "Grace",
+            "Anna",
+            "Isabelle",
+            "Natalie",
+            "Kaitlyn",
+            "Lillian",
+            "Sarah",
+            "Audrey",
+            "Elizabeth",
+            "Leah",
+            "Annabelle",
+            "Kylie",
+            "Mila",
+            "Claire",
+            "Victoria",
+            "Maya",
+            "Lila",
+            "Elena",
+            "Lucy",
+            "Savannah",
+            "Gabriella",
+            "Sabrina",
+            "Frances",
+            "Laura",
+            "Deborah",
+            "Terri",
+            "Zara"
+    };
 
-    public List<PassportCountry> buildCountries() {
-        List<PassportCountry> countries = new ArrayList<>();
+    private static String[] boys = new String[]{
+            "Logan",
+            "Jayden",
+            "Elijah",
+            "Jack",
+            "Luke",
+            "Michael",
+            "Benjamin",
+            "Alexander",
+            "Peter",
+            "James",
+            "Jayce",
+            "Caleb",
+            "Connor",
+            "William",
+            "Carter",
+            "Ryan",
+            "Oliver",
+            "Matthew",
+            "Daniel",
+            "Gabriel",
+            "Henry",
+            "Owen",
+            "Grayson",
+            "Dylan",
+            "Landon",
+            "Isaac",
+            "Nicholas",
+            "Wyatt",
+            "Nathan",
+            "Andrew",
+            "Cameron",
+            "Dominic",
+            "Joshua",
+            "Eli",
+            "Sebastian",
+            "Hunter",
+            "Brayden",
+            "David",
+            "Samuel",
+            "Evan",
+            "Gavin",
+            "Christian",
+            "Max",
+            "Anthony",
+            "Joseph",
+            "Julian",
+            "John",
+            "Colton",
+            "Levi",
+            "Muhammad",
+            "Isaiah",
+            "Aaron",
+            "Frederick",
+    };
+
+    private static String surnames[] = new String[] {
+            "Brown",
+            "Smith",
+            "Patel",
+            "Jones",
+            "Williams",
+            "Johnson",
+            "Taylor",
+            "Thomas",
+            "Roberts",
+            "Khan",
+            "Lewis",
+            "Jackson",
+            "Clarke",
+            "James",
+            "Phillips",
+            "Wilson",
+            "Ali",
+            "Mason",
+            "Mitchell",
+            "Rose",
+            "Davis",
+            "Davies",
+            "Rodríguez",
+            "Cox",
+            "Alexander",
+            "Wilson",
+            "Campbell",
+            "Kelly",
+            "Johnston",
+            "Moore",
+            "Thompson",
+            "Smyth",
+            "Samson",
+            "Johnson",
+            "Ferris",
+            "Harris",
+            "Hodgson",
+            "Megson",
+            "Tomkins",
+            "Perkins",
+            "Simpson",
+            "Simkins",
+            "Watkins",
+            "Rooney",
+            "Bingham",
+            "Stewart",
+            "MacArthur",
+            "McGregor",
+            "Neill",
+            "Neville",
+            "Newton",
+            "Ramsey",
+            "Braithwaite",
+            "Samuels",
+            "Cassidy",
+            "Lloyd",
+            "Bray",
+            "Anderson",
+            "Winder",
+            "Hervogstein",
+            "Weinbergs-Hols"
+    };
+
+    private  static List<PassportCountry> countries = new ArrayList<>();
+
+    static {
         countries.add( new PassportCountry( "Afghanistan", "AFG" ) );
         countries.add( new PassportCountry( "Albania", "ALB" ) );
         countries.add( new PassportCountry( "Algeria", "DZA" ) );
@@ -273,8 +454,39 @@ public class PopulationHelper {
         countries.add( new PassportCountry( "amended by 1967 protocol)", "XXB" ) );
         countries.add( new PassportCountry( "Refugee (non-convention)", "XXC" ) );
         countries.add( new PassportCountry( "Unspecified / Unknown", "XXX" ) );
+    }
+
+    public String getRandomGirlsName()
+    {
+        return girls[ (int)(Math.random() * girls.length) ];
+    }
+
+    public String getRandomBoysName()
+    {
+        return boys[ (int)(Math.random() * boys.length) ];
+    }
+
+    public String getRandomSurname()
+    {
+        return surnames[ (int)(Math.random() * surnames.length) ];
+    }
+
+    public PassportCountry getRandomPassportCountry()
+    {
+        return countries.get( (int)(Math.random() * countries.size()) );
+    }
+
+    @PostConstruct
+    public void initialise() {
+        System.out.printf("%s.initialise()\n", this.getClass().getSimpleName());
+    }
+
+
+    public List<PassportCountry> buildCountries() {
         return countries;
     }
+
+
 
     @PersistenceContext(unitName = "XenNationalForce")
     private EntityManager entityManager;

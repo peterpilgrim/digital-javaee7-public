@@ -72,6 +72,9 @@ public class DemoDataConfigurator {
 
         createPersonFemale();
         createPersonMale();
+
+        for (int j=0; j<5; ++j)
+            createRandomPerson();
     }
 
     private void createPersonMale() {
@@ -92,12 +95,13 @@ public class DemoDataConfigurator {
         final Date q = getFutureRandomDate( p, 8, 0 );
         final Date r = getFutureRandomDate( q, 12, 0 );
 
-        caseRecord1.addTask( new Task("Allocate", getFutureRandomDate(new Date(), 10, 0), true ));
-        caseRecord1.addTask( new Task("Criminal index check", p, false ));
-        caseRecord1.addTask( new Task("List of business fraud index", q, false));
+        caseRecord1.addTask(new Task("Allocate", getFutureRandomDate(new Date(), 10, 0), true ));
+        caseRecord1.addTask(new Task("Criminal index check", p, false ));
+        caseRecord1.addTask(new Task("List of business fraud index", q, false));
         caseRecord1.addTask(new Task("Review case", r, false));
 
         caseRecordTaskService.saveCaseRecord(caseRecord1);
+
     }
 
     private void createPersonFemale() {
@@ -118,9 +122,39 @@ public class DemoDataConfigurator {
         final Date q = getFutureRandomDate( p, 8, 0 );
         final Date r = getFutureRandomDate( q, 12, 0 );
 
-        caseRecord1.addTask( new Task("Allocate", getFutureRandomDate(new Date(), 10, 0), true ));
-        caseRecord1.addTask( new Task("Criminal index check", p, false ));
+        caseRecord1.addTask(new Task("Allocate", getFutureRandomDate(new Date(), 10, 0), true ));
+        caseRecord1.addTask(new Task("Criminal index check", p, false ));
         caseRecord1.addTask(new Task("Review case", r, false));
 
         caseRecordTaskService.saveCaseRecord(caseRecord1);
-    }}
+    }
+
+
+    private void createRandomPerson() {
+        final Date dateOfBirth = getRandomDateOfBirth();
+        final Date expirationDate = getFutureRandomDate( new Date(), 31, 10 );
+
+        final CaseRecord caseRecord1 = new CaseRecord();
+        String sex = Math.random() >= 0.5 ? "F" : "M";
+        caseRecord1.setSex(sex);
+        if ( "F".equals(sex))
+            caseRecord1.setFirstName( populationHelper.getRandomGirlsName());
+        else
+            caseRecord1.setFirstName( populationHelper.getRandomBoysName());
+        caseRecord1.setLastName(populationHelper.getRandomSurname());
+        caseRecord1.setCountry(populationHelper.getRandomPassportCountry().getCode());
+        caseRecord1.setPassportNo(Long.toString((long)(Math.random()*9.9e9 + 1e10)));
+        caseRecord1.setDateOfBirth(dateOfBirth);
+        caseRecord1.setExpirationDate(expirationDate);
+        caseRecord1.setCurrentState( FSM_START.toString() );
+
+        final Date p = getFutureRandomDate( new Date(), 7, 0 );
+        final Date q = getFutureRandomDate( p, 14, 0 );
+        final Date r = getFutureRandomDate( q, 21, 0 );
+
+        caseRecord1.addTask(new Task("Allocate", getFutureRandomDate(new Date(), 10, 0), true ));
+        caseRecord1.addTask(new Task("Review case", r, false));
+
+        caseRecordTaskService.saveCaseRecord(caseRecord1);
+    }
+}
