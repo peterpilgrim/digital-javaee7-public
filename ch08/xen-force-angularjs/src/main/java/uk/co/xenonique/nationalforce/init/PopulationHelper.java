@@ -481,12 +481,9 @@ public class PopulationHelper {
         System.out.printf("%s.initialise()\n", this.getClass().getSimpleName());
     }
 
-
     public List<PassportCountry> buildCountries() {
         return countries;
     }
-
-
 
     @PersistenceContext(unitName = "XenNationalForce")
     private EntityManager entityManager;
