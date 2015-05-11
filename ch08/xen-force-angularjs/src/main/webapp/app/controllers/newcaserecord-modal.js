@@ -11,7 +11,7 @@ newcaserecord.controller('NewCaseRecordModalController', function($rootScope, $s
     $scope.isoCountries = isoCountries;
     $rootScope.isoCountries = isoCountries;
 
-    $scope.open = function () {
+    $scope.openCreateCaseRecordDialog = function () {
         var modalInstance = $modal.open({
             templateUrl: 'newCaseRecordContent.html',
             controller: newCaseRecordModalInstanceController,
