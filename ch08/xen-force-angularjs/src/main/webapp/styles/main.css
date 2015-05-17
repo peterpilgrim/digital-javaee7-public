@@ -55,7 +55,7 @@ body {
   position: relative;
   width: 100%;
   height: 300px;
-  background-image: url("../images/xentracker_logon_signpost_retina.jpg");
+  background-image: url("../images/xen-national-force-signpost-login.jpg");
   background-repeat: no-repeat;
   background-position: center;  
 }
@@ -65,7 +65,7 @@ body {
   top: 80px;
   margin-left: auto;
   margin-right: auto;
-  width: 400px;
+  width: 56.7%;
   background: #F0F0F0;
   padding: 10px;
   -webkit-border-radius: 10px;
@@ -137,7 +137,7 @@ body {
 }
 
 .modal-body {
-  height: 600px;
+  height: 450px;
 }
 
 .modal-body input[type=text] {
@@ -148,3 +148,14 @@ body {
   width: 32em;
 }
 
+.brand-logo {
+ width: 64px;
+}
+
+#brandNavbarLogo {
+  width: 32px;
+}
+
+#promoLogo {
+  float:right;
+}
