@@ -3,8 +3,8 @@
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-bottom: 40px;
-  color: #5a5a5a;
+    padding-bottom: 40px;
+    color: #5a5a5a;
 }
 
 /* CUSTOMIZE THE NAVBAR
@@ -12,115 +12,118 @@ body {
 
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
 .navbar-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  margin-top: 20px;
-  margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin-top: 20px;
+    margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
 }
+
 .navbar-wrapper .navbar {
 
 }
 
 /* Remove border and change up box shadow for more contrast */
 .navbar .navbar-inner {
-  border: 0;
-  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-     -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-          box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    border: 0;
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+    -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
 }
 
 /* Downsize the brand/project name a bit */
 .navbar .brand {
-  padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
-  font-size: 16px;
-  font-weight: bold;
-  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+    padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .5);
 }
 
 /* Navbar links: increase padding for taller navbar */
 .navbar .nav > li > a {
-  padding: 15px 20px;
+    padding: 15px 20px;
 }
 
 /* Offset the responsive button for proper vertical alignment */
 .navbar .btn-navbar {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
-
 .promo-signpost {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  background-image: url("../images/xen-national-force-signpost-login.jpg");
-  background-repeat: no-repeat;
-  background-position: center;  
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-image: url("../images/xen-national-force-signpost-login.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .promo-message {
-  position: relative;
-  top: 80px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 56.7%;
-  background: #F0F0F0;
-  padding: 10px;
-  -webkit-border-radius: 10px;
-     -moz-border-radius: 10px;
-          border-radius: 10px;
-  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-     -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-          box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    position: relative;
+    top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 56.7%;
+    background: #F0F0F0;
+    padding: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+    -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
 }
 
 .mainContent {
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px; 
-  margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .case-record-view {
-  margin-left: auto;
-  margin-left: auto;
-  width: 90%; 
-  padding: 10px; 
+    margin-left: auto;
+    margin-left: auto;
+    width: 90%;
+    padding: 10px;
 }
 
 .case-record-headline {
-  color: #00007F;
+    color: #00007F;
 }
 
-
 .case-record-task-table {
-  width: 85%;
-  table-layout: fixed;
+    width: 98.25%;
+    table-layout: fixed;
 }
 
 .case-record-task-table td {
-  border: 1px solid black;
-  padding: 3px;
+    border: 1px solid black;
+    padding: 3px;
 }
 
 .case-record-task-table tr:first-child {
-  background-color: #E0E0FF;
-  text-align: center;
-  font-weight: bold;
+    background-color: #E0E0FF;
+    text-align: center;
+    font-weight: bold;
 }
 
 .case-record-task-table td:nth-child(1),
 .case-record-task-table td:nth-child(3) {
-  width: 75px;
-  text-align: center;
+    width: 75px;
+    text-align: center;
 }
 
-.case-record-task-table td:nth-child(4),
+.case-record-task-table td:nth-child(4) {
+    width: 100px;
+    text-align: center;
+}
+
 .case-record-task-table td:nth-child(5) {
-  width: 100px;
-  text-align: center;
+    width: 150px;
+    text-align: center;
 }
 
 .featurette-divider {
@@ -137,25 +140,25 @@ body {
 }
 
 .modal-body {
-  height: 450px;
+    height: 450px;
 }
 
 .modal-body input[type=text] {
-  width: 32em;
+    width: 32em;
 }
 
 .modal-body textarea {
-  width: 32em;
+    width: 32em;
 }
 
 .brand-logo {
- width: 64px;
+    width: 64px;
 }
 
 #brandNavbarLogo {
-  width: 32px;
+    width: 32px;
 }
 
 #promoLogo {
-  float:right;
+    float: right;
 }
