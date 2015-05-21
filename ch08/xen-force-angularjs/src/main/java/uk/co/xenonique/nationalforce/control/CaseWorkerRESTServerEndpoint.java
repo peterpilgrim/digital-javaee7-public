@@ -239,7 +239,7 @@ public class CaseWorkerRESTServerEndpoint {
             throw new RuntimeException(
                     "Invalid caseId:["+caseId+"] supplied");
 
-        List<CaseRecord> caseRecords = service.findCaseById(caseId);
+        final List<CaseRecord> caseRecords = service.findCaseById(caseId);
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
                     "No case record was found with caseId:["+caseId+"]");
@@ -284,16 +284,16 @@ public class CaseWorkerRESTServerEndpoint {
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
-        for ( Task task: caseRecord.getTasks()) {
-            if ( task.getId().equals(taskId )) {
-                task.setName( taskObject.getString("name") );
-                task.setTargetDate( taskObject.containsKey("targetDate") ?
-                        CaseRecordHelper.convertToDate(taskObject.getString("targetDate")) :
-                        null );
-                task.setCompleted( taskObject.containsKey("completed") ?
-                        taskObject.getBoolean("completed") : false );
-            }
-        }
+        caseRecord.getTasks().stream().filter(
+            task -> task.getId().equals(taskId)).forEach(
+                task -> {
+                    task.setName( taskObject.getString("name") );
+                    task.setTargetDate( taskObject.containsKey("targetDate") ?
+                            CaseRecordHelper.convertToDate(taskObject.getString("targetDate")) :
+                            null );
+                    task.setCompleted( taskObject.containsKey("completed") ?
+                            taskObject.getBoolean("completed") : false );
+            });
         service.saveCaseRecord(caseRecord);
 
         final StringWriter swriter = new StringWriter();
@@ -327,12 +327,15 @@ public class CaseWorkerRESTServerEndpoint {
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
-        for ( Task task: caseRecord.getTasks()) {
-            if ( task.getId().equals(taskId )) {
-                caseRecord.removeTask(task);
-                break;
-            }
-        }
+//        for ( Task task: caseRecord.getTasks()) {
+//            if ( task.getId().equals(taskId )) {
+//                caseRecord.removeTask(task);
+//                break;
+//            }
+//        }
+        caseRecord.getTasks().stream().filter(
+                task -> task.getId().equals(taskId))
+                .forEach( task -> caseRecord.removeTask(task) );
         service.saveCaseRecord(caseRecord);
 
         final StringWriter swriter = new StringWriter();

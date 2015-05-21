@@ -56,13 +56,19 @@ public class CaseRecordUpdateTaskWebSocketEndpoint {
         final List<CaseRecord> projects = service.findCaseById(projectId);
 
         if ( !projects.isEmpty()) {
-            for ( Task task: projects.get(0).getTasks()) {
-                if ( task.getId() == taskId) {
+//            for ( Task task: projects.get(0).getTasks()) {
+//                if ( task.getId() == taskId) {
+//                    task.setCompleted(completed);
+//                    service.saveCaseRecord(task.getCaseRecord());
+//                }
+//            }
+            projects.get(0).getTasks().stream()
+                .filter(task -> task.getId() == taskId).
+                forEach(task -> {
                     task.setCompleted(completed);
                     service.saveCaseRecord(task.getCaseRecord());
-                    return "OK";
-                }
-            }
+                });
+            return "OK";
         }
         return "NOT FOUND";
     }
