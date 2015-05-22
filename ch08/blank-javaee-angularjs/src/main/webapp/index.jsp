@@ -105,6 +105,13 @@
             <p>
                 Now make this application work! Do as you please.
             </p>
+
+            <p>
+                <a href="<%= request.getContextPath()%>/rest/sample/hello"> Hyperlink HTTP GET Request to the Sample Endpoint </a>
+            </p>
+            <p>
+                NB: We use JavaServer Pages to gain access to the Servlet Request Context, in order to set up the Hyperlink correctly.
+            </p>
         </div>
     </div>
 
