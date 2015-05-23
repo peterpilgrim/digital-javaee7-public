@@ -11,4 +11,5 @@ include 'ch02/jsf-compositions',
 	'ch06/jsf-product-flow-stage2',
 	'ch06/jsf-resource-library-contracts',
 	'ch08/xen-force-angularjs',
-	'ch08/blank-javaee-angularjs'
+	'ch08/blank-javaee-angularjs' ,
+	'ch09/basic-javaee-mvc'

@@ -3,13 +3,13 @@
         "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
         "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
 <resources>
-    <jdbc-resource pool-name="AcmeDemoEmbeddedDerbyPool"
-                   jndi-name="java:app/jdbc/acmedemo"/>
-    <jdbc-connection-pool name="XenTrackerEmbeddedDerbyPool"
+    <jdbc-resource pool-name="BasicMVCEmbeddedDerbyPool"
+                   jndi-name="java:app/jdbc/basicmvc"/>
+    <jdbc-connection-pool name="BasicMVCEmbeddedDerbyPool"
                           res-type="javax.sql.DataSource"
                           datasource-classname="org.apache.derby.jdbc.EmbeddedDataSource"
                           is-isolation-level-guaranteed="false">
-        <property name="databaseName" value="/tmp/acmedemo/derby"/>
+        <property name="databaseName" value="/tmp/basicmvc/derby"/>
         <property name="createDatabase" value="create"/>
     </jdbc-connection-pool>
 </resources>

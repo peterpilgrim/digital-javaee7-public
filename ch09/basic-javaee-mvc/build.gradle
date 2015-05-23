@@ -1,0 +1,34 @@
+// Template based on Java EE 7 Developer Handbook by Peter A. Pilgrim
+// http://www.xenonique.co.uk/blog/ (CC) 2014
+
+apply plugin: 'war'
+
+// Define equivalent Maven GAV coordinates.
+archivesBaseName = 'basic-javaee-mvc'
+
+dependencies {
+    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
+    providedCompile 'javax:javaee-api:7.0'
+
+    // WARNING: Joda time is broken with Glassfish 4
+//    compile     'joda-time:joda-time:2.2'
+
+    compile 'org.hibernate:hibernate-validator:5.0.0.Final'
+
+    compile 'com.oracle.ozark:ozark:1.0.0-m01'
+
+    testCompile 'org.slf4j:slf4j-simple:1.6.4'
+    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.1.7.Final'
+    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.CR4'
+
+    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.2.2'
+    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.2.2'
+    compile     'org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven:2.0.2'
+}
+
+war {
+    // Exclude GlassFish embedded libraries and avoid java.io.IOException: com.sun.enterprise.admin.remote.RemoteFailureException: Error occurred during deployment: Exception while deploying the app [jsf-compositions-1.0-SNAPSHOT] : Servlet [ParticipantPortImpl] and Servlet [CoordinatorPortImpl] have the same url pattern: [/WSAT11Service].
+    rootSpec.exclude("**/glassfish-embedded-all-*.jar")
+    rootSpec.exclude("**/glassfish-embedded-runner-*.jar")
+}
+
