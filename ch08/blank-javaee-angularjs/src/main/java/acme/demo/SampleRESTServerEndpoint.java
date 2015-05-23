@@ -3,6 +3,7 @@ package acme.demo;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import java.util.Date;
 
 /**
  * The type SampleEndpoint
@@ -11,11 +12,11 @@ import javax.ws.rs.Path;
  */
 @Stateless
 @Path("/sample")
-public class SampleEndpoint {
+public class SampleRESTServerEndpoint {
 
     @GET
     @Path("/hello")
     public String hello() {
-        return "You reached the sample endpoint";
+        return String.format("You reached the sample REST endpoint [date: %s, class: %s]", new Date(), this.getClass().getName()) ;
     }
 }
