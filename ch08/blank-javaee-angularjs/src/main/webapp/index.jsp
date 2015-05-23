@@ -74,45 +74,41 @@
 
 <div class="main-content">
 
-    <h1> BLANK ANGULAR JS ACME DEMO </h1>
-
+    <div class="page-header">
+        <h1> Blank AngularJS ACME Demo </h1>
+    </div>
 
     <div class="other-content">
 
         <h2> Sample Form </h2>
         <form name="exampleForm" class="acme-container-form  css-form" novalidate>
-            Title:<br />
-            <input type="text" ng-model="employee.title" required /><br />
-            <br/>
-            First Name:<br />
-            <input type="text" ng-model="employee.firstName" required /><br />
-            <br/>
-            Last Name:<br />
-            <input type="text" ng-model="employee.lastName" required /><br />
-            <br/>
-            Employee Id:<br />
-            <input type="text" ng-model="employee.employeeId" required /><br />
-            <br/>
-            Comment:<br />
-            <input type="text" ng-model="employee.comment" required /><br />
-            <br/>
+
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" ng-model="employee.title" class="form-control" id="title" placeholder="Enter title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" ng-model="employee.firstName" class="form-control" id="firstName" placeholder="Enter firstName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" ng-model="employee.lastName" class="form-control" id="lastName" placeholder="Enter lastName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="employeeId">Employee Id</label>
+                <input type="text" ng-model="employee.employeeId" class="form-control" id="employeeId" placeholder="Enter employeeId" required>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <input type="text" ng-model="employee.comment" class="form-control" id="comment" placeholder="Enter comment" required>
+            </div>
+
         </form>
-    </div>
-
-
-    <div class="other-content">
-        <div class="alert-info">
-            <p>
-                Now make this application work! Do as you please.
-            </p>
-
-            <p>
-                <a href="<%= request.getContextPath()%>/rest/sample/hello"> Hyperlink HTTP GET Request to the Sample Endpoint </a>
-            </p>
-            <p>
-                NB: We use JavaServer Pages to gain access to the Servlet Request Context, in order to set up the Hyperlink correctly.
-            </p>
-        </div>
     </div>
 
     <div class="other-content">
@@ -141,6 +137,27 @@
             </table>
         </p>
     </div>
+
+    <div class="other-content">
+
+        <div class="alert-info" role="alert">
+            <p>
+                Now make this application work! Do as you please.
+            </p>
+        </div>
+
+
+        <div>
+            <h2>REST GET REQUEST</h2>
+            <p>
+                <a href="<%= request.getContextPath()%>/rest/sample/hello"> Hyperlink HTTP GET Request to the Sample Endpoint </a>
+            </p>
+            <p>
+                NB: We use JavaServer Pages to gain access to the Servlet Request Context, in order to set up the Hyperlink correctly.
+            </p>
+        </div>
+    </div>
+
 </div>
 
 <div class="container fatbottom">
@@ -150,6 +167,14 @@
 
         <p>&copy; 2015, 2016 XeNoNiQUe, UK &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
         <p class="slogan"> I can definitely help you.</p>
+
+        <div class="other-content">
+
+            <a href="http://xenonique.co.uk/blog/" title="Peter Pilgrim's Blog">
+                <img src="images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" />
+            </a>
+        </div>
+
         <p>
             <a href="https://glassfish.java.net/"> <img src="images/glassfish_logo.jpg" width="128" height="65"/> </a>
             <a href="http://twitter.com/peter_pilgrim"> <img src="images/twitter-bird-white-on-blue.png" width="64" height="64" /> </a>
