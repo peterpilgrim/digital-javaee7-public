@@ -75,55 +75,17 @@
 <div class="main-content">
 
     <div class="page-header">
-        <h1> Blank Demo </h1>
-    </div>
-
-    <div class="other-content">
-        Pre-season training
-
+        <h1> Java EE 8 MVC - Hello  </h1>
         <p>
-            <form action="<%= request.getContextPath() %>/rest/hello/queryform" method="POST" >
-
-                <div class="form-group">
-                    <label for="elementName">Name</label>
-                    <input type="text" class="form-control" id="elementName" name="name" placeholder="Jane Doe">
-                </div>
-
-            </form>
-
-        </p>
-
-        <p>
-            <a href="<%= request.getContextPath() %>/rest/hello/view/Sarah" class="btn btn-primary">
-                Set Name to Sarah
-            </a>
-        </p>
-
-        <p>
-            <a href="<%= request.getContextPath() %>/rest/hello/view/Benjamin" class="btn btn-primary">
-                Set Name to Benjamin
-            </a>
+            Model View Controller
         </p>
     </div>
 
     <div class="other-content">
-
-        <div class="alert-info" role="alert">
-            <p>
-                Now make this application work! Do as you please.
-            </p>
+        <div class="jumbotron">
+            <p> Hello ${user.name} </p>
         </div>
-
-
-        <div>
-            <h2>REST GET REQUEST</h2>
-            <p>
-                <a href="<%= request.getContextPath()%>/rest/sample/hello"> Hyperlink HTTP GET Request to the Sample Endpoint </a>
-            </p>
-            <p>
-                NB: We use JavaServer Pages to gain access to the Servlet Request Context, in order to set up the Hyperlink correctly.
-            </p>
-        </div>
+        <p> How are you?</p>
     </div>
 
 </div>
@@ -137,7 +99,6 @@
         <p class="slogan"> I can definitely help you.</p>
 
         <div class="other-content">
-
             <a href="http://xenonique.co.uk/blog/" title="Peter Pilgrim's Blog">
                 <img src="<%= request.getContextPath() %>/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" />
             </a>
@@ -167,10 +128,10 @@
 =========================================================================================
 
 Created by Peter Pilgrim (c) 2015 using some most excellent tools:
- On the client side: Twitter Bootstrap, AngularJS and JQuery
- On the server side: Java EE 7 GlassFish 4.1
+On the client side: Twitter Bootstrap, AngularJS and JQuery
+On the server side: Java EE 7 GlassFish 4.1
 
- Need Development Help? "I can definitely help you"
+Need Development Help? "I can definitely help you"
 
 =========================================================================================
 =========================================================================================
