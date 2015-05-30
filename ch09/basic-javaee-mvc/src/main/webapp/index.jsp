@@ -105,19 +105,12 @@
             </a>
         </p>
     </div>
-
     <div class="other-content">
         Product Controller
 
         <p>
-            <a href="<%= request.getContextPath() %>/rest/products/view/Nut" class="btn btn-primary">
-                Set Product to Nut
-            </a>
-        </p>
-
-        <p>
-            <a href="<%= request.getContextPath() %>/rest/products/view/Bolt" class="btn btn-primary">
-                Set Product to Bolt
+            <a href="<%= request.getContextPath() %>/rest/products/list" class="btn btn-primary">
+                List All Products
             </a>
         </p>
     </div>

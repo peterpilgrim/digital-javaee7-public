@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,37 +84,28 @@
 
     <div class="other-content">
         <div class="jumbotron">
-            <p> Product </p>
+            <p> Products </p>
         </div>
 
-        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/rest/products/edit/${product.id}">
-            <div class="form-group">
-                <label for="productName" class="col-sm-3 control-label">Product Name</label>
-                <div class="col-sm-9">
-                <input type="text" class="form-control" id="productName" name="name" value="${product.name}" placeholder="A product name">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="description" class="col-sm-3 control-label">Description</label>
-                <div class="col-sm-9">
-                <input type="text" class="form-control" id="description" name="description" value="${product.description}" placeholder="A product description">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="description" class="col-sm-3 control-label">Unit Price</label>
-                <div class="col-sm-9">
-                <input type="text" class="form-control" id="price" name="price" value="${product.price}" placeholder="100.00">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-6 col-md-offset-4">
-                    <button type="submit" name="action" value="Save" class="btn btn-primary">Save</button>
-                    &nbsp;
-                    <button type="submit" name="action" value="Cancel" class="btn btn-default">Cancel</button>
-                </div>
-            </div>
-        </form>
-
+        <table class="product-container-table table table-bordered table-responsive table-striped">
+            <tr>
+                <th> Product Name </th>
+                <th> Description </th>
+                <th> Unit Price </th>
+                <th> Action </th>
+            </tr>
+            <c:forEach var="product" items="${products}">
+                <tr>
+                    <td> ${product.name} </td>
+                    <td> ${product.description} </td>
+                    <td> ${product.price} </td>
+                    <td>
+                        <a class="btn" href="<%= request.getContextPath()%>/rest/products/view/${product.id}" ><i class="glyphicon glyphicon-edit"></i></a>
+                        <a class="btn" href="#" ><i class="glyphicon glyphicon-trash"></i></a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
 
 </div>
