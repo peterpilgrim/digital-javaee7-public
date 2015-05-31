@@ -12,8 +12,8 @@
     <meta name="author" content="Peter Pilgrim">
 
     <!-- Les Bootstrap styles -->
-    <link href="<%= request.getContextPath() %>/styles/bootstrap.css" rel="stylesheet">
-    <link href="<%= request.getContextPath() %>/styles/main.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/styles/bootstrap.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/styles/main.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img id="brandNavbarLogo" src="<%= request.getContextPath() %>/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" /></a>
+            <a class="navbar-brand" href="#"><img id="brandNavbarLogo" src="${pageContext.request.contextPath}/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" /></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -87,6 +87,10 @@
             <p> Products </p>
         </div>
 
+        <div>
+            <a href="${pageContext.request.contextPath}/add-product.jsp" class="btn-primary btn">Add New</a>
+        </div>
+
         <table class="product-container-table table table-bordered table-responsive table-striped">
             <tr>
                 <th> Product Name </th>
@@ -100,8 +104,8 @@
                     <td> ${product.description} </td>
                     <td> ${product.price} </td>
                     <td>
-                        <a class="btn" href="<%= request.getContextPath()%>/rest/products/view/${product.id}" ><i class="glyphicon glyphicon-edit"></i></a>
-                        <a class="btn" href="#" ><i class="glyphicon glyphicon-trash"></i></a>
+                        <a class="btn" href="${pageContext.request.contextPath}/rest/products/view/${product.id}" ><i class="glyphicon glyphicon-edit"></i></a>
+                        <a class="btn" href="${pageContext.request.contextPath}/rest/products/delete/${product.id}" ><i class="glyphicon glyphicon-trash"></i></a>
                     </td>
                 </tr>
             </c:forEach>
@@ -120,23 +124,23 @@
 
         <div class="other-content">
             <a href="http://xenonique.co.uk/blog/" title="Peter Pilgrim's Blog">
-                <img src="<%= request.getContextPath() %>/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" />
+                <img src="${pageContext.request.contextPath}/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" />
             </a>
         </div>
 
         <p>
-            <a href="https://glassfish.java.net/"> <img src="<%= request.getContextPath() %>/images/glassfish_logo.jpg" width="128" height="65"/> </a>
-            <a href="http://twitter.com/peter_pilgrim"> <img src="<%= request.getContextPath() %>/images/twitter-bird-white-on-blue.png" width="64" height="64" /> </a>
-            <a href="https://plus.google.com/117513042687634436539/posts"> <img src="<%= request.getContextPath() %>/images/Google-Plus-Logo.png" width="64" height="64" /> </a>
+            <a href="https://glassfish.java.net/"> <img src="${pageContext.request.contextPath}/images/glassfish_logo.jpg" width="128" height="65"/> </a>
+            <a href="http://twitter.com/peter_pilgrim"> <img src="${pageContext.request.contextPath}/images/twitter-bird-white-on-blue.png" width="64" height="64" /> </a>
+            <a href="https://plus.google.com/117513042687634436539/posts"> <img src="${pageContext.request.contextPath}/images/Google-Plus-Logo.png" width="64" height="64" /> </a>
         </p>
     </footer>
 </div>
 
 <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
 <!-- <script src="http://code.jquery.com/jquery-2.1.3js"></script> -->
-<script src="<%= request.getContextPath() %>/javascripts/jquery-2.1.3.js"></script>
-<script src="<%= request.getContextPath() %>/javascripts/bootstrap.js"></script>
-<script src="<%= request.getContextPath() %>/app/main.js"></script>
+<script src="${pageContext.request.contextPath}/javascripts/jquery-2.1.3.js"></script>
+<script src="${pageContext.request.contextPath}/javascripts/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/app/main.js"></script>
 
 </body>
 </html>

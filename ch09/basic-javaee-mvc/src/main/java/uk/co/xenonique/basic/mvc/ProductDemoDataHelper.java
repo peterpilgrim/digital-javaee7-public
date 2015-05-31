@@ -35,7 +35,11 @@ public class ProductDemoDataHelper {
                 new Product("250 A4 Sheets Paper", "writing material", 7.99),
                 new Product("Traffic Cone", "Useful for controlling downtown traffic", 18.99),
                 new Product("Tow truck", "Helps to move car that breaks down", 14999.99),
-                new Product("Vacuum Cleaner", "perfect for keeping the humble ubode clean", 361.99)
+                new Product("Vacuum Cleaner", "perfect for keeping the humble ubode clean", 361.99),
+                new Product("Plant Pot", "add a flower or plant to your garden", 14.99),
+                new Product("Water Can", "Make sure you your plants plenty of water", 9.99),
+                new Product("Running Shoe", "Hit the treadmill, get fitter today", 59.99),
+                new Product("Track suit", "Looking good, looking sporty", 89.99)
         );
 
         products.forEach( product -> productService.saveProduct(product));

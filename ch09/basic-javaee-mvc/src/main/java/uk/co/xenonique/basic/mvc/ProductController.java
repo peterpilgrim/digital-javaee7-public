@@ -95,4 +95,52 @@ public class ProductController {
         final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
         return response;
     }
-}
+
+
+    @GET
+    @Controller
+    @Path("delete/{id}")
+    @Produces("text/html")
+    public Response deleteProduct( @PathParam("id") int id  )
+    {
+        System.out.printf("***** %s.deleteProduct( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
+        final List<Product> products = productService.findById(id);
+        System.out.printf("***** products=%s", products);
+        if ( products.isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("/error.jsp").build();
+        }
+        else {
+            productService.removeProduct(products.get(0));
+            models.put("product", products.get(0) );
+            retrieveAll();
+            final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
+            return response;
+        }
+    }
+
+    @POST
+    @Controller
+    @Path("add")
+    @Produces("text/html")
+    public Response addProduct(@FormParam("action") String action,
+                                 @FormParam("name") String name,
+                                 @FormParam("description") String description,
+                                 @FormParam("price") double price,
+                                 @Context HttpServletRequest request
+    )
+    {
+        System.out.printf("***** %s.add() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
+        System.out.printf("***** name=%s, description=%s, price=%.4f\n", name, description, price);
+        if ("Add".equalsIgnoreCase(action)) {
+            final Product product = new Product(name, description, price);
+            productService.saveProduct(product);
+            models.put("product", product);
+        }
+        retrieveAll();
+//        return new Viewable("products.jsp");
+//        return new Viewable("redirect:/products.jsp");
+//        final Response response = Response.seeOther(URI.create("products.jsp")).build();
+        // "location - the redirection URI. If a relative URI is supplied it will be converted into an absolute URI by resolving it relative to the base URI of the application (see UriInfo.getBaseUri())."
+        final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
+        return response;
+    }}
