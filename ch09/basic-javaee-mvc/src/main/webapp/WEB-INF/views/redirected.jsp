@@ -11,8 +11,8 @@
     <meta name="author" content="Peter Pilgrim">
 
     <!-- Les Bootstrap styles -->
-    <link href="${pageContext.request.contextPath}/styles/bootstrap.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/styles/main.css" rel="stylesheet">
+    <link href="<%= request.getContextPath() %>/styles/bootstrap.css" rel="stylesheet">
+    <link href="<%= request.getContextPath() %>/styles/main.css" rel="stylesheet">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img id="brandNavbarLogo" src="${pageContext.request.contextPath}/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" /></a>
+            <a class="navbar-brand" href="#"><img id="brandNavbarLogo" src="<%= request.getContextPath() %>/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" /></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -75,70 +75,13 @@
 <div class="main-content">
 
     <div class="page-header">
-        <h1> Blank Demo </h1>
+        <h1> REDIRECTED - </h1>
+        <p> Redirect works! </p>
     </div>
 
     <div class="other-content">
-        Simple MVC Controller
-
-        <p>
-            <form action="${pageContext.request.contextPath}/rest/hello/queryform" method="POST" >
-
-                <div class="form-group">
-                    <label for="elementName">Name</label>
-                    <input type="text" class="form-control" id="elementName" name="name" placeholder="Jane Doe">
-                </div>
-
-            </form>
-
-        </p>
-
-        <p>
-            <a href="${pageContext.request.contextPath}/rest/hello/view/Sarah" class="btn btn-primary">
-                Set Name to Sarah
-            </a>
-        </p>
-
-        <p>
-            <a href="${pageContext.request.contextPath}/rest/hello/view/Benjamin" class="btn btn-primary">
-                Set Name to Benjamin
-            </a>
-        </p>
+        <p>Simple MVC Controller</p>
     </div>
-    <div class="other-content">
-        Product Controller
-
-        <p>
-            <a href="${pageContext.request.contextPath}/rest/products/list" class="btn btn-primary">
-                List All Products
-            </a>
-        </p>
-    </div>
-
-    <div class="other-content">
-
-        <div class="alert-info" role="alert">
-            <p>
-                Now make this application work! Do as you please.
-            </p>
-        </div>
-
-        <p>
-            <a href="${pageContext.request.contextPath}/rest/redirect/string" class="btn btn-info"> Redirect #1 </a>
-        </p>
-
-        <div>
-            <h2>REST GET REQUEST</h2>
-            <p>
-                <a href="<%= request.getContextPath()%>/rest/sample/hello"> Hyperlink HTTP GET Request to the Sample Endpoint </a>
-            </p>
-            <p>
-                NB: We use JavaServer Pages to gain access to the Servlet Request Context, in order to set up the Hyperlink correctly.
-            </p>
-        </div>
-    </div>
-
-
 
 </div>
 
@@ -152,23 +95,23 @@
 
         <div class="other-content">
             <a href="http://xenonique.co.uk/blog/" title="Peter Pilgrim's Blog">
-                <img src="${pageContext.request.contextPath}/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" />
+                <img src="<%= request.getContextPath() %>/images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" />
             </a>
         </div>
 
         <p>
-            <a href="https://glassfish.java.net/"> <img src="${pageContext.request.contextPath}/images/glassfish_logo.jpg" width="128" height="65"/> </a>
-            <a href="http://twitter.com/peter_pilgrim"> <img src="${pageContext.request.contextPath}/images/twitter-bird-white-on-blue.png" width="64" height="64" /> </a>
-            <a href="https://plus.google.com/117513042687634436539/posts"> <img src="${pageContext.request.contextPath}/images/Google-Plus-Logo.png" width="64" height="64" /> </a>
+            <a href="https://glassfish.java.net/"> <img src="<%= request.getContextPath() %>/images/glassfish_logo.jpg" width="128" height="65"/> </a>
+            <a href="http://twitter.com/peter_pilgrim"> <img src="<%= request.getContextPath() %>/images/twitter-bird-white-on-blue.png" width="64" height="64" /> </a>
+            <a href="https://plus.google.com/117513042687634436539/posts"> <img src="<%= request.getContextPath() %>/images/Google-Plus-Logo.png" width="64" height="64" /> </a>
         </p>
     </footer>
 </div>
 
 <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
 <!-- <script src="http://code.jquery.com/jquery-2.1.3js"></script> -->
-<script src="${pageContext.request.contextPath}/javascripts/jquery-2.1.3.js"></script>
-<script src="${pageContext.request.contextPath}/javascripts/bootstrap.js"></script>
-<script src="${pageContext.request.contextPath}/app/main.js"></script>
+<script src="<%= request.getContextPath() %>/javascripts/jquery-2.1.3.js"></script>
+<script src="<%= request.getContextPath() %>/javascripts/bootstrap.js"></script>
+<script src="<%= request.getContextPath() %>/app/main.js"></script>
 
 </body>
 </html>
@@ -180,10 +123,10 @@
 =========================================================================================
 
 Created by Peter Pilgrim (c) 2015 using some most excellent tools:
- On the client side: Twitter Bootstrap, AngularJS and JQuery
- On the server side: Java EE 7 GlassFish 4.1
+On the client side: Twitter Bootstrap, AngularJS and JQuery
+On the server side: Java EE 7 GlassFish 4.1
 
- Need Development Help? "I can definitely help you"
+Need Development Help? "I can definitely help you"
 
 =========================================================================================
 =========================================================================================
