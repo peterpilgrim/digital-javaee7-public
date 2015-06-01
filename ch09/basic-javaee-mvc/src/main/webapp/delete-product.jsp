@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,32 +83,41 @@
 
     <div class="other-content">
         <div class="jumbotron">
-            <p> Products </p>
+            <p> Product </p>
         </div>
 
-        <p>
-            <a href="${pageContext.request.contextPath}/create-product.jsp" class="btn-primary btn">Add New Product</a>
-        </p>
+        <div class="alert-warning">
+            <h3> Cautionary Note</h3>
+            <p>
+                Are you sure that you want to delete this product from the database?
+            </p>
+        </div>
 
-        <table class="product-container-table table table-bordered table-responsive table-striped">
-            <tr>
-                <th> Product Name </th>
-                <th> Description </th>
-                <th> Unit Price </th>
-                <th> Action </th>
-            </tr>
-            <c:forEach var="product" items="${products}">
+        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/rest/products/delete/${product.id}">
+
+            <table class="table table-bordered table-responsive table-striped"">
                 <tr>
-                    <td> ${product.name} </td>
-                    <td> ${product.description} </td>
-                    <td> ${product.price} </td>
-                    <td>
-                        <a class="btn" href="${pageContext.request.contextPath}/rest/products/view/${product.id}" ><i class="glyphicon glyphicon-edit"></i></a>
-                        <a class="btn" href="${pageContext.request.contextPath}/rest/products/preview-delete/${product.id}" ><i class="glyphicon glyphicon-trash"></i></a>
-                    </td>
+                    <th>Name</th><th>Value</th>
                 </tr>
-            </c:forEach>
-        </table>
+                <tr>
+                    <td>Product Name</td><td>${product.name}</td>
+                </tr>
+                <tr>
+                    <td>Description </td><td>${product.description}</td>
+                </tr>
+                <tr>
+                    <td>Unit Price</td><td>${product.price}</td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <div class="col-sm-6 col-md-offset-4">
+                    <button type="submit" name="action" value="Remove" class="btn btn-primary">Remove</button>
+                    &nbsp;
+                    <button type="submit" name="action" value="Cancel" class="btn btn-default">Cancel</button>
+                </div>
+            </div>
+        </form>
+
     </div>
 
 </div>

@@ -6,13 +6,10 @@ import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.Viewable;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.List;
 
 
@@ -88,10 +85,6 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-//        return new Viewable("products.jsp");
-//        return new Viewable("redirect:/products.jsp");
-//        final Response response = Response.seeOther(URI.create("products.jsp")).build();
-        // "location - the redirection URI. If a relative URI is supplied it will be converted into an absolute URI by resolving it relative to the base URI of the application (see UriInfo.getBaseUri())."
         final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
         return response;
     }
@@ -99,19 +92,45 @@ public class ProductController {
 
     @GET
     @Controller
-    @Path("delete/{id}")
+    @Path("preview-delete/{id}")
     @Produces("text/html")
-    public Response deleteProduct( @PathParam("id") int id  )
+    public Response previewDeleteProduct( @PathParam("id") int id)
     {
-        System.out.printf("***** %s.deleteProduct( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
+        System.out.printf("***** %s.previewDeleteProduct( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
         final List<Product> products = productService.findById(id);
         System.out.printf("***** products=%s", products);
         if ( products.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("/error.jsp").build();
         }
         else {
-            productService.removeProduct(products.get(0));
-            models.put("product", products.get(0) );
+            models.put("product", products.get(0));
+            final Response response = Response.status(Response.Status.OK).entity("/delete-product.jsp").build();
+            return response;
+        }
+    }
+
+    @POST
+    @Controller
+    @Path("delete/{id}")
+    @Produces("text/html")
+    public Response deleteProduct( @PathParam("id") int id, @FormParam("action") String action  )
+    {
+        System.out.printf("***** %s.deleteProduct( id=%d, action=%s ) productService=%s, models=%s\n", getClass().getSimpleName(), id, action, productService, models );
+        if ( "Remove".equalsIgnoreCase(action)) {
+            final List<Product> products = productService.findById(id);
+            System.out.printf("***** products=%s", products);
+            if ( products.isEmpty()) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("/error.jsp").build();
+            }
+            else {
+                productService.removeProduct(products.get(0));
+                models.put("product", products.get(0) );
+                retrieveAll();
+                final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
+                return response;
+            }
+        }
+        else {
             retrieveAll();
             final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
             return response;
@@ -137,10 +156,7 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-//        return new Viewable("products.jsp");
-//        return new Viewable("redirect:/products.jsp");
-//        final Response response = Response.seeOther(URI.create("products.jsp")).build();
-        // "location - the redirection URI. If a relative URI is supplied it will be converted into an absolute URI by resolving it relative to the base URI of the application (see UriInfo.getBaseUri())."
         final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
         return response;
-    }}
+    }
+}
