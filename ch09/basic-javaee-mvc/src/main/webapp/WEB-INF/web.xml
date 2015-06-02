@@ -5,9 +5,25 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1" metadata-complete="false">
 
-    <display-name>ACME DEMO</display-name>
+    <display-name>MVC BASIC CRUD DEMO</display-name>
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <!-- How to redefine the view folder?
+
+        Hi Peter,
+
+        The default view folder is set to /WEB-INF/views in the property ViewEngine.DEFAULT_VIEW_ENGINE
+        See section 6.2 in the specification
+
+        In Ozark, you can override this by setting the property "javax.mvc.engine.ViewEngine.viewFolder" to something else. Have not tried it myself yet, but have a look at the Ozark implementation at https://github.com/ivargrimstad/ozark/blob/master/ozark/src/main/java/com/oracle/ozark/engine/ViewEngineBase.java
+
+        Regards,
+        Ivar
+        -->
+        <init-param>
+            <param-name>javax.mvc.engine.ViewEngine.viewFolder</param-name>
+            <param-value>/</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>
     </servlet>

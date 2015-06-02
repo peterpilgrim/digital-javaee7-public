@@ -22,12 +22,17 @@ public class RedirectController {
         return "redirect:rredirect/here";
     }
 
+
+    // This does work with 1.0.0-m1
+    // http://localhost:8080/basic-javaee-mvc-1.0-SNAPSHOT/rest/redirect/response1 -> 500 Internal Server Error
     @GET
     @Path("response1")
     public Response getResponse1() {
         return Response.seeOther(URI.create("redirect/here")).build();
     }
 
+    // Ditto - this does work with 1.0.0-m1
+    // http://localhost:8080/basic-javaee-mvc-1.0-SNAPSHOT/rest/redirect/response2 -> 500 Internal Server Error
     @GET
     @Path("response2")
     public Response getResponse2() {
