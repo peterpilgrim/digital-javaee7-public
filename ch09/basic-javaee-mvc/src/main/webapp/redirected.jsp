@@ -76,7 +76,7 @@
 
     <div class="page-header">
         <h1> REDIRECTED WEB APP FOLDER - </h1>
-        <p> Redirect works! src/main/webapp/redirected.jsp </p>
+        <p> Redirect works! <code>src/main/webapp/redirected.jsp</code> </p>
     </div>
 
     <div class="other-content">

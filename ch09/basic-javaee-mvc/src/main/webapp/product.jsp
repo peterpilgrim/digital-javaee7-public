@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        XeNoNiQUE :: 2016 :: BLANK JAVA EE ANGULARJS EXAMPLE
+        XeNoNiQUE :: 2016 :: BASIC JAVA EE 8 MVC
     </title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +75,7 @@
 <div class="main-content">
 
     <div class="page-header">
-        <h1> Java EE 8 MVC - Products  </h1>
+        <h1> Basic Java EE 8 MVC - Products  </h1>
         <p>
             Model View Controller
         </p>
