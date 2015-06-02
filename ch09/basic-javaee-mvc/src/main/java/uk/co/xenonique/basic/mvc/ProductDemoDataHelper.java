@@ -27,7 +27,7 @@ public class ProductDemoDataHelper {
     }
 
     public void populate() {
-        List<Product> products = Arrays.asList(
+        final List<Product> products = Arrays.asList(
                 new Product("Iron Widget", "useful for bolting shards", 213.98),
                 new Product("Cast Steel Bolt", "useful for bolting shards", 74.23),
                 new Product("Kitchen Scissors", "useful for cutting paper, strings and plastics shrink wrap", 4.99),
