@@ -4,7 +4,8 @@
 apply plugin: 'war'
 
 // Define equivalent Maven GAV coordinates.
-archivesBaseName = 'basic-javaee-mvc'
+archivesBaseName = 'handlebars-javaee-mvc'
+
 
 dependencies {
     providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
@@ -16,6 +17,8 @@ dependencies {
     compile 'org.hibernate:hibernate-validator:5.0.0.Final'
 
     compile "com.oracle.ozark:ozark:${ozarkVersion}"
+    compile "com.oracle.ozark.ext:ozark-handlebars:${ozarkVersion}"
+    compile "com.github.jknack:handlebars:2.0.0"
 
     testCompile 'org.slf4j:slf4j-simple:1.6.4'
     testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.1.7.Final'

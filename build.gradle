@@ -44,6 +44,13 @@ allprojects {
     group = 'uk.co.xenonique.digital'
     version = '1.0-SNAPSHOT'
 
+    ext {
+        glassfishVersion    = "4.1"
+        javaeeVersion       = "7.0"
+        ozarkVersion        = "1.0.0-m01"
+        // 1.0.0-m01  1.0.0-m02-SNAPSHOT
+    }
+
     repositories {
         mavenLocal()
         mavenCentral()
@@ -61,7 +68,7 @@ allprojects {
     targetCompatibility = '1.8'
 
     task wrapper(type: Wrapper) {
-        gradleVersion = '2.3'
+        gradleVersion = '2.4'
     }
 
     idea {
