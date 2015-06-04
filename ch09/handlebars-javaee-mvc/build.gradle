@@ -17,7 +17,7 @@ dependencies {
     compile 'org.hibernate:hibernate-validator:5.0.0.Final'
 
     compile "com.oracle.ozark:ozark:${ozarkVersion}"
-    compile "com.oracle.ozark.ext:ozark-handlebars:${ozarkVersion}"
+//    compile "com.oracle.ozark.ext:ozark-handlebars:${ozarkVersion}"
     compile "com.github.jknack:handlebars:2.0.0"
 
     testCompile 'org.slf4j:slf4j-simple:1.6.4'
