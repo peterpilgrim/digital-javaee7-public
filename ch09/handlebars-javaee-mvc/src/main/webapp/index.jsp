@@ -108,7 +108,7 @@
         Person
         <p>
             <a href="${pageContext.request.contextPath}/rest/person" class="btn btn-primary">
-                Person
+                Person (HBS)
             </a>
         </p>
     </div>
