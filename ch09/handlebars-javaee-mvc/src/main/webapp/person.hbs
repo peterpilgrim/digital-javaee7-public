@@ -2,17 +2,17 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Person View</title>
+    <title>Handlebars.java and Java EE 8 MVC - Person View</title>
     <link href="{{webContextPath}}/styles/bootstrap.css" rel="stylesheet">
     <link href="{{webContextPath}}/styles/main.css" rel="stylesheet">
 </head>
 <body>
-    {{> header}}
+    {{> navbar}}
     <div class="page-header">
-        <h1> Handlebars Java EE 8 MVC </h1>
+        <h1> {{title}} </h1>
     </div>
 
-    <div class="other-content">
+    <div class="main-content">
         <h1>Person</h1>
         <div> <p class="lead"> {{person.firstName}} </p></div>
         <div> <p class="lead"> {{person.lastName}} </p></div>
@@ -28,7 +28,7 @@
     </div>
     {{> footer}}
 </body>
-<script src="{{webContextPath}}/javascripts/jquery-2.1.3.js"></script>
-<script src="{{webContextPath}}/javascripts/bootstrap.js"></script>
-<script src="{{webContextPath}}/app/main.js"></script>
+
+{{> bottom }}
+
 </html>
