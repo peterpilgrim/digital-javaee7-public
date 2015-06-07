@@ -29,7 +29,7 @@ public class PersonController {
     @Produces("text/html;Charset=UTF-8")
     @View("person.hbs")
     public void person( @Context HttpServletRequest request, @Context HttpServletResponse response) {
-        Person person = new Person();
+        final Person person = new Person();
         person.setFirstName("Richard");
         person.setLastName("Davies");
         person.setAge(36);

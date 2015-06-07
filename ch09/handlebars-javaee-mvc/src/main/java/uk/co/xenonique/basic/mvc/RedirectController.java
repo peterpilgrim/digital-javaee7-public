@@ -56,7 +56,6 @@ public class RedirectController {
         models.put("page", request.getRequestURI() );
     }
 
-
     @GET
     @Path("here")
     @Produces("text/html")
