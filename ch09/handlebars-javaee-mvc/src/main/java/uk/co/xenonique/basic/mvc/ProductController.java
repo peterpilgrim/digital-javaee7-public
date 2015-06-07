@@ -68,9 +68,32 @@ public class ProductController {
         System.out.printf("***** products=%s", products);
         models.put("product", products.get(0) );
         defineCommonModelProperties(request, response, "Product");
-        return new Viewable("/product.jsp");
+        return new Viewable("/edit-product.hbs");
     }
 
+
+    @POST
+    @Controller
+    @Path("add")
+    @Produces("text/html")
+    public Response addProduct(@FormParam("action") String action,
+                               @FormParam("name") String name,
+                               @FormParam("description") String description,
+                               @FormParam("price") double price,
+                               @Context HttpServletRequest request, @Context HttpServletResponse response    )
+    {
+        System.out.printf("***** %s.add() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
+        System.out.printf("***** name=%s, description=%s, price=%.4f\n", name, description, price);
+        defineCommonModelProperties(request, response, "Add Product");
+        if ("Add".equalsIgnoreCase(action)) {
+            final Product product = new Product(name, description, price);
+            productService.saveProduct(product);
+            models.put("product", product);
+        }
+        retrieveAll();
+        final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
+        return res;
+    }
 
     @POST
     @Controller
@@ -97,7 +120,7 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-        final Response res = Response.status(Response.Status.OK).entity("/edit-products.hbs").build();
+        final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
         return res;
     }
 
@@ -117,7 +140,7 @@ public class ProductController {
         }
         else {
             models.put("product", products.get(0));
-            final Response res = Response.status(Response.Status.OK).entity("/delete-product.jsp").build();
+            final Response res = Response.status(Response.Status.OK).entity("/delete-product.hbs").build();
             return res;
         }
     }
@@ -141,37 +164,15 @@ public class ProductController {
                 productService.removeProduct(products.get(0));
                 models.put("product", products.get(0) );
                 retrieveAll();
-                final Response res = Response.status(Response.Status.OK).entity("/products.jsp").build();
+                final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
                 return res;
             }
         }
         else {
             retrieveAll();
-            final Response res = Response.status(Response.Status.OK).entity("/products.jsp").build();
+            final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
             return res;
         }
     }
 
-    @POST
-    @Controller
-    @Path("add")
-    @Produces("text/html")
-    public Response addProduct(@FormParam("action") String action,
-                               @FormParam("name") String name,
-                               @FormParam("description") String description,
-                               @FormParam("price") double price,
-                               @Context HttpServletRequest request, @Context HttpServletResponse response    )
-    {
-        System.out.printf("***** %s.add() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
-        System.out.printf("***** name=%s, description=%s, price=%.4f\n", name, description, price);
-        defineCommonModelProperties(request, response, "Add Product");
-        if ("Add".equalsIgnoreCase(action)) {
-            final Product product = new Product(name, description, price);
-            productService.saveProduct(product);
-            models.put("product", product);
-        }
-        retrieveAll();
-        final Response res = Response.status(Response.Status.OK).entity("/products.jsp").build();
-        return res;
-    }
 }

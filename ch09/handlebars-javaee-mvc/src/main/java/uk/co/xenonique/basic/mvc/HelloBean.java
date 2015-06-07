@@ -26,7 +26,7 @@ public class HelloBean {
     {
         System.out.printf("%s.fire( name=`%s' )\n", getClass().getSimpleName(), name );
         user.setName(name);
-        return new Viewable("/hello.jsp");
+        return new Viewable("/hello.hbs");
     }
 
     @POST
@@ -37,6 +37,6 @@ public class HelloBean {
     {
         System.out.printf("%s.hello( name=`%s' )\n", getClass().getSimpleName(), name );
         user.setName(name);
-        return new Viewable("/hello.jsp");
+        return new Viewable("/hello.hbs");
     }
 }

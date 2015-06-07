@@ -79,32 +79,6 @@
     </div>
 
     <div class="other-content">
-        MVC Controller
-        <p>
-            <form action="${pageContext.request.contextPath}/rest/hello/queryform" method="POST" >
-                <div class="form-group">
-                    <label for="elementName">Name</label>
-                    <input type="text" class="form-control" id="elementName" name="name" placeholder="Jane Doe">
-                </div>
-
-            </form>
-
-        </p>
-
-        <p>
-            <a href="${pageContext.request.contextPath}/rest/hello/view/Sarah" class="btn btn-primary">
-                Set Name to Sarah
-            </a>
-        </p>
-
-        <p>
-            <a href="${pageContext.request.contextPath}/rest/hello/view/Benjamin" class="btn btn-primary">
-                Set Name to Benjamin
-            </a>
-        </p>
-    </div>
-
-    <div class="other-content">
         Person
         <p>
             <a href="${pageContext.request.contextPath}/rest/person" class="btn btn-primary">
