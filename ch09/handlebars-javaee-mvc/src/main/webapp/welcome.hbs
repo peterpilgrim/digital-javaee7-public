@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+{{> header }}
+
+<body>
+    {{> navbar }}
+
+    <div class="main-content">
+
+        <div class="page-header">
+            <h1> Handlebars Java EE 8 MVC </h1>
+        </div>
+
+        <div class="other-content">
+            Person
+            <p>
+                <a href="{{webContextPath}}/rest/person" class="btn btn-primary">
+                    Person (HBS)
+                </a>
+            </p>
+        </div>
+
+        <div class="other-content">
+            Product Controller
+            <p>
+                <a href="{{webContextPath}}/rest/products/list" class="btn btn-primary">
+                    List All Products
+                </a>
+            </p>
+        </div>
+
+        <div class="other-content">
+
+            <div class="alert-info" role="alert">
+                <p>
+                    Now make this application work! Do as you please.
+                </p>
+            </div>
+
+            <p class="alert alert-info"> NB: This page is <code>src/main/webapp/welcome.hbs</code></p>
+
+            <p>
+                <a href="{{webContextPath}}/rest/redirect/string" class="btn btn-info"> Redirect #1 </a>
+            </p>
+
+            <div>
+                <h2>REST GET REQUEST</h2>
+                <p>
+                    <a href="<%= request.getContextPath()%>/rest/sample/hello"> Hyperlink HTTP GET Request to the Sample Endpoint </a>
+                </p>
+                <p>
+                    NB: We use JavaServer Pages to gain access to the Servlet Request Context, in order to set up the Hyperlink correctly.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{> footer}}
+</body>
+
+{{> bottom }}
+
+</html>

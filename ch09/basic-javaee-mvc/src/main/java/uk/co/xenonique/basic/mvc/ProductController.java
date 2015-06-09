@@ -85,8 +85,7 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-        final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
-        return response;
+        return Response.status(Response.Status.OK).entity("/products.jsp").build();
     }
 
 
@@ -104,8 +103,7 @@ public class ProductController {
         }
         else {
             models.put("product", products.get(0));
-            final Response response = Response.status(Response.Status.OK).entity("/delete-product.jsp").build();
-            return response;
+            return Response.status(Response.Status.OK).entity("/delete-product.jsp").build();
         }
     }
 
@@ -126,14 +124,12 @@ public class ProductController {
                 productService.removeProduct(products.get(0));
                 models.put("product", products.get(0) );
                 retrieveAll();
-                final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
-                return response;
+                return Response.status(Response.Status.OK).entity("/products.jsp").build();
             }
         }
         else {
             retrieveAll();
-            final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
-            return response;
+            return Response.status(Response.Status.OK).entity("/products.jsp").build();
         }
     }
 
@@ -156,7 +152,6 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-        final Response response = Response.status(Response.Status.OK).entity("/products.jsp").build();
-        return response;
+        return Response.status(Response.Status.OK).entity("/products.jsp").build();
     }
 }

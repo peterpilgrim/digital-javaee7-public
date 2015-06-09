@@ -15,7 +15,7 @@ import javax.ws.rs.core.Context;
 /**
  * PersonController test.
  *
- * @author Rahman Usta
+ * @author Peter Pilgrim
  */
 @Path("person")
 @Controller

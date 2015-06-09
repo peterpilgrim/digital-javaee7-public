@@ -71,6 +71,17 @@ public class ProductController {
         return new Viewable("/edit-product.hbs");
     }
 
+    @GET
+    @Controller
+    @Path("preview-create")
+    @Produces("text/html")
+    public Response previewCreateProduct(@Context HttpServletRequest request, @Context HttpServletResponse response)
+    {
+        System.out.printf("***** %s.previewCreateProduct() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
+        defineCommonModelProperties(request, response, "Create Product");
+        models.put("product", new Product() );
+        return Response.status(Response.Status.OK).entity("/create-product.hbs").build();
+    }
 
     @POST
     @Controller
@@ -91,8 +102,7 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-        final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
-        return res;
+        return Response.status(Response.Status.OK).entity("/products.hbs").build();
     }
 
     @POST
@@ -120,8 +130,7 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-        final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
-        return res;
+        return Response.status(Response.Status.OK).entity("/products.hbs").build();
     }
 
 
@@ -140,8 +149,7 @@ public class ProductController {
         }
         else {
             models.put("product", products.get(0));
-            final Response res = Response.status(Response.Status.OK).entity("/delete-product.hbs").build();
-            return res;
+            return Response.status(Response.Status.OK).entity("/delete-product.hbs").build();
         }
     }
 
@@ -158,20 +166,19 @@ public class ProductController {
             final List<Product> products = productService.findById(id);
             System.out.printf("***** products=%s", products);
             if ( products.isEmpty()) {
+                models.put("error", String.format("There is no product with the following id: [%d]", id ));
                 return Response.status(Response.Status.BAD_REQUEST).entity("/error.jsp").build();
             }
             else {
                 productService.removeProduct(products.get(0));
                 models.put("product", products.get(0) );
                 retrieveAll();
-                final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
-                return res;
+                return Response.status(Response.Status.OK).entity("/products.hbs").build();
             }
         }
         else {
             retrieveAll();
-            final Response res = Response.status(Response.Status.OK).entity("/products.hbs").build();
-            return res;
+            return Response.status(Response.Status.OK).entity("/products.hbs").build();
         }
     }
 
