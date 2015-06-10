@@ -35,7 +35,7 @@
                     <tr>
                         <td> {{this.name}} </td>
                         <td> {{this.description}} </td>
-                        <td> {{this.price}} </td>
+                        <td> {{formatDecimal this.price}} </td>
                         <td>
                             <a class="btn" href="{{webContextPath}}/rest/products/view/{{this.id}}" ><i class="glyphicon glyphicon-edit"></i></a>
                             <a class="btn" href="{{webContextPath}}/rest/products/preview-delete/{{this.id}}" ><i class="glyphicon glyphicon-trash"></i></a>

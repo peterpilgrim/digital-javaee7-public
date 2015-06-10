@@ -6,6 +6,8 @@ package uk.co.xenonique.basic.mvc;
  * @author Peter Pilgrim
  */
 import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Helper;
+import com.github.jknack.handlebars.Options;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.ServletContextTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
@@ -18,6 +20,8 @@ import javax.mvc.engine.ViewEngineContext;
 import javax.mvc.engine.ViewEngineException;
 import javax.servlet.ServletContext;
 import java.io.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.stream.Collectors;
 
 
@@ -51,6 +55,13 @@ public class MyHandlebarsViewEngine extends ViewEngineBase {
 
             final TemplateLoader loader = new ServletContextTemplateLoader(servletContext);
             final Handlebars handlebars = new Handlebars(loader);
+            handlebars.registerHelper("formatDecimal", new Helper<BigDecimal>() {
+                @Override
+                public CharSequence apply(BigDecimal number, Options options) throws IOException {
+                    final DecimalFormat formatter = new DecimalFormat("#,##0.##");
+                    return formatter.format(number.doubleValue());
+                }
+            });
             final Template template = handlebars.compileInline(viewContent);
             template.apply(models, writer);
         } catch (IOException e) {
