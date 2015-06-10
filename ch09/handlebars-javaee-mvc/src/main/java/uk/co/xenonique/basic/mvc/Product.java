@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.annotation.Generated;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 /**
  * The type Product
@@ -24,13 +25,17 @@ public class Product {
     private Integer id;
     @NotEmpty @Size(max=64) private String name;
     @NotEmpty @Size(max=256) private String description;
-    private Double price;
+    private BigDecimal price;
 
     public Product() {
         this(null, null, null);
     }
 
-    public Product(String name, String description, Double price) {
+    public Product(String name, String description, double price) {
+        this(name, description, new BigDecimal(price));
+    }
+
+    public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -60,11 +65,11 @@ public class Product {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

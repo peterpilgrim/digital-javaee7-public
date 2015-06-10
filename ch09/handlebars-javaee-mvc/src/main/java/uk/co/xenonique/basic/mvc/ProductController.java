@@ -1,5 +1,7 @@
 package uk.co.xenonique.basic.mvc;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -8,12 +10,20 @@ import javax.mvc.Models;
 import javax.mvc.Viewable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.*;
+import javax.validation.executable.ExecutableType;
+import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
-
+ import static javax.ws.rs.core.Response.Status.*;
 /**
  * The type ProductController
  *
@@ -25,6 +35,12 @@ public class ProductController {
 
     @Inject
     Models  models;
+
+    @Inject
+    ValidatorFactory validatorFactory;
+
+    @Inject
+    FormErrorMessage formError;
 
     @EJB
     ProductService productService;
@@ -87,10 +103,11 @@ public class ProductController {
     @Controller
     @Path("add")
     @Produces("text/html")
+    @ValidateOnExecution(type = ExecutableType.NONE)
     public Response addProduct(@FormParam("action") String action,
                                @FormParam("name") String name,
                                @FormParam("description") String description,
-                               @FormParam("price") double price,
+                               @FormParam("price") BigDecimal price,
                                @Context HttpServletRequest request, @Context HttpServletResponse response    )
     {
         System.out.printf("***** %s.add() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
@@ -98,6 +115,19 @@ public class ProductController {
         defineCommonModelProperties(request, response, "Add Product");
         if ("Add".equalsIgnoreCase(action)) {
             final Product product = new Product(name, description, price);
+//            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//            final Set<ConstraintViolation<Product>> set = factory.getValidator().validate(product);
+            final Set<ConstraintViolation<Product>> set = validatorFactory.getValidator().validate(product);
+            if (!set.isEmpty()) {
+                final ConstraintViolation<?> cv = set.iterator().next();
+                final String property = cv.getPropertyPath().toString();
+                formError.setProperty(property.substring(property.lastIndexOf('.') + 1));
+                formError.setValue(cv.getInvalidValue());
+                formError.setMessage(cv.getMessage());
+                models.put("formError",formError);
+                return Response.status(BAD_REQUEST).entity("error.hbs").build();
+            }
+
             productService.saveProduct(product);
             models.put("product", product);
         }
@@ -109,11 +139,12 @@ public class ProductController {
     @Controller
     @Path("edit/{id}")
     @Produces("text/html")
+    @ValidateOnExecution(type = ExecutableType.NONE)
     public Response editProduct( @PathParam("id") int id,
                                  @FormParam("action") String action,
-                                 @FormParam("name") String name,
-                                 @FormParam("description") String description,
-                                 @FormParam("price") double price,
+                                 @NotNull @NotEmpty @FormParam("name") String name,
+                                 @NotNull @NotEmpty @FormParam("description") String description,
+                                 @DecimalMin("0.0") @FormParam("price") BigDecimal price,
                                  @Context HttpServletRequest request, @Context HttpServletResponse response    )
     {
         System.out.printf("***** %s.edit( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
@@ -126,6 +157,16 @@ public class ProductController {
             product.setName(name);
             product.setDescription(description);
             product.setPrice(price);
+            final Set<ConstraintViolation<Product>> set = validatorFactory.getValidator().validate(product);
+            if (!set.isEmpty()) {
+                final ConstraintViolation<?> cv = set.iterator().next();
+                final String property = cv.getPropertyPath().toString();
+                formError.setProperty(property.substring(property.lastIndexOf('.') + 1));
+                formError.setValue(cv.getInvalidValue());
+                formError.setMessage(cv.getMessage());
+                models.put("formError",formError);
+                return Response.status(BAD_REQUEST).entity("error.hbs").build();
+            }
             productService.saveProduct(product);
             models.put("product", product);
         }
@@ -166,7 +207,8 @@ public class ProductController {
             final List<Product> products = productService.findById(id);
             System.out.printf("***** products=%s", products);
             if ( products.isEmpty()) {
-                models.put("error", String.format("There is no product with the following id: [%d]", id ));
+                formError.setMessage(String.format("There is no product with the following id: [%d]", id ));
+                models.put("formError", formError);
                 return Response.status(Response.Status.BAD_REQUEST).entity("/error.jsp").build();
             }
             else {

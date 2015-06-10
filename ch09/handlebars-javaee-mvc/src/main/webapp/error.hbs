@@ -16,12 +16,27 @@
 
     <div class="other-content">
         <div class="jumbotron">
-            <p> Error </p>
+            <p> Form Error </p>
         </div>
 
         <div class="main-content" >
-            <p> Error {{error}}</p>
-            <p> Message {{message}}</p>
+            <table class="table table-stripped table-bordered table-responsive">
+                <tr>
+                    <th>Name</th><th>Value</th>
+                </tr>
+                <tr>
+                    <td>Property</td> <td>{{formError.property}}</td>
+                </tr>
+                <tr>
+                    <td>Message</td> <td>{{formError.message}}</td>
+                </tr>
+                <tr>
+                    <td>Value</td> <td>{{formError.value}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="main-content" >
             <pre> Stacktrace:
                 {{stacktrace}}
             </pre>
