@@ -7,15 +7,16 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
+import javax.mvc.View;
 import javax.mvc.Viewable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
+//import javax.mvc.validation.ValidationResult;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.*;
-import javax.validation.executable.ExecutableType;
-import javax.validation.executable.ValidateOnExecution;
+//import javax.validation.executable.ExecutableType;
+//import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -103,7 +104,6 @@ public class ProductController {
     @Controller
     @Path("add")
     @Produces("text/html")
-    @ValidateOnExecution(type = ExecutableType.NONE)
     public Response addProduct(@FormParam("action") String action,
                                @FormParam("name") String name,
                                @FormParam("description") String description,
@@ -139,12 +139,11 @@ public class ProductController {
     @Controller
     @Path("edit/{id}")
     @Produces("text/html")
-    @ValidateOnExecution(type = ExecutableType.NONE)
     public Response editProduct( @PathParam("id") int id,
                                  @FormParam("action") String action,
-                                 @NotNull @NotEmpty @FormParam("name") String name,
-                                 @NotNull @NotEmpty @FormParam("description") String description,
-                                 @DecimalMin("0.0") @FormParam("price") BigDecimal price,
+                                 @FormParam("name") String name,
+                                 @FormParam("description") String description,
+                                 @FormParam("price") BigDecimal price,
                                  @Context HttpServletRequest request, @Context HttpServletResponse response    )
     {
         System.out.printf("***** %s.edit( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
@@ -165,7 +164,7 @@ public class ProductController {
                 formError.setValue(cv.getInvalidValue());
                 formError.setMessage(cv.getMessage());
                 models.put("formError",formError);
-                return Response.status(BAD_REQUEST).entity("error.hbs").build();
+                return Response.status(OK).entity("error.hbs").build();
             }
             productService.saveProduct(product);
             models.put("product", product);
@@ -224,4 +223,49 @@ public class ProductController {
         }
     }
 
+
+
+    /*
+    @POST
+    @Controller
+    @Path("alt-edit/{id}")
+    @Produces("text/html")
+    @View("validation-error.hbs")
+    @ValidateOnExecution(type = ExecutableType.NONE)
+    public Response alternativeEditProduct( @PathParam("id") int id,
+                                 @FormParam("action") String action,
+                                 @NotNull @NotEmpty @FormParam("name") String name,
+                                 @NotNull @NotEmpty @FormParam("description") String description,
+                                 @NotNull @DecimalMin("0.0") @FormParam("price") BigDecimal price,
+                                 @Context HttpServletRequest request, @Context HttpServletResponse response    )
+    {
+        // This does NOT work with MVC 1.0.0-m1
+        System.out.printf("***** %s.edit( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
+        System.out.printf("***** name=%s, description=%s, price=%.4f\n", name, description, price);
+        defineCommonModelProperties(request,response,"Edit Product");
+//        System.out.printf("**** vr=%s, vr.failed = %s\n", vr, vr.isFailed());
+        if ("Save".equalsIgnoreCase(action)) {
+            final List<Product> products = productService.findById(id);
+            System.out.printf("***** products=%s", products);
+            final Product product = products.get(0);
+            product.setName(name);
+            product.setDescription(description);
+            product.setPrice(price);
+            final Set<ConstraintViolation<Product>> set = validatorFactory.getValidator().validate(product);
+            if (!set.isEmpty()) {
+                final ConstraintViolation<?> cv = set.iterator().next();
+                final String property = cv.getPropertyPath().toString();
+                formError.setProperty(property.substring(property.lastIndexOf('.') + 1));
+                formError.setValue(cv.getInvalidValue());
+                formError.setMessage(cv.getMessage());
+                models.put("formError",formError);
+                return Response.status(BAD_REQUEST).entity("error.hbs").build();
+            }
+            productService.saveProduct(product);
+            models.put("product", product);
+        }
+        retrieveAll();
+        return Response.status(Response.Status.OK).entity("/products.hbs").build();
+    }
+    */
 }

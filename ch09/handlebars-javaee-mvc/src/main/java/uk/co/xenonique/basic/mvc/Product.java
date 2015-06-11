@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
@@ -25,7 +27,7 @@ public class Product {
     private Integer id;
     @NotEmpty @Size(max=64) private String name;
     @NotEmpty @Size(max=256) private String description;
-    private BigDecimal price;
+    @NotNull @DecimalMin("0.010") private BigDecimal price;
 
     public Product() {
         this(null, null, null);

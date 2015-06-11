@@ -55,10 +55,16 @@ public class MyHandlebarsViewEngine extends ViewEngineBase {
 
             final TemplateLoader loader = new ServletContextTemplateLoader(servletContext);
             final Handlebars handlebars = new Handlebars(loader);
+
+            models.put( "webContext", context.getRequest().getContextPath());
+            models.put( "page", context.getRequest().getRequestURI());
+            models.put( "request", context.getRequest());
+            models.put( "response", context.getResponse());
+
             handlebars.registerHelper("formatDecimal", new Helper<BigDecimal>() {
                 @Override
                 public CharSequence apply(BigDecimal number, Options options) throws IOException {
-                    final DecimalFormat formatter = new DecimalFormat("#,##0.##");
+                    final DecimalFormat formatter = new DecimalFormat("###0.##");
                     return formatter.format(number.doubleValue());
                 }
             });
