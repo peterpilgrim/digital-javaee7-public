@@ -14,7 +14,7 @@ import java.util.List;
 @Stateless
 public class ProductService {
 
-    @PersistenceContext(unitName = "BasicMvcDemo")
+    @PersistenceContext(unitName = "HandlebarsMvcDemo")
     private EntityManager entityManager;
 
     public void saveProduct(Product product) {

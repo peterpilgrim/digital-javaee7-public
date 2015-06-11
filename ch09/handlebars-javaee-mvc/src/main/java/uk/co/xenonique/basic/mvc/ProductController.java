@@ -226,13 +226,12 @@ public class ProductController {
 
 
 
-    /*
     @POST
     @Controller
     @Path("alt-edit/{id}")
     @Produces("text/html")
-    @View("validation-error.hbs")
-    @ValidateOnExecution(type = ExecutableType.NONE)
+//    @View("validation-error.hbs")
+//    @ValidateOnExecution(type = ExecutableType.NONE)
     public Response alternativeEditProduct( @PathParam("id") int id,
                                  @FormParam("action") String action,
                                  @NotNull @NotEmpty @FormParam("name") String name,
@@ -268,5 +267,4 @@ public class ProductController {
         retrieveAll();
         return Response.status(Response.Status.OK).entity("/products.hbs").build();
     }
-    */
 }
