@@ -56,7 +56,7 @@ public class MyHandlebarsViewEngine extends ViewEngineBase {
             final TemplateLoader loader = new ServletContextTemplateLoader(servletContext);
             final Handlebars handlebars = new Handlebars(loader);
 
-            models.put( "webContext", context.getRequest().getContextPath());
+            models.put( "webContextPath", context.getRequest().getContextPath());
             models.put( "page", context.getRequest().getRequestURI());
             models.put( "request", context.getRequest());
             models.put( "response", context.getResponse());

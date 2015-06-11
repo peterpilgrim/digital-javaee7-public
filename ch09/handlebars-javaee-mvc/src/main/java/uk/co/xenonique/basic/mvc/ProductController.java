@@ -49,10 +49,6 @@ public class ProductController {
     private void defineCommonModelProperties(HttpServletRequest request, HttpServletResponse response, String title ) {
         models.put("pageTitle", "Handlebars.java Java EE 8 MVC" );
         models.put("title", title);
-        models.put("webContextPath", request.getContextPath() );
-        models.put("request", request);
-        models.put("response", response);
-        models.put("page", request.getRequestURI() );
     }
 
     private void retrieveAll() {
@@ -152,11 +148,10 @@ public class ProductController {
         if ("Save".equalsIgnoreCase(action)) {
             final List<Product> products = productService.findById(id);
             System.out.printf("***** products=%s", products);
-            final Product product = products.get(0);
-            product.setName(name);
-            product.setDescription(description);
-            product.setPrice(price);
-            final Set<ConstraintViolation<Product>> set = validatorFactory.getValidator().validate(product);
+            // We need to work with a detached copy to avoid EJB transactional rollback error that happen
+            // when the entity is invalid.
+            final Product product2 = new Product(name, description, price );
+            final Set<ConstraintViolation<Product>> set = validatorFactory.getValidator().validate(product2);
             if (!set.isEmpty()) {
                 final ConstraintViolation<?> cv = set.iterator().next();
                 final String property = cv.getPropertyPath().toString();
@@ -164,8 +159,14 @@ public class ProductController {
                 formError.setValue(cv.getInvalidValue());
                 formError.setMessage(cv.getMessage());
                 models.put("formError",formError);
-                return Response.status(OK).entity("error.hbs").build();
+                return Response.status(BAD_REQUEST).entity("error.hbs").build();
             }
+            // Now retrieve the real entity and work with it.
+            final Product product = products.get(0);
+            product.setName(name);
+            product.setDescription(description);
+            product.setPrice(price);
+
             productService.saveProduct(product);
             models.put("product", product);
         }
