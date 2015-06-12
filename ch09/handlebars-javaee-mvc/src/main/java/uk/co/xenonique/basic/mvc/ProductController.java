@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
- import static javax.ws.rs.core.Response.Status.*;
+import static javax.ws.rs.core.Response.Status.*;
 /**
  * The type ProductController
  *
@@ -93,7 +93,7 @@ public class ProductController {
         System.out.printf("***** %s.previewCreateProduct() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
         defineCommonModelProperties(request, response, "Create Product");
         models.put("product", new Product() );
-        return Response.status(Response.Status.OK).entity("/create-product.hbs").build();
+        return Response.status(OK).entity("/create-product.hbs").build();
     }
 
     @POST
@@ -128,7 +128,7 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-        return Response.status(Response.Status.OK).entity("/products.hbs").build();
+        return Response.status(OK).entity("/products.hbs").build();
     }
 
     @POST
@@ -171,7 +171,7 @@ public class ProductController {
             models.put("product", product);
         }
         retrieveAll();
-        return Response.status(Response.Status.OK).entity("/products.hbs").build();
+        return Response.status(OK).entity("/products.hbs").build();
     }
 
 
@@ -186,11 +186,11 @@ public class ProductController {
         System.out.printf("***** products=%s", products);
         defineCommonModelProperties(request, response, "Delete Product");
         if ( products.isEmpty()) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("/error.jsp").build();
+            return Response.status(BAD_REQUEST).entity("/error.jsp").build();
         }
         else {
             models.put("product", products.get(0));
-            return Response.status(Response.Status.OK).entity("/delete-product.hbs").build();
+            return Response.status(OK).entity("/delete-product.hbs").build();
         }
     }
 
@@ -209,18 +209,18 @@ public class ProductController {
             if ( products.isEmpty()) {
                 formError.setMessage(String.format("There is no product with the following id: [%d]", id ));
                 models.put("formError", formError);
-                return Response.status(Response.Status.BAD_REQUEST).entity("/error.jsp").build();
+                return Response.status(BAD_REQUEST).entity("/error.jsp").build();
             }
             else {
                 productService.removeProduct(products.get(0));
                 models.put("product", products.get(0) );
                 retrieveAll();
-                return Response.status(Response.Status.OK).entity("/products.hbs").build();
+                return Response.status(OK).entity("/products.hbs").build();
             }
         }
         else {
             retrieveAll();
-            return Response.status(Response.Status.OK).entity("/products.hbs").build();
+            return Response.status(OK).entity("/products.hbs").build();
         }
     }
 
@@ -230,14 +230,12 @@ public class ProductController {
     @Controller
     @Path("alt-edit/{id}")
     @Produces("text/html")
-//    @View("validation-error.hbs")
-//    @ValidateOnExecution(type = ExecutableType.NONE)
     public Response alternativeEditProduct( @PathParam("id") int id,
-                                 @FormParam("action") String action,
-                                 @NotNull @NotEmpty @FormParam("name") String name,
-                                 @NotNull @NotEmpty @FormParam("description") String description,
-                                 @NotNull @DecimalMin("0.0") @FormParam("price") BigDecimal price,
-                                 @Context HttpServletRequest request, @Context HttpServletResponse response    )
+         @FormParam("action") String action,
+         @NotNull @NotEmpty @FormParam("name") String name,
+         @NotNull @NotEmpty @FormParam("description") String description,
+         @NotNull @DecimalMin("0.0") @FormParam("price") BigDecimal price,
+         @Context HttpServletRequest request, @Context HttpServletResponse response )
     {
         // This does NOT work with MVC 1.0.0-m1
         System.out.printf("***** %s.edit( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
@@ -251,20 +249,10 @@ public class ProductController {
             product.setName(name);
             product.setDescription(description);
             product.setPrice(price);
-            final Set<ConstraintViolation<Product>> set = validatorFactory.getValidator().validate(product);
-            if (!set.isEmpty()) {
-                final ConstraintViolation<?> cv = set.iterator().next();
-                final String property = cv.getPropertyPath().toString();
-                formError.setProperty(property.substring(property.lastIndexOf('.') + 1));
-                formError.setValue(cv.getInvalidValue());
-                formError.setMessage(cv.getMessage());
-                models.put("formError",formError);
-                return Response.status(BAD_REQUEST).entity("error.hbs").build();
-            }
             productService.saveProduct(product);
             models.put("product", product);
         }
         retrieveAll();
-        return Response.status(Response.Status.OK).entity("/products.hbs").build();
+        return Response.status(OK).entity("/products.hbs").build();
     }
 }

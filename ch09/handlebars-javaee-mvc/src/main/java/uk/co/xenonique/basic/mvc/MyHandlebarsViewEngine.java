@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * Class HandlebarsViewEngine
  *
- * @author Rahman Usta
+ * @author Peter Pilgrim
  */
 @ApplicationScoped
 public class MyHandlebarsViewEngine extends ViewEngineBase {
@@ -58,6 +58,7 @@ public class MyHandlebarsViewEngine extends ViewEngineBase {
 
             models.put( "webContextPath", context.getRequest().getContextPath());
             models.put( "page", context.getRequest().getRequestURI());
+            models.put( "viewName", viewName);
             models.put( "request", context.getRequest());
             models.put( "response", context.getResponse());
 

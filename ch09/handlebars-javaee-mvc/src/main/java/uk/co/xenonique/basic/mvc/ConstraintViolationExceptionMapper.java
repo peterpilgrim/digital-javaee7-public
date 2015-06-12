@@ -1,11 +1,18 @@
 package uk.co.xenonique.basic.mvc;
 
 import javax.annotation.Priority;
+import javax.mvc.Models;
+import javax.mvc.Viewable;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+
+import static javax.ws.rs.core.Response.Status.*;
 
 /**
  * The type ConstraintViolationExceptionMapper
@@ -17,35 +24,19 @@ import javax.ws.rs.ext.Provider;
 public class ConstraintViolationExceptionMapper
         implements ExceptionMapper<ConstraintViolationException> {
 
+    @Context HttpServletRequest request;
+
     @Override
     public Response toResponse(final ConstraintViolationException exception) {
-        return Response
-                // Define your own status.
-                .status(400)
-                        // Process given Exception and set an entity
-                        // i.e. Set an instance of Viewable to the response
-                        // so that Jersey MVC support can handle it.
-                .entity(new MyViewable("error.hbs", exception))
-                .build();
+        final Models models = new com.oracle.ozark.core.Models();
+        final ConstraintViolation<?> cv = exception.getConstraintViolations().iterator().next();
+        final String property = cv.getPropertyPath().toString();
+        final FormErrorMessage formError = new FormErrorMessage();
+        formError.setProperty(property.substring(property.lastIndexOf('.') + 1));
+        formError.setValue(cv.getInvalidValue());
+        formError.setMessage(cv.getMessage());
+        models.put("formError",formError);
+        final Viewable viewable = new Viewable("error.hbs", models);
+        return Response.status(BAD_REQUEST).entity(viewable).build();
     }
-
-    private static class MyViewable {
-        private final String view;
-        private final Exception exception;
-
-        public MyViewable(String view, Exception exception) {
-            this.view = view;
-            this.exception = exception;
-        }
-
-        @Override
-        public String toString() {
-            return view;
-        }
-
-        public Exception getException() {
-            return exception;
-        }
-    }
-
 }
