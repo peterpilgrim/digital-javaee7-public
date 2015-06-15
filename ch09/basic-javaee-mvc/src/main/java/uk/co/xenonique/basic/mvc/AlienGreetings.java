@@ -13,10 +13,32 @@ import javax.ws.rs.*;
  */
 @Path("/hello")
 @Stateless
-public class HelloBean {
+public class AlienGreetings {
 
     @Inject
     User user;
+
+    @POST
+    @Controller
+    @Path("simple1")
+    @Produces("text/html")
+    public String simple1(  @QueryParam("name") String name )
+    {
+        System.out.printf("%s.hello( name=`%s' )\n", getClass().getSimpleName(), name );
+        user.setName(name);
+        return "/hello.jsp";
+    }
+
+    @POST
+    @Controller
+    @Path("simple")
+    @Produces("text/html")
+    public Viewable simple2(  @QueryParam("name") String name )
+    {
+        System.out.printf("%s.hello( name=`%s' )\n", getClass().getSimpleName(), name );
+        user.setName(name);
+        return new Viewable("/hello.jsp");
+    }
 
     @GET
     @Controller
