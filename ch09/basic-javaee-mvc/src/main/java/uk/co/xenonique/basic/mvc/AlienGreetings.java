@@ -3,6 +3,7 @@ package uk.co.xenonique.basic.mvc;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.mvc.Controller;
+import javax.mvc.View;
 import javax.mvc.Viewable;
 import javax.ws.rs.*;
 
@@ -18,7 +19,7 @@ public class AlienGreetings {
     @Inject
     User user;
 
-    @POST
+    @GET
     @Controller
     @Path("simple1")
     @Produces("text/html")
@@ -29,9 +30,9 @@ public class AlienGreetings {
         return "/hello.jsp";
     }
 
-    @POST
+    @GET
     @Controller
-    @Path("simple")
+    @Path("simple2")
     @Produces("text/html")
     public Viewable simple2(  @QueryParam("name") String name )
     {
@@ -42,22 +43,33 @@ public class AlienGreetings {
 
     @GET
     @Controller
+    @Path("simple3")
+    @Produces("text/html")
+    @View("/hello.jsp")
+    public void simple3(  @QueryParam("name") String name )
+    {
+        System.out.printf("%s.hello( name=`%s' )\n", getClass().getSimpleName(), name );
+        user.setName(name);
+    }
+
+    @GET
+    @Controller
     @Path("view/{name}")
     @Produces("text/html")
-    public Viewable fire(  @PathParam("name") String name )
+    public Viewable helloWebPath( @PathParam("name") String name )
     {
-        System.out.printf("%s.fire( name=`%s' )\n", getClass().getSimpleName(), name );
+        System.out.printf("%s.helloWebPath( name=`%s' )\n", getClass().getSimpleName(), name );
         user.setName(name);
         return new Viewable("/hello.jsp");
     }
 
     @POST
     @Controller
-    @Path("queryform")
+    @Path("webform")
     @Produces("text/html")
-    public Viewable hello(  @FormParam("name") String name )
+    public Viewable helloWebForm( @FormParam("name") String name )
     {
-        System.out.printf("%s.hello( name=`%s' )\n", getClass().getSimpleName(), name );
+        System.out.printf("%s.helloWebForm( name=`%s' )\n", getClass().getSimpleName(), name );
         user.setName(name);
         return new Viewable("/hello.jsp");
     }

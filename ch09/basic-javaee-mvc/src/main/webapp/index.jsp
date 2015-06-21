@@ -1,3 +1,4 @@
+<%@ page import="uk.co.xenonique.basic.mvc.AlienGreetings" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,34 +80,58 @@
     </div>
 
     <div class="other-content">
-        Simple MVC Controller
+        <h2>Simple MVC Controller</h2>
 
         <p>
-            <form action="${pageContext.request.contextPath}/rest/hello/queryform" method="POST" >
+            HTTP GET Request with query parameter and invocation of <code><%= AlienGreetings.class.getSimpleName() %></code> with HTML Form:<br>
+            <a href="${pageContext.request.contextPath}/rest/hello/simple1?name=James" class="btn btn-primary">
+                Person called James
+            </a>
+        </p>
 
+        <p>
+            HTTP GET Request with query parameter and invocation of <code><%= AlienGreetings.class.getSimpleName() %></code> with HTML Form:<br>
+            <a href="${pageContext.request.contextPath}/rest/hello/simple2?name=Patricia" class="btn btn-primary">
+                Person called Patricia
+            </a>
+        </p>
+
+        <p>
+        <p>
+            HTTP GET Request with query parameter and invocation of <code><%= AlienGreetings.class.getSimpleName() %></code> with HTML Form:<br>
+            <a href="${pageContext.request.contextPath}/rest/hello/simple3?name=Aliiyah" class="btn btn-primary">
+                Person called Aliiyah
+            </a>
+        </p>
+
+        HTTP POST Request and invocation of <code><%= AlienGreetings.class.getSimpleName() %></code> with HTML Form:<br>
+            <form action="${pageContext.request.contextPath}/rest/hello/webform" method="POST" >
                 <div class="form-group">
                     <label for="elementName">Name</label>
                     <input type="text" class="form-control" id="elementName" name="name" placeholder="Jane Doe">
                 </div>
-
             </form>
-
         </p>
 
         <p>
+            HTTP GET Request with Path parameter and invocation of <code><%= AlienGreetings.class.getSimpleName() %></code> with HTML Form:<br>
             <a href="${pageContext.request.contextPath}/rest/hello/view/Sarah" class="btn btn-primary">
                 Set Name to Sarah
             </a>
         </p>
 
         <p>
+            HTTP GET Request with Path parameter and invocation of <code><%= AlienGreetings.class.getSimpleName() %></code> with HTML Form:<br>
             <a href="${pageContext.request.contextPath}/rest/hello/view/Benjamin" class="btn btn-primary">
                 Set Name to Benjamin
             </a>
         </p>
     </div>
+
+    <hr class="featurette-divider" />
+
     <div class="other-content">
-        Product Controller
+        <h2>Product Controller</h2>
 
         <p>
             <a href="${pageContext.request.contextPath}/rest/products/list" class="btn btn-primary">
@@ -115,8 +140,24 @@
         </p>
     </div>
 
-    <div class="other-content">
+    <hr class="featurette-divider" />
 
+
+    <div class="other-content">
+        <h2> Response </h2>
+        <div class="alert-info" role="alert">
+            <p>
+                Now make this application work! Do as you please.
+            </p>
+        </div>
+    </div>
+
+
+
+    <hr class="featurette-divider" />
+
+    <div class="other-content">
+        <h2> Redirect </h2>
         <div class="alert-info" role="alert">
             <p>
                 Now make this application work! Do as you please.
@@ -137,9 +178,6 @@
             </p>
         </div>
     </div>
-
-
-
 </div>
 
 <div class="container fatbottom">
