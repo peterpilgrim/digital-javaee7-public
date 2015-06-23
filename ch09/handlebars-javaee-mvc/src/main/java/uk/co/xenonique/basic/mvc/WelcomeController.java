@@ -20,27 +20,17 @@ import javax.ws.rs.core.Context;
 @Path("/welcome")
 @Stateless
 public class WelcomeController {
-
     @Inject
     Models models;
-
-    private void defineCommonModelProperties(HttpServletRequest request, HttpServletResponse response ) {
-        models.put("pageTitle", "Handlebars.java Java EE 8 MVC" );
-        models.put("title", "Welcome");
-        models.put("webContextPath", request.getContextPath() );
-        models.put("request", request);
-        models.put("response", response);
-        models.put("page", request.getRequestURI() );
-    }
 
     @GET
     @Controller
     @Produces("text/html")
-    public Viewable welcome( @Context HttpServletRequest request, @Context HttpServletResponse response)
+    public Viewable welcome()
     {
         System.out.printf("***** %s.welcome() models=%s\n", getClass().getSimpleName(), models );
-        defineCommonModelProperties(request, response);
+        models.put("pageTitle", "Handlebars.java Java EE 8 MVC" );
+        models.put("title", "Welcome");
         return new Viewable("/welcome.hbs");
     }
-
 }

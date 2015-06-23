@@ -5,6 +5,7 @@ package uk.co.xenonique.basic.mvc;
  *
  * @author Peter Pilgrim
  */
+
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
@@ -49,18 +50,18 @@ public class MyHandlebarsViewEngine extends ViewEngineBase {
         try (PrintWriter writer = context.getResponse().getWriter();
              InputStream resourceAsStream = servletContext.getResourceAsStream(resolveView(context));
              InputStreamReader in = new InputStreamReader(resourceAsStream, "UTF-8");
-             BufferedReader bufferedReader = new BufferedReader(in);) {
+             BufferedReader buffer = new BufferedReader(in);) {
 
-            final String viewContent = bufferedReader.lines().collect(Collectors.joining());
+            final String viewContent = buffer.lines().collect(Collectors.joining());
 
             final TemplateLoader loader = new ServletContextTemplateLoader(servletContext);
             final Handlebars handlebars = new Handlebars(loader);
 
-            models.put( "webContextPath", context.getRequest().getContextPath());
-            models.put( "page", context.getRequest().getRequestURI());
-            models.put( "viewName", viewName);
-            models.put( "request", context.getRequest());
-            models.put( "response", context.getResponse());
+            models.put("webContextPath", context.getRequest().getContextPath());
+            models.put("page", context.getRequest().getRequestURI());
+            models.put("viewName", viewName);
+            models.put("request", context.getRequest());
+            models.put("response", context.getResponse());
 
             handlebars.registerHelper("formatDecimal", new Helper<BigDecimal>() {
                 @Override

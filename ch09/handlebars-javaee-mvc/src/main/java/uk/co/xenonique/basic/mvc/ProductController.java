@@ -33,20 +33,15 @@ import static javax.ws.rs.core.Response.Status.*;
 @Path("/products")
 @Stateless
 public class ProductController {
+    @Inject Models models;
 
-    @Inject
-    Models  models;
+    @Inject ValidatorFactory validatorFactory;
 
-    @Inject
-    ValidatorFactory validatorFactory;
+    @Inject FormErrorMessage formError;
 
-    @Inject
-    FormErrorMessage formError;
+    @EJB ProductService productService;
 
-    @EJB
-    ProductService productService;
-
-    private void defineCommonModelProperties(HttpServletRequest request, HttpServletResponse response, String title ) {
+    private void defineCommonModelProperties(String title) {
         models.put("pageTitle", "Handlebars.java Java EE 8 MVC" );
         models.put("title", title);
     }
@@ -62,11 +57,11 @@ public class ProductController {
     @Controller
     @Path("list")
     @Produces("text/html")
-    public Viewable listProducts( @Context HttpServletRequest request, @Context HttpServletResponse response)
+    public Viewable listProducts()
     {
         System.out.printf("***** %s.listProducts() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
         retrieveAll();
-        defineCommonModelProperties(request, response, "Products");
+        defineCommonModelProperties( "Products");
         return new Viewable("/products.hbs");
     }
 
@@ -74,13 +69,13 @@ public class ProductController {
     @Controller
     @Path("view/{id}")
     @Produces("text/html")
-    public Viewable retrieveProduct( @PathParam("id") int id, @Context HttpServletRequest request, @Context HttpServletResponse response )
+    public Viewable retrieveProduct( @PathParam("id") int id )
     {
         System.out.printf("***** %s.retrieveProduct( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
         final List<Product> products = productService.findById(id);
         System.out.printf("***** products=%s", products);
         models.put("product", products.get(0) );
-        defineCommonModelProperties(request, response, "Product");
+        defineCommonModelProperties("Product");
         return new Viewable("/edit-product.hbs");
     }
 
@@ -88,10 +83,10 @@ public class ProductController {
     @Controller
     @Path("preview-create")
     @Produces("text/html")
-    public Response previewCreateProduct(@Context HttpServletRequest request, @Context HttpServletResponse response)
+    public Response previewCreateProduct()
     {
         System.out.printf("***** %s.previewCreateProduct() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
-        defineCommonModelProperties(request, response, "Create Product");
+        defineCommonModelProperties("Create Product");
         models.put("product", new Product() );
         return Response.status(OK).entity("/create-product.hbs").build();
     }
@@ -103,12 +98,11 @@ public class ProductController {
     public Response addProduct(@FormParam("action") String action,
                                @FormParam("name") String name,
                                @FormParam("description") String description,
-                               @FormParam("price") BigDecimal price,
-                               @Context HttpServletRequest request, @Context HttpServletResponse response    )
+                               @FormParam("price") BigDecimal price)
     {
         System.out.printf("***** %s.add() productService=%s, models=%s\n", getClass().getSimpleName(), productService, models );
         System.out.printf("***** name=%s, description=%s, price=%.4f\n", name, description, price);
-        defineCommonModelProperties(request, response, "Add Product");
+        defineCommonModelProperties("Add Product");
         if ("Add".equalsIgnoreCase(action)) {
             final Product product = new Product(name, description, price);
 //            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -139,12 +133,11 @@ public class ProductController {
                                  @FormParam("action") String action,
                                  @FormParam("name") String name,
                                  @FormParam("description") String description,
-                                 @FormParam("price") BigDecimal price,
-                                 @Context HttpServletRequest request, @Context HttpServletResponse response    )
+                                 @FormParam("price") BigDecimal price)
     {
         System.out.printf("***** %s.edit( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
         System.out.printf("***** name=%s, description=%s, price=%.4f\n", name, description, price);
-        defineCommonModelProperties(request,response,"Edit Product");
+        defineCommonModelProperties("Edit Product");
         if ("Save".equalsIgnoreCase(action)) {
             final List<Product> products = productService.findById(id);
             System.out.printf("***** products=%s", products);
@@ -179,12 +172,12 @@ public class ProductController {
     @Controller
     @Path("preview-delete/{id}")
     @Produces("text/html")
-    public Response previewDeleteProduct( @PathParam("id") int id, @Context HttpServletRequest request, @Context HttpServletResponse response)
+    public Response previewDeleteProduct( @PathParam("id") int id)
     {
         System.out.printf("***** %s.previewDeleteProduct( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
         final List<Product> products = productService.findById(id);
         System.out.printf("***** products=%s", products);
-        defineCommonModelProperties(request, response, "Delete Product");
+        defineCommonModelProperties("Delete Product");
         if ( products.isEmpty()) {
             return Response.status(BAD_REQUEST).entity("/error.jsp").build();
         }
@@ -198,11 +191,10 @@ public class ProductController {
     @Controller
     @Path("delete/{id}")
     @Produces("text/html")
-    public Response deleteProduct( @PathParam("id") int id, @FormParam("action") String action,
-                                   @Context HttpServletRequest request, @Context HttpServletResponse response  )
+    public Response deleteProduct( @PathParam("id") int id, @FormParam("action") String action)
     {
         System.out.printf("***** %s.deleteProduct( id=%d, action=%s ) productService=%s, models=%s\n", getClass().getSimpleName(), id, action, productService, models );
-        defineCommonModelProperties(request, response, "Remove");
+        defineCommonModelProperties( "Remove");
         if ( "Remove".equalsIgnoreCase(action)) {
             final List<Product> products = productService.findById(id);
             System.out.printf("***** products=%s", products);
@@ -240,7 +232,7 @@ public class ProductController {
         // This does NOT work with MVC 1.0.0-m1
         System.out.printf("***** %s.edit( id=%d ) productService=%s, models=%s\n", getClass().getSimpleName(), id, productService, models );
         System.out.printf("***** name=%s, description=%s, price=%.4f\n", name, description, price);
-        defineCommonModelProperties(request,response,"Edit Product");
+        defineCommonModelProperties("Edit Product");
 //        System.out.printf("**** vr=%s, vr.failed = %s\n", vr, vr.isFailed());
         if ("Save".equalsIgnoreCase(action)) {
             final List<Product> products = productService.findById(id);
