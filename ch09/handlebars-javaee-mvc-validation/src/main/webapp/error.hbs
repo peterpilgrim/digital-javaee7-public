@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+{{> header }}
+
+<body>
+{{> navbar }}
+
+<div class="main-content">
+
+    <div class="page-header">
+        <h1>
+            {{pageTitle}}
+        </h1>
+    </div>
+
+    <div class="other-content">
+        <div class="jumbotron">
+            <p> Form Error </p>
+        </div>
+
+        <div class="main-content" >
+            <table class="table table-stripped table-bordered table-responsive">
+                <tr>
+                    <th>Name</th><th>Value</th>
+                </tr>
+                <tr>
+                    <td>Property</td> <td>{{formError.property}}</td>
+                </tr>
+                <tr>
+                    <td>Message</td> <td>{{formError.message}}</td>
+                </tr>
+                <tr>
+                    <td>Value</td> <td>{{formError.value}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="main-content" >
+            <pre> Stacktrace:
+                {{stacktrace}}
+            </pre>
+        </div>
+
+        <p class="alert alert-info"> NB: This page is <code>src/main/webapp/error.hbs</code></p>
+
+    </div>
+
+</div>
+
+{{> footer}}
+</body>
+
+{{> bottom }}
+
+</html>

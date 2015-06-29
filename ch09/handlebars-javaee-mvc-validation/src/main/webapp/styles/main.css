@@ -1,0 +1,130 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+    padding-bottom: 40px;
+    color: #5a5a5a;
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin-top: 20px;
+    margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+}
+
+.navbar-wrapper .navbar {
+
+}
+
+/* Remove border and change up box shadow for more contrast */
+.navbar .navbar-inner {
+    border: 0;
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+    -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+}
+
+/* Downsize the brand/project name a bit */
+.navbar .brand {
+    padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .5);
+}
+
+/* Navbar links: increase padding for taller navbar */
+.navbar .nav > li > a {
+    padding: 15px 20px;
+}
+
+/* Offset the responsive button for proper vertical alignment */
+.navbar .btn-navbar {
+    margin-top: 10px;
+}
+
+.main-content {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.other-content {
+    margin-top: 0.5em;
+    margin-bottom: 1.5em;
+}
+
+.featurette-divider {
+    width: 100%;
+}
+
+.mvc-view-divider {
+    width: 85%;
+}
+
+.mvc-container-form {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+
+.mvc-container-form input {
+    width: 75%;
+}
+
+.mvc-container-table {
+    width: 95.0%;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+
+}
+
+.mvc-container-table td:nth-child(1) {
+    width: 35%;
+    text-align: center;
+    color: #00007F;
+}
+
+.mvc-container-table td:nth-child(2) {
+    width: 75%;
+}
+
+.product-container-table th {
+    text-align: center;
+}
+
+.product-container-table {
+    width: 95.0%;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+
+}
+
+.product-container-table td:nth-child(3){
+    width: 10em;
+    text-align: right;
+}
+
+.product-container-table td:nth-child(4){
+    width: 8em;
+}
+
+.brand-logo {
+    width: 64px;
+}
+
+#brandNavbarLogo {
+    width: 32px;
+}
+
+#promoLogo {
+    float: right;
+}

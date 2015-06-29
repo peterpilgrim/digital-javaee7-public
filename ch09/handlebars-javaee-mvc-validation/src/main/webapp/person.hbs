@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Handlebars.java and Java EE 8 MVC - Person View</title>
+    <link href="{{webContextPath}}/styles/bootstrap.css" rel="stylesheet">
+    <link href="{{webContextPath}}/styles/main.css" rel="stylesheet">
+</head>
+<body>
+    {{> navbar}}
+    <div class="page-header">
+        <h1> {{title}} </h1>
+    </div>
+
+    <div class="main-content">
+        <h1>Person</h1>
+        <div> <p class="lead"> {{person.firstName}} </p></div>
+        <div> <p class="lead"> {{person.lastName}} </p></div>
+        <div> <p class="lead"> {{person.age}} </p></div>
+
+        <div>
+            <pre>
+                request = {{request}} <br>
+                response = {{response}} <br>
+                page = {{page}} <br>
+            </pre>
+        </div>
+    </div>
+    {{> footer}}
+</body>
+
+{{> bottom }}
+
+</html>

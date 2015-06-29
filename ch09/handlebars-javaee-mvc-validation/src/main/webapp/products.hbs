@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+{{> header }}
+
+<body>
+    {{> navbar }}
+
+    <div class="main-content">
+
+        <div class="page-header">
+            <h1>
+                {{pageTitle}}
+            </h1>
+        </div>
+
+        <div class="other-content">
+            <div class="jumbotron">
+                <p> {{title}} </p>
+            </div>
+
+            <p>
+                <a href="{{webContextPath}}/rest/products/preview-create" class="btn-primary btn">Add New Product</a>
+            </p>
+
+            <table class="product-container-table table table-bordered table-responsive table-striped">
+                <tr>
+                    <th> Product Name </th>
+                    <th> Description </th>
+                    <th> Unit Price </th>
+                    <th> Action </th>
+                </tr>
+
+                {{#each products}}
+                    <tr>
+                        <td> {{this.name}} </td>
+                        <td> {{this.description}} </td>
+                        <td> {{formatDecimal this.price}} </td>
+                        <td>
+                            <a class="btn" href="{{webContextPath}}/rest/products/view/{{this.id}}" ><i class="glyphicon glyphicon-edit"></i></a>
+                            <a class="btn" href="{{webContextPath}}/rest/products/preview-delete/{{this.id}}" ><i class="glyphicon glyphicon-trash"></i></a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </table>
+        </div>
+
+        <p class="alert alert-info"> NB: This page is <code>src/main/webapp/products.hbs</code></p>
+    </div>
+
+    {{> footer}}
+</body>
+
+{{> bottom }}
+
+</html>

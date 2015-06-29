@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+{{> header }}
+
+<body>
+{{> navbar }}
+
+<div class="main-content">
+
+    <div class="page-header">
+        <h1>
+            {{pageTitle}}
+        </h1>
+    </div>
+
+    <div class="main-content">
+        <table class="table table-bordered table-stripped table-responsive">
+            <tr>
+                <th>Name</th> <th>Value</th>
+            </tr>
+            <tr>
+                <td>First Name </td> <td>{{ firstName }}</td>
+                <td>Last Name </td> <td>{{ lastName }}</td>
+                <td>Age </td> <td>{{ age }}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+{{> footer}}
+</body>
+
+{{> bottom }}
+
+</html>
