@@ -6,4 +6,5 @@ package uk.co.xenonique.payments;
  * @author Peter Pilgrim
  */
 public interface PaymentIssuer {
+    void allocate(int allocationId);
 }

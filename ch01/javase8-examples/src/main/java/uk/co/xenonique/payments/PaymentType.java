@@ -6,4 +6,5 @@ package uk.co.xenonique.payments;
  * @author Peter Pilgrim
  */
 public enum PaymentType {
+    CreditCard, DebitCard, PayPal
 }
