@@ -7,7 +7,7 @@ apply plugin: 'war'
 archivesBaseName = 'jsf-crud'
 
 dependencies {
-    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
+//    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
     providedCompile 'javax:javaee-api:7.0'
 
     // WARNING: Joda time is broken with Glassfish 4

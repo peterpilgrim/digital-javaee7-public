@@ -17,15 +17,23 @@ public class CreditCardTicketTracker {
     @Inject
     PaymentIssuer issuer;
 
+    public PaymentIssuer getIssuer() {
+        return issuer;
+    }
+
+    public void setIssuer(PaymentIssuer issuer) {
+        this.issuer = issuer;
+    }
+
     public void processTickets(List<Ticket> ticketBatch) {
         final LocalDate dt = LocalDate.now().plusDays(2);
 
         ticketBatch.stream()
-                .filter(
-                        t -> t.isAvailable() &&
-                        t.getPaymentType() == PaymentType.CreditCard &&
-                        dt.isAfter(DateUtils.asLocalDate(t.getConcertDate())))
-                .map(t -> t.getAllocationId())
-                .forEach(allocationId -> issuer.allocate(allocationId));
+            .filter(
+                t -> t.isAvailable() &&
+                t.getPaymentType() == PaymentType.CreditCard &&
+                dt.isAfter(DateUtils.asLocalDate(t.getConcertDate())))
+            .map(t -> t.getAllocation().allocateToTicket(t))
+            .forEach(allocation -> issuer.allocate(allocation));
     }
 }

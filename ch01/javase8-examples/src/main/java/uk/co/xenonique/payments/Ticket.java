@@ -11,7 +11,7 @@ public class Ticket {
     private boolean available;
     private PaymentType paymentType;
     private Date concertDate;
-    private int allocationId;
+    private Allocation allocation;
 
     public boolean isAvailable() {
         return available;
@@ -37,11 +37,11 @@ public class Ticket {
         this.concertDate = concertDate;
     }
 
-    public int getAllocationId() {
-        return allocationId;
+    public Allocation getAllocation() {
+        return allocation;
     }
 
-    public void setAllocationId(int allocationId) {
-        this.allocationId = allocationId;
+    public void setAllocation(Allocation allocation) {
+        this.allocation = allocation;
     }
 }

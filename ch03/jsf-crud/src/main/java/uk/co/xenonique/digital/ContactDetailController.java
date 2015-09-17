@@ -2,9 +2,10 @@ package uk.co.xenonique.digital;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.*;
 
@@ -13,10 +14,10 @@ import java.util.*;
  *
  * @author Peter Pilgrim
  */
-@ManagedBean(name = "contactDetailController")
-//@Named("contactDetailController")
+//@ManagedBean(name = "contactDetailController")
+@Named("contactDetailController")
 @ViewScoped
-public class ContactDetailController {
+public class ContactDetailController implements Serializable{
 
     @EJB ContactDetailService contactDetailService;
 

@@ -9,8 +9,6 @@ archivesBaseName = 'javase8-examples'
 // Override master project dependencies
 dependencies {
     providedCompile 'javax:javaee-api:7.0'
-
-    compile     'org.slf4j:slf4j-simple:1.6.4'
 }
 
 
