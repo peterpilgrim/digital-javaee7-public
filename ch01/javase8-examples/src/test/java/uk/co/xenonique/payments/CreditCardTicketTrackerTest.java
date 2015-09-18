@@ -15,10 +15,8 @@ import static org.hamcrest.Matchers.*;
  * @author Peter Pilgrim
  */
 public class CreditCardTicketTrackerTest {
-
-
     @Test
-    public void should_issue_ticket() {
+    public void should_issue_ticket_with_credit_associate_allocation() {
 
         final Ticket ticket = new Ticket();
         ticket.setAvailable(true);
@@ -26,17 +24,19 @@ public class CreditCardTicketTrackerTest {
         ticket.setConcertDate(DateUtils.asDate(LocalDateTime.of(2016, 4, 29, 20, 30)));
 
         final Allocation allocation = new Allocation("Exclusive VIP", "A", 1);
+        ticket.setAllocation(allocation);
 
         final PaymentIssuerImpl paymentIssuer = new PaymentIssuerImpl();
 
         final CreditCardTicketTracker tracker = new CreditCardTicketTracker();
+        tracker.setIssuer(paymentIssuer);
         tracker.processTickets(Arrays.asList(ticket));
 
         assertThat( paymentIssuer.getAllocations().isEmpty(), is(false));
+        assertThat(paymentIssuer.getAllocations().size(), is(1));
 
-        assertThat(1 + 2, is(3));
-//        assertThat(300, is(greaterThan(100)));
-//        assertThat(new Object(), is(notNullValue()));
-//        fail("implement this");
+        // We already know that there is one in the stream.
+        final Allocation a1 = paymentIssuer.getAllocations().stream().findFirst().get();
+        assertThat(a1, is(allocation));
     }
 }

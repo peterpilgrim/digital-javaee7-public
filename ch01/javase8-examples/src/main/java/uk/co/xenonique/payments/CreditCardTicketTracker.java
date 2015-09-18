@@ -32,7 +32,7 @@ public class CreditCardTicketTracker {
             .filter(
                 t -> t.isAvailable() &&
                 t.getPaymentType() == PaymentType.CreditCard &&
-                dt.isAfter(DateUtils.asLocalDate(t.getConcertDate())))
+                dt.isBefore(DateUtils.asLocalDate(t.getConcertDate())))
             .map(t -> t.getAllocation().allocateToTicket(t))
             .forEach(allocation -> issuer.allocate(allocation));
     }
