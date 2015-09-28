@@ -182,7 +182,7 @@ public class CaseRecord {
         if (this == o) return true;
         if (!(o instanceof CaseRecord)) return false;
 
-        CaseRecord that = (CaseRecord) o;
+        final CaseRecord that = (CaseRecord) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;

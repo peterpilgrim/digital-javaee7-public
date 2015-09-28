@@ -70,14 +70,14 @@ public class CaseWorkerRESTServerEndpoint {
             throw new RuntimeException(
                     "Invalid caseId:["+caseId+"] supplied");
 
-        List<CaseRecord> caseRecords = service.findCaseById( caseId );
+        final List<CaseRecord> caseRecords = service.findCaseById( caseId );
         if ( caseRecords.isEmpty() ) {
             throw new RuntimeException(
                     "No project was found with caseId:["+caseId+"]");
         }
 
-        StringWriter swriter = new StringWriter();
-        JsonGenerator generator
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator
             = jsonGeneratorFactory.createGenerator(swriter);
         CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecords.get(0)).close();
         return swriter.toString();
@@ -100,7 +100,7 @@ public class CaseWorkerRESTServerEndpoint {
         caseRecord.setCurrentState(BasicStateMachine.FSM_START.toString());
         caseRecord.setShowTasks(json.getBoolean("showTasks", false));
 
-        JsonArray tasksArray = json.getJsonArray("tasks");
+        final JsonArray tasksArray = json.getJsonArray("tasks");
         if ( tasksArray != null ) {
             for ( int j=0; j<tasksArray.size(); ++j ) {
                 JsonObject taskObject = tasksArray.getJsonObject(j);
@@ -116,7 +116,7 @@ public class CaseWorkerRESTServerEndpoint {
         }
 
         service.saveCaseRecord(caseRecord);
-        StringWriter swriter = new StringWriter();
+        final StringWriter swriter = new StringWriter();
         JsonGenerator generator =
             jsonGeneratorFactory.createGenerator(swriter);
         CaseRecordHelper.writeCaseRecordAsJson(generator, caseRecord).close();
@@ -209,8 +209,8 @@ public class CaseWorkerRESTServerEndpoint {
                     "No case record was found with caseId:["+caseId+"]");
         }
 
-        CaseRecord caseRecord = caseRecords.get(0);
-        BasicStateMachine fsm = new BasicStateMachine();
+        final CaseRecord caseRecord = caseRecords.get(0);
+        final BasicStateMachine fsm = new BasicStateMachine();
         fsm.setCurrentState(BasicStateMachine.retrieveCurrentState(caseRecord.getCurrentState()));
         CaseState nextStateWanted = BasicStateMachine.retrieveCurrentState(json.getString("currentState", BasicStateMachine.FSM_START.toString()));
         fsm.moveSelectedNextState( (machine,state )-> nextStateWanted );

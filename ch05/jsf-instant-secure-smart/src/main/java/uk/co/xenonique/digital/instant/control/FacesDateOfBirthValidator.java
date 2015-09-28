@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2014,2015 by Peter Pilgrim, Milton Keynes, P.E.A.T LTD
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
 package uk.co.xenonique.digital.instant.control;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -21,25 +40,25 @@ public class FacesDateOfBirthValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value)
     throws ValidatorException {
-        UIInput dayComp   = (UIInput)component.getAttributes().get("dob_dotm");
-        UIInput monthComp = (UIInput)component.getAttributes().get("dob_moty");
-        UIInput yearComp  = (UIInput)component.getAttributes().get("dob_year");
+        final UIInput dayComp   = (UIInput)component.getAttributes().get("dob_dotm");
+        final UIInput monthComp = (UIInput)component.getAttributes().get("dob_moty");
+        final UIInput yearComp  = (UIInput)component.getAttributes().get("dob_year");
 
-        List<FacesMessage> errors = new ArrayList<>();
-        int day = parsePositiveInteger(dayComp.getSubmittedValue());
+        final List<FacesMessage> errors = new ArrayList<>();
+        final int day = parsePositiveInteger(dayComp.getSubmittedValue());
         if ( day < 1 || day > 31 ) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,
                 "DOB day must be in the range of 1 to 31 ", null ));
         }
-        int month = parsePositiveInteger(monthComp.getSubmittedValue());
+        final int month = parsePositiveInteger(monthComp.getSubmittedValue());
         if ( month < 1 || month > 12 ) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,
                 "DOB month must be in the range of 1 to 12 ", null));
         }
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
 
         cal.setTime(new Date());
         cal.add(Calendar.YEAR, -18);
@@ -49,9 +68,9 @@ public class FacesDateOfBirthValidator implements Validator {
         cal.add(Calendar.YEAR, -100);
         Date hundredthBirthday = cal.getTime();
 
-        int year = parsePositiveInteger(yearComp.getSubmittedValue());
+        final int year = parsePositiveInteger(yearComp.getSubmittedValue());
         cal.set(year,month,day);
-        Date targetDate = cal.getTime();
+        final Date targetDate = cal.getTime();
         if (targetDate.after(eighteenBirthday) ) {
             errors.add(new FacesMessage(
                 FacesMessage.SEVERITY_ERROR,

@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2014,2015 by Peter Pilgrim, Milton Keynes, P.E.A.T LTD
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
 package uk.co.xenonique.digital;
 
 import javax.faces.context.FacesContext;
@@ -19,7 +38,7 @@ public class ExemplarController {
     private String country="United Kingdom";
 
     public String methodOneArg( String alpha ) {
-        Flash flash = FacesContext.getCurrentInstance().
+        final Flash flash = FacesContext.getCurrentInstance().
             getExternalContext().getFlash();
         flash.put("result",
             String.format("executed methodOneArg(\"%s\")", alpha ));
@@ -27,7 +46,7 @@ public class ExemplarController {
     }
 
     public String methodTwoArgs( String alpha, String beta ) {
-        Flash flash = FacesContext.getCurrentInstance().
+        final Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("result",
                 String.format("executed methodTwoArgs(\"%s\", \"%s\")", alpha, beta ));
@@ -35,7 +54,7 @@ public class ExemplarController {
     }
 
     public String methodThreeArgs( String alpha, String beta, String gamma ) {
-        Flash flash = FacesContext.getCurrentInstance().
+        final Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("result",
                 String.format("executed methodThreeArgs(\"%s\", \"%s\", \"%s\")", alpha, beta, gamma ));
@@ -43,11 +62,11 @@ public class ExemplarController {
     }
 
     public String methodPassingParameters() {
-        Map<String,String> params = FacesContext.getCurrentInstance()
+        final Map<String,String> params = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap();
-        String ctaText = params.get("callToActionText");
-        String custType = params.get("customerType");
-        Flash flash = FacesContext.getCurrentInstance().
+        final String ctaText = params.get("callToActionText");
+        final String custType = params.get("customerType");
+        final Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("result",
                 String.format("executed methodPassingParameters() " +
@@ -62,7 +81,7 @@ public class ExemplarController {
     }
 
     public String performAction() {
-        Flash flash = FacesContext.getCurrentInstance().
+        final Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("result",
                 String.format("executed performAction() contactName=\"%s\" ", contactName ));

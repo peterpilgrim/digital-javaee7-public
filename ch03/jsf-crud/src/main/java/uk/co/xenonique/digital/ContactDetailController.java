@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2014,2015 by Peter Pilgrim, Milton Keynes, P.E.A.T LTD
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
 package uk.co.xenonique.digital;
 
 import javax.ejb.EJB;
@@ -32,10 +51,10 @@ public class ContactDetailController implements Serializable{
     }
 
     public String createContact() {
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, dobDay);
         cal.set(Calendar.MONTH, dobMonth);
-        int year = Integer.parseInt(dobYear);
+        final int year = Integer.parseInt(dobYear);
         cal.set(Calendar.YEAR, year);
         contactDetail.setDob(cal.getTime());
         contactDetailService.add(contactDetail);
@@ -60,7 +79,7 @@ public class ContactDetailController implements Serializable{
 
     public void findContactById() {
         if (id <= 0) {
-            String message = "Bad request. Please use a link from within the system.";
+            final String message = "Bad request. Please use a link from within the system.";
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
             return;
@@ -68,12 +87,12 @@ public class ContactDetailController implements Serializable{
 
         ContactDetail item = contactDetailService.findById(id).get(0);
         if (item == null) {
-            String message = "Bad request. Unknown contact detail id.";
+            final String message = "Bad request. Unknown contact detail id.";
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
         }
         contactDetail = item;
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.setTime(contactDetail.getDob());
         dobDay = cal.get(Calendar.DAY_OF_MONTH);
         dobMonth = cal.get(Calendar.MONTH);
@@ -82,10 +101,10 @@ public class ContactDetailController implements Serializable{
     }
 
     public String editContact() {
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, dobDay);
         cal.set(Calendar.MONTH, dobMonth);
-        int year = Integer.parseInt(dobYear);
+        final int year = Integer.parseInt(dobYear);
         cal.set(Calendar.YEAR, year);
         contactDetail.setDob(cal.getTime());
         contactDetail.setId(id);
@@ -129,7 +148,7 @@ public class ContactDetailController implements Serializable{
             daysOfTheMonth.add(d);
         }
 
-        DateFormatSymbols symbols =
+        final DateFormatSymbols symbols =
                 new DateFormatSymbols(Locale.getDefault());
         for (int m=1; m<=12; ++m) {
             monthsOfTheYear.put(symbols.getMonths()[m-1], m );

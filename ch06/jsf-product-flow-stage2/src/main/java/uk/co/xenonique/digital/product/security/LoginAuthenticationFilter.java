@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2014,2015 by Peter Pilgrim, Milton Keynes, P.E.A.T LTD
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
 package uk.co.xenonique.digital.product.security;
 
 import uk.co.xenonique.digital.product.boundary.UserProfileService;
@@ -56,7 +75,7 @@ public class LoginAuthenticationFilter implements Filter {
                 final String role = users.get(0).getRole().getName();
                 if ( rolesToDirectories.containsKey(role)) {
                     final List<String> pathElements = rolesToDirectories.get(role);
-                    String inputPath = request.getRequestURI();
+                    final String inputPath = request.getRequestURI();
                     System.out.printf("**** PROCESSING **** inputPath=%s, pathElements=%s\n", inputPath, pathElements );
                     for ( String element : pathElements) {
                         if ( inputPath.contains(element)) {
@@ -79,9 +98,9 @@ public class LoginAuthenticationFilter implements Filter {
         System.out.printf("**** %s.init(config=%s)\n", this.getClass().getName(), config);
         this.config = config;
         for (String roleName: Collections.list(config.getInitParameterNames())) {
-            String paths = config.getInitParameter(roleName);
-            String pathElementArr[] = paths.split("[, \t]+");
-            List<String> pathElements = Arrays.asList(pathElementArr);
+            final String paths = config.getInitParameter(roleName);
+            final String pathElementArr[] = paths.split("[, \t]+");
+            final List<String> pathElements = Arrays.asList(pathElementArr);
             System.out.printf("**** INIT **** roleName=%s, pathElements=%s\n", roleName, pathElements );
 
             rolesToDirectories.put(roleName,pathElements) ;

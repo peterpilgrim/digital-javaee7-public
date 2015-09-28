@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2014,2015 by Peter Pilgrim, Milton Keynes, P.E.A.T LTD
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
 package uk.co.xenonique.digital.instant.util;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -68,7 +87,7 @@ public class Utility implements Serializable {
      * @param np the notice period, number of months of the loan agreement (Years * 12 (for example, 5 years means NP = 60))
      * @return the monthly payment
      */
-    public double calculateMonthlyPayment( double pv, double apr, int np ) {
+    public double calculateMonthlyPayment( final double pv, final double apr, final int np ) {
         double ir = apr / 100 / 12;
         return (pv * ir) / (1 - Math.pow(1+ir, -np));
     }
