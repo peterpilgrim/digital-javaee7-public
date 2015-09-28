@@ -327,15 +327,17 @@ public class CaseWorkerRESTServerEndpoint {
         }
 
         final CaseRecord caseRecord = caseRecords.get(0);
-//        for ( Task task: caseRecord.getTasks()) {
-//            if ( task.getId().equals(taskId )) {
-//                caseRecord.removeTask(task);
-//                break;
-//            }
-//        }
-        caseRecord.getTasks().stream().filter(
-                task -> task.getId().equals(taskId))
-                .forEach( task -> caseRecord.removeTask(task) );
+        for ( Task task: caseRecord.getTasks()) {
+            if ( task.getId().equals(taskId )) {
+                caseRecord.removeTask(task);
+                break;
+            }
+        }
+
+        // TODO: The Stream API produces a ConcurrentModification exception. Why?
+//        caseRecord.getTasks().stream().filter(
+//                task -> task.getId().equals(taskId))
+//                .forEach( task -> caseRecord.removeTask(task) );
         service.saveCaseRecord(caseRecord);
 
         final StringWriter swriter = new StringWriter();

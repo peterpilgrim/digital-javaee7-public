@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.*;
  *
  * @author Peter Pilgrim
  */
-public class PopulationHelperText {
+public class PopulationHelperTest {
 
     @Test
     public void generate_first_names() {
@@ -78,7 +78,7 @@ public class PopulationHelperText {
             checkName(name);
             firstNames.add(name);
         }
-        assertThat(firstNames.size(), is(greaterThan((int)(count * ratio))));
+        assertThat(firstNames.size(), is(greaterThanOrEqualTo((int)(count * ratio))));
     }
 
     private void checkName(String name) {

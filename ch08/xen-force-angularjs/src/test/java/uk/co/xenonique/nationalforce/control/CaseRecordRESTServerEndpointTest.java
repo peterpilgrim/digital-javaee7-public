@@ -45,6 +45,9 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -276,9 +279,13 @@ public class CaseRecordRESTServerEndpointTest {
         final List<CaseRecord> caseRecords = service.findAllCases();
         Thread.sleep(1000);
 
+        final LocalDate futureDate = LocalDate.now().plusDays(64);
+        final DateTimeFormatter clientSideFormattter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+        final DateTimeFormatter serverSideFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         final JsonObject input1 = bf.createObjectBuilder()
                 .add("name", "Make money now")
-                .add("targetDate", "14-Jul-2015")
+                .add("targetDate", futureDate.format(clientSideFormattter))
                 .add("completed", JsonValue.FALSE)
                 .build();
 
@@ -294,9 +301,9 @@ public class CaseRecordRESTServerEndpointTest {
 
         final JsonObject json = output1.getJsonArray("tasks").getJsonObject(0);
         final int taskId = json.getInt("id");
-        assertThat( taskId, is(greaterThan(2)) );
+        assertThat( taskId, is(greaterThanOrEqualTo(2)) );
         assertThat( "Make money now", is(json.getString("name")));
-        assertThat( "2015-07-14", is(json.getString("targetDate")));
+        assertThat( futureDate.format(serverSideFormatter), is(json.getString("targetDate")));
         assertThat( json.getBoolean("completed"), is(false)) ;
 
         target = ClientBuilder.newClient()
