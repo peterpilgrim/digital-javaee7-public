@@ -146,15 +146,17 @@ task myZip(type: Zip) {
     include '**/*.xml'
     include '**/*.gradle'
     include '**/*.txt'
+    include '**/*.md'
     exclude '**/.gradle'
     exclude '**/.gradle/**'
     exclude '**/build'
     exclude '**/build/**'
     exclude '**/target'
     exclude '**/target/**'
+    exclude '**/classes'
+    exclude '**/classes/**'
     exclude '**/out'
     exclude '**/out/**'
-    exclude '**/jsf-instant-secure-smart/**'
 
     into "B01496-${archivesBaseName}"
 
