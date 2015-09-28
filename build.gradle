@@ -85,7 +85,6 @@ allprojects {
 
 
 
-
 // --------------------------------------------------------------------------------
 // Configure settings for Digital Java EE 7 sub projects
 // --------------------------------------------------------------------------------
@@ -147,8 +146,13 @@ task myZip(type: Zip) {
     include '**/*.gradle'
     include '**/*.txt'
     include '**/*.md'
+    include '**/.gitignore'
     exclude '**/.gradle'
     exclude '**/.gradle/**'
+    exclude '**/.idea'
+    exclude '**/.idea/**'
+    exclude '**/.eclipse'
+    exclude '**/.classpath'
     exclude '**/build'
     exclude '**/build/**'
     exclude '**/target'

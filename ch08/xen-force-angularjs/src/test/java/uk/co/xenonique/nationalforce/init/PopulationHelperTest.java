@@ -55,7 +55,7 @@ public class PopulationHelperTest {
     public void generate_surnames() {
         final PopulationHelper helper = new PopulationHelper();
         int N = 50;
-        checkRandomNames(N, 0.5,  ()-> helper.getRandomSurname());
+        checkRandomNames(N, 0.35,  ()-> helper.getRandomSurname());
     }
 
     @Test
@@ -70,7 +70,6 @@ public class PopulationHelperTest {
         assertThat(countries.size(), is(greaterThan((int) (N * 0.6667))));
     }
 
-
     private void checkRandomNames(int count, double ratio, Supplier<String> supplier) {
         Set<String> firstNames = new HashSet<>();
         for (int k=0; k< count; ++k) {
@@ -78,14 +77,17 @@ public class PopulationHelperTest {
             checkName(name);
             firstNames.add(name);
         }
-        assertThat(firstNames.size(), is(greaterThanOrEqualTo((int)(count * ratio))));
+        assertThat(firstNames.size(), is(greaterThanOrEqualTo((int) (count * ratio))));
     }
 
     private void checkName(String name) {
         assertThat(name, is(notNullValue()));
         assertThat(name.trim().length(), is(greaterThan(0)));
         for (int j=0; j<name.length(); ++j) {
-            assertThat(Character.isAlphabetic(name.charAt(j)), is(true));
+            char ch = name.charAt(j);
+            if ( ch != '-' &&  ch != ' ') {
+                assertThat(Character.isAlphabetic(ch), is(true));
+            }
         }
     }
 }
