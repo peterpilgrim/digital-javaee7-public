@@ -11,7 +11,6 @@ require(['Employee','Department'], function(Employee, Department){
 
     console.log("employee1 = "+employee1 );
     console.log("employee2 = "+employee2 );
-
     console.log("department = "+department );
 
     department.addEmployee(employee1);
