@@ -1,5 +1,6 @@
 // settings.gradle
 include 'ch01/javase8-examples',
+    'ch01/javascript-examples',
 	'ch02/jsf-compositions',
 	'ch03/jsf-crud',
 	'ch04/jsf-crud-ajax-validation',
