@@ -7,7 +7,7 @@
 
     <h:head>
         <title>Digital Java EE 7 - JavaScript example - Chapter 1</title>
-        <script data-main="resources/app/main" src="${pageContext.request.contextPath}/resources/javascripts/require-2.1.16.js"></script>
+        <script data-main="resources/app/main" src="#{request.contextPath}/resources/javascripts/require-2.1.16.js"></script>
         <link href="#{request.contextPath}/resources/styles/bootstrap.css" rel="stylesheet"/>
         <!-- <link href="styles/bootstrap-responsive.css" rel="stylesheet"> -->
         <link href="#{request.contextPath}/resources/styles/main.css" rel="stylesheet"/>
@@ -20,12 +20,18 @@
         <![endif]-->
     </h:head>
     <h:body>
-
         <h1> Digital Java EE 7 - JavaScript example - Chapter 1</h1>
 
         <p>
-        This example uses the RequireJS library. You will need to open your web browser's Inspector Tool to see the output.
+        This example uses the RequireJS library. You will need to open your web browser's <em>Inspector Tool</em> and
+            navigate to the <em>console log</em> in order to see the JavaScript working.
         </p>
 
+        <div class="well">
+            <p>
+                Invoke the method in the application scoped bean, the result is:
+                <code> #{applicationBean.projectName}</code>
+            </p>
+        </div>
     </h:body>
 </html>
