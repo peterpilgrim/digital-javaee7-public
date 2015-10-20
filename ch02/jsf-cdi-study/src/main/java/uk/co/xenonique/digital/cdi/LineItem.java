@@ -9,6 +9,16 @@ public class LineItem {
     private float price;
     private int quantity;
 
+    public LineItem() {
+    }
+
+    public LineItem(long id, String productName, float price, int quantity) {
+        this.id = id;
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public long getId() {
         return id;
     }

@@ -1,5 +1,7 @@
 package uk.co.xenonique.digital.cdi;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
@@ -13,8 +15,16 @@ import java.util.List;
 public class ShoppingCartController implements Serializable{
     private List<LineItem> lineItems = new ArrayList<>();
 
+    @EJB
+    private MemoryDatabase database;
+
     @Inject
     private Utility utility;
+
+    @PostConstruct
+    public void initalise() {
+        lineItems = database.defaultLineItems();
+    }
 
     public String doList() {
         return "index.xhtml";

@@ -23,7 +23,7 @@
 apply plugin: 'war'
 
 // Define equivalent Maven GAV coordinates.
-archivesBaseName = 'cdi-study'
+archivesBaseName = 'jsf-cdi-study'
 
 // Override master project dependencies
 dependencies {
