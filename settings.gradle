@@ -2,6 +2,7 @@
 include 'ch01/javase8-examples',
     'ch01/javascript-examples',
 	'ch02/jsf-compositions',
+	'ch02/cdi-study',
 	'ch03/jsf-crud',
 	'ch04/jsf-crud-ajax-validation',
 	'ch04/jsf-crud-validation',
