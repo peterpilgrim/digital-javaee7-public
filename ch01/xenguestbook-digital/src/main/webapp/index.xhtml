@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+    <h:head>
+        <title>Digital Java EE 7 - JavaScript example - Chapter 1</title>
+        <script data-main="resources/app/main" src="#{request.contextPath}/resources/javascripts/require-2.1.16.js"></script>
+        <link href="#{request.contextPath}/resources/styles/bootstrap.css" rel="stylesheet"/>
+        <!-- <link href="styles/bootstrap-responsive.css" rel="stylesheet"> -->
+        <link href="#{request.contextPath}/resources/styles/main.css" rel="stylesheet"/>
+        <link href="#{request.contextPath}/resources/styles/main-responsive.css" rel="stylesheet"/>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+    <h:body>
+        <h1> Digital Java EE 7 - JavaScript example - Chapter 1</h1>
+
+        <p>
+        This example uses the RequireJS library. You will need to open your web browser's <em>Inspector Tool</em> and
+            navigate to the <em>console log</em> in order to see the JavaScript working.
+        </p>
+
+        <div class="well">
+            <p>
+                Invoke the method in the application scoped bean, the result is:
+                <code> #{applicationBean.projectName}</code>
+            </p>
+        </div>
+    </h:body>
+</html>
