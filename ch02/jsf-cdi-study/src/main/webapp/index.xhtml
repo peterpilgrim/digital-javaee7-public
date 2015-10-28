@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" >
 
@@ -11,8 +12,48 @@
 
             <h1> CDI Examples </h1>
 
-            <p>
-            </p>
+            <div class="">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Id </th>
+                        <th> Product Name </th>
+                        <th> Price </th>
+                        <th> Quantity </th>
+                    </tr>
+                    <ui:repeat value="#{shoppingCartController.lineItems}" var="item">
+                        <tr>
+                            <td> #{item.id} </td>
+                            <td> #{item.productName} </td>
+                            <td> #{item.price} </td>
+                            <td> #{item.quantity } </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </div>
+
+            <div>
+                <form jsf:id="exampleForm">
+
+                    <div class="alert">
+                        #{shoppingCartController.importantCustomerInformation}
+                    </div>
+
+                    <div class="form-group">
+                        <h:commandLink styleClass="btn btn-primary" action="#{shoppingCartController.doList}" value="Display List"/>
+                    </div>
+
+
+                    <div>
+                        <pre>
+                            #{shoppingCartController.debugMessage}
+                        </pre>
+                    </div>
+
+                    <div class="form-group">
+                        <h:commandLink styleClass="btn btn-primary" action="#{priceUpdater.announce()}" value="Price Update"/>
+                    </div>
+                </form>
+            </div>
 
         </ui:define> <!--name="mainContent" -->
 

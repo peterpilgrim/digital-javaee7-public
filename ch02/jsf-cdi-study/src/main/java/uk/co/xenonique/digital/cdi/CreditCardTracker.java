@@ -1,11 +1,13 @@
 package uk.co.xenonique.digital.cdi;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 
 /**
  * Created by peter.pilgrim on 20-Oct-2015.
  */
+@Named
 @ApplicationScoped
 public class CreditCardTracker implements Serializable {
 

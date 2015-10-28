@@ -128,3 +128,8 @@ body {
     font-family: Consolas, Courier;
 }
 
+.main-panel {
+    border-top: 1px solid darkgray;
+    margin-top: 0.75em;
+    margin-bottom: 1.1em;
+}
