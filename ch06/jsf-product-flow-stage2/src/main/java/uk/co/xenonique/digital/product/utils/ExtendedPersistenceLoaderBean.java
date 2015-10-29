@@ -47,6 +47,7 @@ public class ExtendedPersistenceLoaderBean {
     public static final String DEFAULT_PASSWORD = "digital";
 
     public final static String ADMIN_USERNAME = "admin@products.com";
+    public final static String APPROVER_USERNAME = "approver@products.com";
     public static final String NORMAL_USERNAME = "user@products.com";
 
     @Inject
@@ -72,6 +73,7 @@ public class ExtendedPersistenceLoaderBean {
 
     public void createData() {
         UserRole userRole = new UserRole("user");
+        UserRole approverRole = new UserRole("approver");
         UserRole managerRole = new UserRole("manager");
 
         final List<UserRole> roles = Arrays.asList(userRole, managerRole);
@@ -84,7 +86,8 @@ public class ExtendedPersistenceLoaderBean {
                 new UserProfile("test@products.com", DEFAULT_PASSWORD, userRole),
                 new UserProfile("developer@products.com", DEFAULT_PASSWORD, userRole),
                 new UserProfile(ADMIN_USERNAME, DEFAULT_PASSWORD, managerRole),
-                new UserProfile("manager@products.com", DEFAULT_PASSWORD, managerRole)
+                new UserProfile("manager@products.com", DEFAULT_PASSWORD, managerRole),
+                new UserProfile(APPROVER_USERNAME, DEFAULT_PASSWORD, approverRole)
         );
 
 

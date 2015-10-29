@@ -39,23 +39,32 @@ public class FootprintFlow implements Serializable {
     private CarbonFootprint footprint;
 
     public FootprintFlow() {
+        System.out.printf("**** %s.initialize()", getClass().getSimpleName());
         if ( footprint == null) {
             final Map<Object,Object> flowMap = FacesContext.getCurrentInstance().getApplication().getFlowHandler().getCurrentFlowScope();
             footprint = (CarbonFootprint) flowMap.get("param3Value");
         }
     }
 
-    public String exitFromFootprintFlow() {
+    public String exitOutsideAllFlows() {
         return "/endflow.xhtml";
     }
 
+    public String exitToSectorFlow() {
+        return "/sector-flow.xhtml";
+    }
+
+    public String exitFromFootprintFlow() {
+        return "/sector-flow.xhtml";
+    }
+
     public String gotoPage1() {
-        System.out.printf("****** gotoPage1() footprint=%s\n", footprint);
+        System.out.printf("****** %s.gotoPage1() footprint=%s\n", getClass().getSimpleName(), footprint);
         return "footprint-flow";
     }
 
     public String gotoPage2() {
-        System.out.printf("****** gotoPage2() footprint=%s\n", footprint);
+        System.out.printf("****** %s.gotoPage2() footprint=%s\n", getClass().getSimpleName(), footprint);
         return "footprint-flow-1a";
     }
 

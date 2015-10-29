@@ -1,4 +1,4 @@
-var newcaserecord = angular.module('newcaserecord', ['ui.bootstrap.modal', 'sharedService','isoCountries'])
+var newcaserecord = angular.module('newcaserecord', ['ui.bootstrap.modal', 'sharedService','isoCountries', 'luegg.directives'])
 
 newcaserecord.controller('NewCaseRecordModalController', function($rootScope, $scope, $modal, $http, $log, sharedService, isoCountries ) {
     $log.info("CaseRecord Modal Dialog. Yes!  $modal="+$modal+", $log="+$log);

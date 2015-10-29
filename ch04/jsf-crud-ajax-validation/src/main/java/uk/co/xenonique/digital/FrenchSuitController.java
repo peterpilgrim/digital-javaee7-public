@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  * The type FrenchSuitController
@@ -31,7 +32,7 @@ import javax.inject.Named;
  */
 @Named("frenchSuitController")
 @ViewScoped
-public class FrenchSuitController {
+public class FrenchSuitController implements Serializable {
     private String firstName;
     private String lastName;
     private FrenchSuit suit;

@@ -30,14 +30,14 @@ import javax.inject.Named;
 import java.io.Serializable;
 
 /**
- * The type SectionFlowController
+ * The type SectorFlowController
  *
  * @author Peter Pilgrim
  *
  */
 @Named
 @FlowScoped("sector-flow")
-public class SectorFlow implements Serializable{
+public class SectorFlow implements Serializable {
 
     @Inject
     UtilityHelper utilityHelper;
@@ -52,6 +52,7 @@ public class SectorFlow implements Serializable{
 
     @PostConstruct
     public void initialize() {
+        System.out.printf("**** %s.initialize()", getClass().getSimpleName());
         System.out.printf("********* utilityHelper=%s\n", utilityHelper);
         footprint.setApplicationId(utilityHelper.getNextApplicationId());
     }
@@ -65,6 +66,7 @@ public class SectorFlow implements Serializable{
     }
 
     public String saveFootprintRecord() {
+        System.out.printf("****** %s.saveFootprintRecord() footprint=%s\n", getClass().getSimpleName(), footprint);
         service.add(footprint);
         return "sector-flow-1c.xhtml";
     }

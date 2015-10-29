@@ -22,6 +22,7 @@ package uk.co.xenonique.digital;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  * The type LoginControllerJV
@@ -31,7 +32,7 @@ import javax.inject.Named;
 //@ManagedBean(name = "loginControllerJV")
 @Named("loginControllerJV")
 @ViewScoped
-public class LoginControllerJV {
+public class LoginControllerJV implements Serializable {
     private String username;
     private String password;
     private String email;

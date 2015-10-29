@@ -24,6 +24,7 @@ import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -33,7 +34,7 @@ import java.util.Map;
  */
 @Named("examplarController")
 @ViewScoped
-public class ExemplarController {
+public class ExemplarController implements Serializable {
     private String city = "London";
     private String country="United Kingdom";
 

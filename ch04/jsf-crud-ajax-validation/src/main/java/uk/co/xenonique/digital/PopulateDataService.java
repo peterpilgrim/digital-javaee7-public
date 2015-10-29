@@ -22,6 +22,7 @@ package uk.co.xenonique.digital;
 //import org.joda.time.DateTime;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
@@ -36,7 +37,7 @@ import java.util.Calendar;
 @Startup
 public class PopulateDataService {
 
-    @Inject
+    @EJB
     ContactDetailService contactDetailService;
 
     @PostConstruct

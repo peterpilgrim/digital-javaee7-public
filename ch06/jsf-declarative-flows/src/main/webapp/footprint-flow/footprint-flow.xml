@@ -12,8 +12,8 @@
         <flow-return id="exitFromFootprintFlow">
             <from-outcome>#{footprintFlow.exitFromFootprintFlow}</from-outcome>
         </flow-return>
-        <flow-return id="exitToSectionFlow">
-            <from-outcome>/section-flow</from-outcome>
+        <flow-return id="exitToSectorFlow">
+            <from-outcome>/sector-flow</from-outcome>
         </flow-return>
 
         <inbound-parameter>

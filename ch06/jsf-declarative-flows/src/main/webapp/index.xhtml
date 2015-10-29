@@ -15,17 +15,18 @@
                 Welcome to Declarative Flows. This example demonstrates that nested JSF flows.
             </p>
 
-            <div class="content-wrapper">
-                <h:form>
-                    <h:commandButton  styleClass="btn btn-primary btn-lg" action="sector-flow" value="Section Flow" />
-                </h:form>
-            </div>
+            <h2> Outside of Flows </h2>
 
-            <div class="content-wrapper">
-                <h:form>
-                    <h:commandButton  styleClass="btn btn-primary btn-lg" action="footprint-flow" value="Footprint Flow" />
-                </h:form>
-            </div>
+            <h:form>
+                <div class="content-wrapper">
+                    <h:commandButton id="sectorFlowBtn" styleClass="btn btn-primary btn-lg" action="sector-flow" value="Enter Sector Flow" />
+                </div>
+
+                <div class="content-wrapper">
+                    <h:commandButton id="footprintFlowBtn" styleClass="btn btn-primary btn-lg" action="footprint-flow" value="Enter Carbon Footprint Flow" />
+                </div>
+            </h:form>
+
             <hr class="subfeaturette-divider" />
 
             <p>

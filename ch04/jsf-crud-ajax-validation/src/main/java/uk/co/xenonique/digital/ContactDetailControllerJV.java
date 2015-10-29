@@ -26,6 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
+import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -39,7 +40,7 @@ import java.util.regex.Pattern;
 @ManagedBean(name = "contactDetailControllerJV")
 // @Named("contactDetailControllerJV")
 @ViewScoped
-public class ContactDetailControllerJV {
+public class ContactDetailControllerJV implements Serializable {
 
     @EJB ContactDetailService contactDetailService;
 
