@@ -50,9 +50,9 @@
             <h:form prependId="false">
                 <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="#{footprintFlow.gotoPage2()}" />
                 &#160;
-                <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="exitFromFootprintFlow" />
+                <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="#{footprintFlow.exitFromFootprintFlow()}" />
                 &#160;
-                <h:commandButton id="exitFlowBtn2" styleClass="btn btn-primary btn-lg" value="Exit Flow 2" action="exitToSectorFlow" />
+                <h:commandButton id="exitFlowBtn2" styleClass="btn btn-primary btn-lg" value="Exit Flow 2" action="/sector" />
                 &#160;
                 <h:commandButton id="exitFlowBtn3" styleClass="btn btn-primary btn-lg" value="Exit Outside All" action="#{footprintFlow.exitOutsideAllFlows}" />
                 &#160;

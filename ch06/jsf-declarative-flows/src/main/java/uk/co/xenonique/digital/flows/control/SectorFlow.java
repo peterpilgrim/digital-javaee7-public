@@ -36,7 +36,7 @@ import java.io.Serializable;
  *
  */
 @Named
-@FlowScoped("sector-flow")
+@FlowScoped("sector")
 public class SectorFlow implements Serializable {
 
     @Inject
@@ -68,7 +68,7 @@ public class SectorFlow implements Serializable {
     public String saveFootprintRecord() {
         System.out.printf("****** %s.saveFootprintRecord() footprint=%s\n", getClass().getSimpleName(), footprint);
         service.add(footprint);
-        return "sector-flow-1c.xhtml";
+        return "sector-page-1c.xhtml";
     }
 
     // Getters and setters

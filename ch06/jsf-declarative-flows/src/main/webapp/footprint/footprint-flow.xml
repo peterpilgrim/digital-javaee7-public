@@ -5,8 +5,11 @@
               http://xmlns.jcp.org/xml/ns/javaee
               http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
-    <flow-definition id="footprint-flow">
+    <flow-definition id="footprint">
         <flow-return id="goHome">
+            <from-outcome>/index</from-outcome>
+        </flow-return>
+        <flow-return id="returnToCallerFlow">
             <from-outcome>/index</from-outcome>
         </flow-return>
         <flow-return id="exitFromFootprintFlow">

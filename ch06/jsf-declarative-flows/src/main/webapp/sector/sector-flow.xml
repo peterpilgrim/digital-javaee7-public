@@ -4,7 +4,7 @@
               xsi:schemaLocation="
               http://xmlns.jcp.org/xml/ns/javaee
               http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-    <flow-definition id="sector-flow">
+    <flow-definition id="sector">
 
         <flow-return id="goHome">
             <from-outcome>/index</from-outcome>
@@ -15,7 +15,7 @@
 
         <flow-call id="callFootprintFlow">
             <flow-reference>
-                <flow-id>footprint-flow</flow-id>
+                <flow-id>footprint</flow-id>
             </flow-reference>
             <outbound-parameter>
                 <name>param1FromSectorFlow</name>

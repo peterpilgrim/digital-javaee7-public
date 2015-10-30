@@ -33,7 +33,7 @@ import java.util.Map;
  * @author Peter Pilgrim
  */
 @Named
-@FlowScoped("footprint-flow")
+@FlowScoped("footprint")
 public class FootprintFlow implements Serializable {
 
     private CarbonFootprint footprint;
@@ -50,22 +50,22 @@ public class FootprintFlow implements Serializable {
         return "/endflow.xhtml";
     }
 
-    public String exitToSectorFlow() {
-        return "/sector-flow.xhtml";
+    public String exitFromFootprintFlow() {
+        return "/sector";
     }
 
-    public String exitFromFootprintFlow() {
-        return "/sector-flow.xhtml";
+    public String updateAndExitToCallingFlow() {
+        return "/sector";
     }
 
     public String gotoPage1() {
         System.out.printf("****** %s.gotoPage1() footprint=%s\n", getClass().getSimpleName(), footprint);
-        return "footprint-flow";
+        return "footprint";
     }
 
     public String gotoPage2() {
         System.out.printf("****** %s.gotoPage2() footprint=%s\n", getClass().getSimpleName(), footprint);
-        return "footprint-flow-1a";
+        return "footprint-page-1a";
     }
 
     // Getters and setters

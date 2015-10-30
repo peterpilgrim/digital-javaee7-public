@@ -3,7 +3,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core" >
 
 <ui:composition template="/basic_layout.xhtml">
@@ -16,9 +15,8 @@
         </div><!-- content-wrapper  -->
 
         <div class="content-wrapper">
-            <h1>Page <code>sector-flow.xhtml</code></h1>
+            <h1>Page <code>sector-flow-1b.xhtml</code></h1>
             <p>View is part of a flow scope? <code>#{null != facesContext.application.flowHandler.currentFlow}</code>.</p>
-
             <table class="table table-bordered table-striped">
                 <tr>
                     <th>Expression</th>
@@ -39,28 +37,17 @@
                 </tr>
             </table>
 
-            <h:form prependId="false">
-                <div class="form-group">
-                    <h:outputLabel for="exampleInputEmail1">Email address</h:outputLabel>
-                    <input type="email" class="form-control" jsf:id="exampleInputEmail1" placeholder="Enter email" jsf:value="#{flowScope.email}"/>
-                </div>
-                <div class="form-group">
-                    <h:outputLabel for="industryOrSector">Industry or Sector</h:outputLabel>
-                    <h:inputText type="text" class="form-control" id="industryOrSector"
-                           placeholder="Your industry sector"
-                           value="#{sectorFlow.footprint.industryOrSector}"/>
-                </div>
 
-                <h:commandButton id="nextBtn" styleClass="btn btn-primary btn-lg" value="Next" action="sector-flow-1a" />
+            <h:form prependId="false">
+                <h:commandButton id="previousBtn" styleClass="btn btn-primary btn-lg" value="Previous" action="sector-page-1a" />
                 &#160;
                 <h:commandButton id="exitFlowBtn" styleClass="btn btn-primary btn-lg" value="Exit Flow" action="endFlow" />
                 &#160;
                 <h:commandButton id="homeBtn" styleClass="btn btn-primary btn-lg" value="Home" action="goHome" />
                 &#160;
-                <h:commandButton id="callFootPrintFlowBtn" styleClass="btn btn-primary btn-lg" value="Call Footprint" action="callFootprintFlow" />
-                &#160;
                 <h:commandButton id="saveBtn" styleClass="btn btn-primary btn-lg" value="Save Record" action="#{sectorFlow.saveFootprintRecord()}" />
                 &#160;
+
             </h:form>
         </div>
 
