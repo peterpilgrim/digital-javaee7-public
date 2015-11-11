@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Digital Java EE 7 :: Require JS Demonstration</title>
+		<meta charset="UTF-8">		
+		<meta name="author" content="Peter Pilgrim" >
+		<meta name="Description" content="Demonstration of JavaScript framework: RequireJS">
+	    <meta name="robots" content="noindex,nofollow">
+
+	    <link href="styles/bootstrap.css" rel="stylesheet" />
+	    <link href="styles/main.css" rel="stylesheet" />
+
+		<script src="js/lib/require-setup.js" ></script>
+		<script src="js/lib/require.js" data-main="js/app/app"></script>
+		<script src="js/app/main.js" ></script>
+	</head>
+
+	<body>
+		<h1>RequireJS Demonstration</h1>
+
+		<p class="lead">
+			Demonstration
+		</p>
+
+		<div class="">
+			<form id="standardForm">
+				<!-- Standard button -->
+				<button type="button" class="btn btn-default">Default</button>
+
+				<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+				<button type="button" class="btn btn-primary">Primary</button>
+
+				<!-- Indicates a successful or positive action -->
+				<button type="button" class="btn btn-success">Success</button>
+
+				<!-- Contextual button for informational alert messages -->
+				<button type="button" class="btn btn-info">Info</button>
+
+				<!-- Indicates caution should be taken with this action -->
+				<button type="button" class="btn btn-warning">Warning</button>
+
+				<!-- Indicates a dangerous or potentially negative action -->
+				<button type="button" class="btn btn-danger">Danger</button>
+
+				<!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+				<button type="button" class="btn btn-link">Link</button>
+			</form>
+		</div>
+
+
+		<div>
+			<form id="toggleForm">
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default">1</button>
+					<button type="button" class="btn btn-default">2</button>
+
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Dropdown
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Dropdown link</a></li>
+							<li><a href="#">Dropdown link</a></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<p>
+			<a href="underscore-demo.html"> Underscore Demo </a>
+		</p>
+	</body>
+</html>
+
