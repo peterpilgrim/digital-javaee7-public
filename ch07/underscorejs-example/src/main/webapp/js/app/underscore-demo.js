@@ -39,6 +39,12 @@ requirejs(['underscore'],
 		   return this;
 		};
 
+		ContactDetail.prototype.toString = function contactString() {
+			var ret = "ContactDetail{ gender="+this.gender + ", " +
+					"firstName="+this.firstName+", lastName="+this.lastName+", age="+this.age+", "+
+					"occupation="+this.occupation+" }";
+			return ret;
+		}
 
 		var r1 = _.filter(['Anne','Mike','Pauline','Steve'],
 			function(name){ return name.startsWith('P'); });
@@ -65,6 +71,10 @@ requirejs(['underscore'],
 			this.name = name;
 			this.value = value;
 		};
+
+		Sector.prototype.toString = function sectorToString() {
+			return "Sector{ name="+this.name+", value="+this.value + " }"
+		}
 
 		var salesSectorData = [ 
 			[
