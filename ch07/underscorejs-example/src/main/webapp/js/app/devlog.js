@@ -19,6 +19,13 @@ define([ 'jquery' ], function ($) {
                 element.html( content + msg );
             }
         }
+
+        this.consoleLogAndReportNewLine = function(msg) {
+            console.log(msg);
+            this.report(msg + "\n");
+        }
+
+
     };
  
     return returnedModule; 

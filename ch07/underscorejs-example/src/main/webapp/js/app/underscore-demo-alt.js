@@ -1,5 +1,5 @@
 // /js/app/underscore-demo-alt.js
-requirejs(['underscore', 'devlog'],
+requirejs(['underscore', 'devlog' ],
 	function (_, DevLog) {
 
 		var dv = new DevLog();

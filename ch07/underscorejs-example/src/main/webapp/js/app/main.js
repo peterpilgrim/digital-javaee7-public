@@ -1,20 +1,27 @@
 // main.js
 
 // Start the main app logic.
-requirejs(['jquery', 'bootstrap', 'easel', 'nested/sub'],
-	function ($, bootstrap, easel, sub) {
+requirejs(['jquery', 'underscore', 'bootstrap', 'easel', 'nested/sub', 'devlog'],
+	function ($, _, bootstrap, easel, sub, DevLog ) {
 	    //jQuery, easel and the app/sub module are all
 	    //loaded and can be used here now.
 
-		console.log("**** Initializing the `js/app/main' module");
+		var dv = new DevLog();
 
-	    console.log("start it up now!");
+		dv.consoleLogAndReportNewLine("**** Initializing the `js/app/main' module");
+
+	    dv.consoleLogAndReportNewLine("start it up now!");
 
 	    var e = new easel();
-		console.log("module 1 name = "+e.getName() );
+		dv.consoleLogAndReportNewLine("module 1 name = "+e.getName() );
 		var s = new sub();
-		console.log("module 2 name = "+s.getName() );
-		console.log("other name = "+s.getCanvasName() );
+		dv.consoleLogAndReportNewLine("module 2 name = "+s.getName() );
+		dv.consoleLogAndReportNewLine("other name = "+s.getCanvasName() );
+
+		dv.reportNewLine(
+				_.map( [ 1, 2, 3, 4], function(x){ return x * x; } )
+		);
+		// [1, 4. 9, 16]
 
 		// DOM ready
 	    $(function(){
@@ -22,7 +29,7 @@ requirejs(['jquery', 'bootstrap', 'easel', 'nested/sub'],
 	    	// Programmatically add class to toggles
 			$('.btn.danger').button('toggle').addClass('fat');
 
-			console.log("set it off!");
+			dv.consoleLogAndReportNewLine("set it off!");
 
 			alert("set it off!");
 	    });

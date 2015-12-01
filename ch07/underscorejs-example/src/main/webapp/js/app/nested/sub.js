@@ -1,7 +1,12 @@
 // nested/sub.js
-define(['easel'], function (easel) {
+define(['easel', 'devlog'], function (easel, DevLog ) {
+    var dv = new DevLog();
+
     var easel = new easel();
-    console.log("**** Initializing the `js/app/nested/sub' module");
+
+    dv.consoleLogAndReportNewLine("**** Initializing the `js/app/nested/sub' module");
+    dv.consoleLogAndReportNewLine("Inside sub.js and easel="+easel);
+
     var returnedModule = function () {
         this.getName = function () {
             return "sub";
